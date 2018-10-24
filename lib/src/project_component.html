@@ -1,0 +1,9 @@
+<div *ngIf="project != null" >
+        <h2>{{project.name}}</h2>
+        <div><label>id: </label>{{project.id}}</div>
+        <div>
+            <label>name: </label>
+            <input [(ngModel)]="project.name" placeholder="name">
+        </div>
+        <button (click)="goBack()">Back</button>
+</div>

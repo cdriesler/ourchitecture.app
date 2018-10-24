@@ -1,0 +1,158 @@
+<div class="alerts" *ngIf="warning != ''">
+    <div class="alert-window" >
+        Error: {{warning}}
+        <br>
+        <div class="clear-alert" (click)="onClearAlert()">OK</div>
+    </div>
+</div>
+
+<div class="main-content">
+
+<div class="drawing-square-zone">
+    <div class="drawing-square" >
+
+        <div class="drawing-canvas" id="current-data" style="z-index:-10;" *ngIf="mode==''">
+        </div>
+
+        <div class="drawing-canvas" id="canvas" *ngIf="mode=='line' || mode=='polyline'">
+            <!--
+            <div class="top-edge" id="top-edge" (click)="onSelectEdge($event)"></div>
+            <div class="bottom-edge" (click)="onSelectEdge($event)"></div>
+            <div class="left-edge" id="left-edge" (click)="onSelectEdge($event)"></div>
+            <div class="right-edge" id="right-edge" (click)="onSelectEdge($event)"></div>
+            -->
+
+            <svg width="66vh" height="66vh">
+                <!-- Top Edge -->
+                <!-- 0,0 --> <circle class="anchor-point" cx="1vh" cy="1vh" (click)="onEndPointSelect('0,0')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('0,0')}"></circle>
+                <!-- 1,0 --> <circle class="anchor-point" cx="11vh" cy="1vh" (click)="onEndPointSelect('1,0')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('1,0')}"></circle>
+                <!-- 2,0 --> <circle class="anchor-point" cx="22vh" cy="1vh" (click)="onEndPointSelect('2,0')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('2,0')}"></circle>
+                <!-- 3,0 --> <circle class="anchor-point" cx="33vh" cy="1vh" (click)="onEndPointSelect('3,0')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('3,0')}"></circle>
+                <!-- 4,0 --> <circle class="anchor-point" cx="44vh" cy="1vh" (click)="onEndPointSelect('4,0')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('4,0')}"></circle>
+                <!-- 5,0 --> <circle class="anchor-point" cx="55vh" cy="1vh" (click)="onEndPointSelect('5,0')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('5,0')}"></circle>
+                <!-- 6,0 --> <circle class="anchor-point" cx="65vh" cy="1vh" (click)="onEndPointSelect('6,0')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('6,0')}"></circle>
+
+                <!-- Left Edge -->
+                <!-- 0,1 --> <circle class="anchor-point" cx="1vh" cy="11vh" (click)="onEndPointSelect('0,1')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('0,1')}"></circle>
+                <!-- 0,2 --> <circle class="anchor-point" cx="1vh" cy="22vh" (click)="onEndPointSelect('0,2')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('0,2')}"></circle>
+                <!-- 0,3 --> <circle class="anchor-point" cx="1vh" cy="33vh" (click)="onEndPointSelect('0,3')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('0,3')}"></circle>
+                <!-- 0,4 --> <circle class="anchor-point" cx="1vh" cy="44vh" (click)="onEndPointSelect('0,4')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('0,4')}"></circle>
+                <!-- 0,5 --> <circle class="anchor-point" cx="1vh" cy="55vh" (click)="onEndPointSelect('0,5')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('0,5')}"></circle>
+                <!-- 0,6 --> <circle class="anchor-point" cx="1vh" cy="65vh" (click)="onEndPointSelect('0,6')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('0,6')}"></circle>
+
+                <!-- Right Edge -->
+                <!-- 6,1 --> <circle class="anchor-point" cx="65vh" cy="11vh" (click)="onEndPointSelect('6,1')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('6,1')}"></circle>
+                <!-- 6,2 --> <circle class="anchor-point" cx="65vh" cy="22vh" (click)="onEndPointSelect('6,2')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('6,2')}"></circle>
+                <!-- 6,3 --> <circle class="anchor-point" cx="65vh" cy="33vh" (click)="onEndPointSelect('6,3')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('6,3')}"></circle>
+                <!-- 6,4 --> <circle class="anchor-point" cx="65vh" cy="44vh" (click)="onEndPointSelect('6,4')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('6,4')}"></circle>
+                <!-- 6,5 --> <circle class="anchor-point" cx="65vh" cy="55vh" (click)="onEndPointSelect('6,5')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('6,5')}"></circle>
+                <!-- 6,6 --> <circle class="anchor-point" cx="65vh" cy="65vh" (click)="onEndPointSelect('6,6')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('6,6')}"></circle>
+
+                <!-- Bottom Edge-->
+                <!-- 1,6 --> <circle class="anchor-point" cx="11vh" cy="65vh" (click)="onEndPointSelect('1,6')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('1,6')}"></circle>
+                <!-- 2,6 --> <circle class="anchor-point" cx="22vh" cy="65vh" (click)="onEndPointSelect('2,6')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('2,6')}"></circle>
+                <!-- 3,6 --> <circle class="anchor-point" cx="33vh" cy="65vh" (click)="onEndPointSelect('3,6')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('3,6')}"></circle>
+                <!-- 4,6 --> <circle class="anchor-point" cx="44vh" cy="65vh" (click)="onEndPointSelect('4,6')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('4,6')}"></circle>
+                <!-- 5,6 --> <circle class="anchor-point" cx="55vh" cy="65vh" (click)="onEndPointSelect('5,6')" [ngClass]="{'anchor-point-selected': activeEndPoints.contains('5,6')}"></circle>
+            </svg>
+        </div>
+
+        <div class="drawing-canvas" *ngIf="mode=='box'">
+            <svg width="66vh" height="66vh">
+                <!-- Column 1-->
+                <!-- 1,1 --> <circle class="anchor-point" cx="11vh" cy="11vh" (click)="onCornerPointSelect('1,1')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('1,1')}"></circle>
+                <!-- 1,2 --> <circle class="anchor-point" cx="11vh" cy="22vh" (click)="onCornerPointSelect('1,2')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('1,2')}"></circle>
+                <!-- 1,3 --> <circle class="anchor-point" cx="11vh" cy="33vh" (click)="onCornerPointSelect('1,3')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('1,3')}"></circle>
+                <!-- 1,4 --> <circle class="anchor-point" cx="11vh" cy="44vh" (click)="onCornerPointSelect('1,4')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('1,4')}"></circle>
+                <!-- 1,5 --> <circle class="anchor-point" cx="11vh" cy="55vh" (click)="onCornerPointSelect('1,5')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('1,5')}"></circle>
+
+                <!-- Column 2-->
+                <!-- 2,1 --> <circle class="anchor-point" cx="22vh" cy="11vh" (click)="onCornerPointSelect('2,1')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('2,1')}"></circle>
+                <!-- 2,2 --> <circle class="anchor-point" cx="22vh" cy="22vh" (click)="onCornerPointSelect('2,2')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('2,2')}"></circle>
+                <!-- 2,3 --> <circle class="anchor-point" cx="22vh" cy="33vh" (click)="onCornerPointSelect('2,3')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('2,3')}"></circle>
+                <!-- 2,4 --> <circle class="anchor-point" cx="22vh" cy="44vh" (click)="onCornerPointSelect('2,4')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('2,4')}"></circle>
+                <!-- 2,5 --> <circle class="anchor-point" cx="22vh" cy="55vh" (click)="onCornerPointSelect('2,5')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('2,5')}"></circle>
+
+                <!-- Column 3-->
+                <!-- 3,1 --> <circle class="anchor-point" cx="33vh" cy="11vh" (click)="onCornerPointSelect('3,1')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('3,1')}"></circle>
+                <!-- 3,2 --> <circle class="anchor-point" cx="33vh" cy="22vh" (click)="onCornerPointSelect('3,2')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('3,2')}"></circle>
+                <!-- 3,3 --> <circle class="anchor-point" cx="33vh" cy="33vh" (click)="onCornerPointSelect('3,3')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('3,3')}"></circle>
+                <!-- 3,4 --> <circle class="anchor-point" cx="33vh" cy="44vh" (click)="onCornerPointSelect('3,4')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('3,4')}"></circle>
+                <!-- 3,5 --> <circle class="anchor-point" cx="33vh" cy="55vh" (click)="onCornerPointSelect('3,5')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('3,5')}"></circle>
+
+                <!-- Column 4-->
+                <!-- 4,1 --> <circle class="anchor-point" cx="44vh" cy="11vh" (click)="onCornerPointSelect('4,1')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('4,1')}"></circle>
+                <!-- 4,2 --> <circle class="anchor-point" cx="44vh" cy="22vh" (click)="onCornerPointSelect('4,2')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('4,2')}"></circle>
+                <!-- 4,3 --> <circle class="anchor-point" cx="44vh" cy="33vh" (click)="onCornerPointSelect('4,3')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('4,3')}"></circle>
+                <!-- 4,4 --> <circle class="anchor-point" cx="44vh" cy="44vh" (click)="onCornerPointSelect('4,4')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('4,4')}"></circle>
+                <!-- 4,5 --> <circle class="anchor-point" cx="44vh" cy="55vh" (click)="onCornerPointSelect('4,5')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('4,5')}"></circle>
+
+                <!-- Column 5-->
+                <!-- 5,1 --> <circle class="anchor-point" cx="55vh" cy="11vh" (click)="onCornerPointSelect('5,1')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('5,1')}"></circle>
+                <!-- 5,2 --> <circle class="anchor-point" cx="55vh" cy="22vh" (click)="onCornerPointSelect('5,2')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('5,2')}"></circle>
+                <!-- 5,3 --> <circle class="anchor-point" cx="55vh" cy="33vh" (click)="onCornerPointSelect('5,3')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('5,3')}"></circle>
+                <!-- 5,4 --> <circle class="anchor-point" cx="55vh" cy="44vh" (click)="onCornerPointSelect('5,4')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('5,4')}"></circle>
+                <!-- 5,5 --> <circle class="anchor-point" cx="55vh" cy="55vh" (click)="onCornerPointSelect('5,5')" [ngClass]="{'anchor-point-selected': activeCornerPoints.contains('5,5')}"></circle>
+
+            </svg>
+        </div>
+    </div>
+</div>
+
+<div class="input-column">
+    <div class="subtitle">inputs :</div>
+
+    <div class="group-title">lines</div>
+
+    <ul class="input-list">
+        <li *ngFor="let input of allInputs"
+            [class.activeInput]="input === activeInput"
+            (click)="onInputSelect(input)">
+            <span class="list-item" [ngClass]="{'active-selection': input === activeInput}">{{input}}</span>
+        </li>
+    </ul>
+
+    <div class="submission" (click)="onSubmitInput()" *ngIf="mode==''">&lt;</div>
+    <div *ngIf="mode=='line' || mode=='polyline'" style="text-align:right; margin-bottom: 2vh;"><span class="clear-selection" (click)="onClearSelection()">X</span> <span class="submission" (click)="onCommitInput()">&gt;</span></div>
+
+    <div class="subtitle">boxes :</div>
+
+    <div class="group-title">adverbs</div>
+
+    <ul class="input-list">
+        <li *ngFor="let adverb of boxAdverbs"
+            [class.activeAdverb]="adverb === activeAdverb"
+            (click)="onAdverbSelect(adverb)">
+            <span class="list-item" [ngClass]="{'active-selection': adverb === activeAdverb}">{{adverb}}</span>
+        </li>
+    </ul>
+
+    <div class="group-title">verbs</div>
+
+    <ul class="input-list">
+        <li *ngFor="let verb of boxVerbs"
+            [class.activeVerb]="verb === activeVerb"
+            (click)="onVerbSelect(verb)">
+            <span class="list-item" [ngClass]="{'active-selection': verb === activeVerb}">{{verb}}</span>
+        </li>
+    </ul>
+</div>
+
+<div class="input-column-submission" *ngIf="mode != 'box'">
+    <span class="submission" (click)="onSubmitBox()">&lt;</span>
+    <span class="clear-selection" (click)="onClearSelection()"> X</span>   
+</div>
+
+<div class="input-column-submission" *ngIf="mode == 'box'" style="text-align:right">
+    <span class="clear-selection" (click)="onClearSelection()">X </span>
+    <span class="submission" (click)="onCommitBox()">&gt;</span>
+</div>
+
+<div class="payload-column">
+    <div class="subtitle">payload :</div>
+    <div class="payload-data" id="main-data"></div>
+</div>
+
+<div class="payload-column-submission"><span class="clear-data" (click)="onClearData()">X </span> <span class="submission" (click)="onDeployPayload()"> &gt;</span> </div>
+
+</div>

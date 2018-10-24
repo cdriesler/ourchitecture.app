@@ -1,0 +1,123 @@
+
+.plan_region {
+    grid-column: 3 / span 1;
+    grid-row: 1 / span 3;
+
+    display: grid;
+
+    border-top: 1px solid black;
+
+    grid-template-columns: 6fr 4fr;
+    grid-template-rows: 4fr 1fr;
+}
+
+
+.plan_drawing {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 2;
+
+    line-height: 72.5vh;
+    vertical-align: middle;
+    text-align: center;
+
+    margin: 5vh;
+    margin-right: 2.5vh;
+
+    height: 72.5vh;
+}
+
+.plan_svg {
+    width: 100%;
+    height: 72.5vh;
+}
+
+.request_manifest {
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 2;
+
+    margin: 5vh;
+    margin-left: 2.5vh;
+
+    height: 80vh;
+}
+
+.request_title {
+    margin-bottom: 1vh;
+
+    font-size: 2.1vh;
+    line-height: 3vh;
+    vertical-align: top;
+    text-align: left;
+
+    width: 100%;
+    min-width: 20vh;
+
+    border-bottom: 3px solid black;
+}
+
+.metadata_list{
+    margin-bottom: 3vh;
+
+    font-size: 1.75vh;
+    line-height: 2.5vh;
+
+    list-style-type: none;
+}
+
+.metadata_input {
+    font-size: 1.75vh;
+}
+
+.program_list{
+    margin-bottom: 3vh;
+
+    list-style-type: none;
+}
+
+.program_card {
+    width: 100%;
+    height: 6vh;
+
+    margin-bottom: 1vh;
+
+    display: grid;
+    grid-template-columns: 6vh 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.program_icon {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 2;
+
+    width: 6vh;
+    height: 6vh;
+
+    margin: 0;
+    padding: 0;
+
+    outline: 2px solid black;
+    outline-offset: -2px;
+}
+
+.program_name {
+    padding-left: 2vh;
+
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 1;
+}
+
+.program_params {
+    padding-left: 2vh;
+
+    font-size: 1.75vh;
+    line-height: 2.5vh;
+    vertical-align: center;
+
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+}
+
+div[class*="_quota"]{
+    font-size: 1.75vh;
+    width: 3.25vh;
+}

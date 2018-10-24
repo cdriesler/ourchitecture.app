@@ -1,0 +1,257 @@
+.alerts {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+
+    font-size: 2vh;
+    font-style: italic;
+}
+
+.alert-window {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+
+    margin-left: 2vh;
+}
+
+.clear-alert {
+    color: gainsboro;
+}
+
+.clear-alert:hover {
+    cursor: pointer;
+    color: black;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 5fr 2fr 5fr;
+    grid-template-rows: 1fr 8fr 1fr;
+
+    margin-top: 1vh;
+    border-top: 3px solid black;
+
+    height: 100%;
+
+    overflow-x: hidden;
+    overflow-y: hidden;
+
+    background: none;
+}
+
+.drawing-square-zone {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 2;
+
+    font-size: 2vh;
+
+    background: none;
+}
+
+.drawing-square {
+    height: 70vh;
+    width: 70vh;
+
+    margin-top: 4vh;
+    margin-left: 4vh;
+    padding: 2vh;
+    
+    border: 3px solid black;
+
+    background: none;
+}
+
+.drawing-canvas {
+    width: 132vh;
+    height: 66vh;
+
+    display: grid;
+    grid-template-columns: 1fr 50fr 1fr;
+    grid-template-rows: 1fr 50fr 1fr;
+
+    margin-top: 2vh;
+    margin-left: 2vh;
+
+    background: none;
+
+    z-index: -10;
+}
+
+.top-edge {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 3;
+
+    width: 100%;
+    height: 100%;
+
+    background: black;
+}
+
+.bottom-edge {
+    grid-row: 3 / span 1;
+    grid-column: 1 / span 3;
+
+    width: 100%;
+    height: 100%;
+
+    background: black;
+}
+
+.right-edge {
+    grid-row: 1 / span 3;
+    grid-column: 3 / span 1;
+
+    width: 100%;
+    height: 100%;
+
+    background: black;
+}
+
+.left-edge {
+    grid-row: 1 / span 3;
+    grid-column: 1 / span 1;
+
+    width: 100%;
+    height: 100%;
+
+    background: black;
+}
+
+.active-selection {
+    color: black;
+    background: none;
+}
+
+.subtitle {
+    width: 100%;
+
+    font-size: 2.1vh;
+
+    border-bottom: 2px solid black;
+
+    background: none;
+}
+
+.group-title {
+    width: 100%;
+
+    font-size: 1.5vh;
+
+    border-bottom: 1px solid black;
+
+    margin-top: 2vh;
+    margin-bottom: 1vh;
+
+    background: none;
+}
+
+.submission {
+    font-size: 2.5vh;
+    font-weight: bold;
+
+    margin-bottom: 2vh;
+
+    color: gainsboro;
+
+    background: none;
+}
+
+.submission:hover {
+    cursor: pointer;
+    color: black;
+}
+
+.clear-selection {
+    color:gainsboro;
+    font-size: 2.1vh;
+
+    background: none;
+}
+
+.clear-selection:hover {
+    cursor: pointer;
+    color:black;
+}
+
+.clear-data {
+    color: gainsboro;
+    font-size: 2.1vh;
+
+    background: none;
+}
+
+.clear-data:hover {
+    cursor: pointer;
+    color: black;
+}
+
+li {
+    background: none;
+}
+
+.input-list {
+    margin-bottom: 0.5vh;
+
+    font-size: 1.4vh;
+    line-height: 2.2vh;
+
+    list-style: none;
+
+    color: gainsboro;
+    background: none;
+}
+
+.list-item {
+    background: none;
+}
+
+.list-item:hover {
+    cursor: pointer;
+    color: black;
+}
+
+.input-column {
+    margin-top: 4vh;
+    margin-right: 3vh;
+
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 3;
+
+    background: none;
+}
+
+.input-column-submission {
+    margin-right: 3vh;
+
+    grid-column: 2 / span 1;
+    grid-row: 3 / span 1;
+
+    white-space: nowrap;
+    background: none;
+}
+
+.payload-column-submission {
+    margin-right: 3vh;
+
+    grid-column: 3 / span 1;
+    grid-row: 3 / span 1;
+
+    text-align: right;
+    background: none;
+}
+
+.payload-column {
+    margin-top: 4vh;
+    margin-right: 3vh;
+
+    grid-column: 3 / span 1;
+    grid-row: 1 / span 3;
+    background: none;
+}
+
+.payload-data {
+    font-size: 1.5vh;
+    line-height: 2.5vh;
+    background: none;
+}
+
