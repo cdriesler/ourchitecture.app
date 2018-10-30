@@ -46,9 +46,18 @@ class RhinotestComponent implements OnInit {
   }
 
   void onButton() {
-    CustomEvent event = new CustomEvent("dog");
+    print(rhino3dm().Point3dList(1, 2, 3));
+    /*
+    CustomEvent event = new CustomEvent("dog", detail: {
+      "X" : 2,
+      "Y" : 2,
+      "Z" : 3,
+    });
 
     document.dispatchEvent(event);
+
+    //print(event.detail["info"]);
+    */
   }
 
   @override

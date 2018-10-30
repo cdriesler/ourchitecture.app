@@ -24,9 +24,11 @@
   <script>
       document.addEventListener("dog", function(event) {
         var pts = new Module.Point3dList();
-        pts.add(1,2,3);
+        pts.add(event.detail["X"],2,3);
 
         console.log(pts.get(0));
+
+        //event.detail["info"] = pts.get(0).toString();
       });
   </script>
   <script defer src="main.dart.js"></script>
