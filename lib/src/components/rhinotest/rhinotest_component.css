@@ -1,0 +1,22 @@
+.wrapper {
+    display:grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 20vh 1fr 71vh 1fr 20vh 1fr;
+}
+
+.canvas {
+    grid-column: 4 / span 1;
+    grid-row: 1 / span 2;
+
+    height: 71vh;
+
+    outline: 3px solid black;
+    outline-offset: -3px;
+}
+
+.button {
+    grid-column: 1 / span 2;
+    grid-row: 1 / span 2;
+
+    background: yellow;
+}

@@ -7,6 +7,7 @@ class RoutePaths {
   static final projects = RoutePath(path: "/projects");
   static final dashboard = RoutePath(path: "/black");
   static final cicero = RoutePath(path: "/cicero");
+  static final rhinotest = RoutePath(path: "/rhinotest");
 }
 
 String getId(Map<String, String> parameters) {
