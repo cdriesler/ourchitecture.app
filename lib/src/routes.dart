@@ -6,6 +6,7 @@ import "project_list_component.template.dart" as project_list_template;
 import "project_component.template.dart" as project_template;
 import "components/blackbox/blackbox_component.template.dart" as encase_template;
 import "components/cicero/cicero_component.template.dart" as cicero_template;
+import "components/rhinotest/rhinotest_component.template.dart" as rhinotest_template;
 
 export "route_paths.dart";
 
@@ -30,11 +31,17 @@ class Routes {
     component: cicero_template.CiceroComponentNgFactory,
   );
 
+  static final rhinotest = RouteDefinition(
+    routePath: RoutePaths.rhinotest,
+    component: rhinotest_template.RhinotestComponentNgFactory,
+  );
+
   static final all = <RouteDefinition>[
     project,
     projects,
     dashboard,
     cicero,
+    rhinotest,
     RouteDefinition.redirect(
       path: '',
       redirectTo: RoutePaths.dashboard.toUrl(),
