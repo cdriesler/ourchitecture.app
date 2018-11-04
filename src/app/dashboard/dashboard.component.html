@@ -1,7 +1,31 @@
 <div class="wrapper">
 
-  <div class="navigation-left"><a class="link" routerLink="/cicero">intent</a></div>
+    <li *ngFor="let project of projects"
+    [class.selected]="project === selected"
+    (click)="onSelect(project)">
+<span class="list_item" [ngClass]="{'active_link': project === selected}"><span class="project_badge">{{project.id}}</span> {{project.name}}</span>
+</li>
+
+  <div class="intent" *ngIf="intentActive != false">
+      <ul>
+          <li *ngFor="let arg of conceptStatementArguments"
+          [class.selected]="arg === selectedArgument"
+          (click)="onSelectArg(arg)">
+              <div class="argument_card">
+                <div class="argument_number">{{ arg.number }}</div>
+                <div class="argument_title" [ngClass]="{'active_arg': arg === selectedArgument}">{{ arg.title }}</div>
+              </div>
+              <app-argument-detail *ngIf="arg === selectedArgument" [arg]="selectedArgument"></app-argument-detail>
+          </li>
+        </ul>
+  </div>
+
+  <div class="navigation-left"><a class="link" (click)="onToggleIntent()">intent</a></div>
 <a class="box" href="https://github.com/cdriesler/boxboxbox" target="_blank"></a>
   <div class="navigation-right"><a class="link" routerLink="/cicero">system</a></div>
+
+  <div class="system" *ngIf="systemActive != false">
+
+  </div>
 
 </div>

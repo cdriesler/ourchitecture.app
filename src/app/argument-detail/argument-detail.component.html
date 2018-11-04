@@ -1,0 +1,16 @@
+<div *ngIf="arg">
+    <ul>
+      <li *ngFor="let premise of arg.premises">
+          <h2>{{arg.premises[0].title | uppercase}}</h2>
+          <div><span>id: </span>{{arg.premises[0].number}}</div>
+      </li>
+    </ul>
+
+    <!--
+    <div>
+      <label>name:
+        <input [(ngModel)]="arg.title"/>
+      </label>
+    </div>
+  -->
+  </div>

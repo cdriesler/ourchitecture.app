@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CiceroComponent } from './cicero/cicero.component';
+import { ArgumentDetailComponent } from './argument-detail/argument-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    CiceroComponent
+    CiceroComponent,
+    ArgumentDetailComponent
   ],
   imports: [
     BrowserModule,
