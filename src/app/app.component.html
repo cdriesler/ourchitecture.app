@@ -1,23 +1,19 @@
 <div class="main" id="wrapper">
-
-  <!-- 
-  <div class="title">{{title}}</div>
-  <div class="navigation">
-      <a [routerLink]="RoutePaths.dashboard.toUrl()" [routerLinkActive]="'active'">INTENT</a> &nbsp;
-      <a [routerLink]="RoutePaths.cicero.toUrl()" [routerLinkActive]="'active'">CICERO</a>
-      <a class="not-implemented" >SENECA</a>
-  </div>
-  -->
-  
+ 
+    <!--
   <div class="temp" id="temp">site is undergoing construction...functionality will (must?) return by midterm.</div>
   
   <div class="nav"><div class="idle top"></div></div>
+  -->
   
   <div class="content">
-  <router-outlet></router-outlet>
+  <router-outlet (sendReady)="makeReady()"></router-outlet>
   </div>
   
-  <div class="notes"><div class="idle bottom"></div></div>
+  <div class="notes">
+      <div class="idle bottom" *ngIf="onReady === false" (click)="setReady(true)"></div>
+      <div class="instructions" *ngIf="onReady === true"><div class="topbar" (click)="setReady(false)"></div></div>
+    </div>
   
   <!--
   <div class="footer"><span class="version">v0.0.9 &nbsp; Last updated: 02 October 2018</span> &nbsp; [ <a href="https://github.com/cdriesler/cicero" target="_blank">View Source</a> ] </div>

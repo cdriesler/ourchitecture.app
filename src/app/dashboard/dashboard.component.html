@@ -8,16 +8,20 @@
 
   <div class="intent" *ngIf="intentActive != false">
       <ul>
-          <li *ngFor="let arg of conceptStatementArguments"
+          <li class="nav_lists" *ngFor="let arg of conceptStatementArguments"
           [class.selected]="arg === selectedArgument"
           (click)="onSelectArg(arg)">
               <div class="argument_card">
                 <div class="argument_number">{{ arg.number }}</div>
                 <div class="argument_title" [ngClass]="{'active_arg': arg === selectedArgument}">{{ arg.title }}</div>
               </div>
-              <app-argument-detail *ngIf="arg === selectedArgument" [arg]="selectedArgument"></app-argument-detail>
+              <app-argument-detail 
+              *ngIf="arg === selectedArgument" 
+              [arg]="selectedArgument"
+              (makeReady)="makeReady()">
+            </app-argument-detail>
           </li>
-        </ul>
+      </ul>
   </div>
 
   <div class="navigation-left"><a class="link" (click)="onToggleIntent()">intent</a></div>
