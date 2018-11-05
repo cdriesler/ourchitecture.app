@@ -15,8 +15,6 @@
 .nav_lists {
     list-style-type: none;
     background: none;
-
-    z-index: -5;
 }
 
 .argument_card {
@@ -79,10 +77,39 @@
     animation-duration: 0.5s;
 }
 
+.system {
+    grid-column: 8 / span 1;
+    grid-row: 2 / span 3;
+
+    width: 100%;
+    text-align: center;
+
+    background: none;
+    border: 3px solid white;
+
+    animation-name: panel_enter;
+    animation-duration: 0.5s;
+}
+
+.system_card {
+    display: inline-block;
+
+    color: gainsboro;
+
+    margin-bottom: 2.5vh;
+
+    font-size: 4.5vh;
+}
+
+.system_card:hover {
+    cursor: pointer;
+    color: black;
+}
+
 @keyframes panel_enter {
     0%   {border: 3px solid black;}
     100% {border: 3px solid white;}
- }
+}
 
 .a {
     text-decoration: none;

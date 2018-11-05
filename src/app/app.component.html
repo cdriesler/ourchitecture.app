@@ -12,7 +12,11 @@
   
   <div class="notes">
       <div class="idle bottom" *ngIf="onReady === false" (click)="setReady(true)"></div>
-      <div class="instructions" *ngIf="onReady === true"><div class="topbar" (click)="setReady(false)"></div></div>
+      <div class="instructions" *ngIf="onReady === true">
+          <div class="topbar" (click)="setReady(false)"></div>
+          <div class="route">goto: {{currentRoute}}</div>
+          <div class="run_button"><a [routerLink]="currentRoute">></a></div>
+        </div>
     </div>
   
   <!--

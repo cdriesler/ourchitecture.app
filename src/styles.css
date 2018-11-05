@@ -84,6 +84,10 @@ html * {
     grid-row: 1 / span 3;
     grid-column: 1 / span 1;
 
+    display: grid;
+    grid-template-rows: 0.5vh 11vh 1fr;
+    grid-template-columns: 3fr 1fr 3fr;
+
     border-top: 10px solid black;
     border-left: 3px solid black;
     border-right: 3px solid black;
@@ -91,6 +95,44 @@ html * {
     animation-name: raise !important;
     animation-duration: 1s !important;
     animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+  }
+
+  .route {
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 1;    
+
+    display: inline-block;
+
+    margin-top: 4px;
+    margin-left: 8px; 
+
+    font-size: 1.5vh;
+    line-height: 11vh;
+    vertical-align: middle;
+  }
+
+  .run_button {
+    grid-row: 2 / span 1;
+    grid-column: 2 / span 1;
+
+    font-size: 10vh;
+    line-height: 11vh;
+    vertical-align: middle;
+    text-align: center;
+
+    background: none;
+
+    color: gainsboro;
+  }
+
+  .run_button a {
+    text-decoration: none;
+    color: gainsboro;
+  }
+
+  .run_button a:hover {
+    color: black;
+    cursor: pointer;
   }
 
   .topbar {

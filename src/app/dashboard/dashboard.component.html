@@ -26,7 +26,20 @@
 
   <div class="navigation-left"><a class="link" (click)="onToggleIntent()">intent</a></div>
 <a class="box" href="https://github.com/cdriesler/boxboxbox" target="_blank"></a>
-  <div class="navigation-right"><a class="link" routerLink="/cicero">system</a></div>
+  <!--<div class="navigation-right"><a class="link" routerLink="/cicero">system</a></div>-->
+  <div class="navigation-right"><a class="link" (click)="onToggleSystem()">system</a></div>
+
+  <div class="system" *ngIf="systemActive != false">
+    <ul>
+      <li class="nav_lists" *ngFor="let sys of systemProfiles"
+      [class.selected]="sys === selectedSystem"
+      (click)="onSelectSys(sys)">
+        <div class="system_card" [ngClass]="{'active_arg': sys === selectedSystem}">
+            {{sys.name}}
+        </div>
+      </li>
+    </ul>
+  </div>
 
   <div class="system" *ngIf="systemActive != false">
 

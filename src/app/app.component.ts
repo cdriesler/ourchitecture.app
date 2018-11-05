@@ -1,3 +1,4 @@
+import { DashboardRouteService } from './../services/dashboard-route.service';
 import { NavigationService } from './../services/navigation-service.service';
 import { Component, EventEmitter, Output, Input } from '@angular/core';
 
@@ -5,14 +6,16 @@ import { Component, EventEmitter, Output, Input } from '@angular/core';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [ NavigationService ]
+  providers: [ NavigationService, DashboardRouteService]
 })
 export class AppComponent {
   title = 'boxboxbox';
   onReady = false;
+  currentRoute: string = "/";
 
-  constructor (private _navigationService: NavigationService) {
+  constructor (private _navigationService: NavigationService, private _dashboardRouteService: DashboardRouteService) {
     _navigationService.changeEmitted$.subscribe(x => this.makeReady(x));
+    _dashboardRouteService.changeEmitted$.subscribe(x => this.currentRoute = x);
    }
 
   makeReady(val: boolean) {
@@ -23,4 +26,5 @@ export class AppComponent {
   setReady(val: boolean) {
     this.onReady = val;
   }
+  
 }

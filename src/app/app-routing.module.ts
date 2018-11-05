@@ -7,7 +7,7 @@ import { CiceroComponent } from './cicero/cicero.component';
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'cicero', component: CiceroComponent }
+  { path: 'system/cicero', component: CiceroComponent }
 ];
 
 @NgModule({
