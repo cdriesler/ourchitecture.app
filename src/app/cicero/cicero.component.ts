@@ -157,6 +157,8 @@ export class CiceroComponent implements OnInit {
 
     var ref = this.db.collection('/results').doc(id);
 
+    this.svgData = this.sanitizer.bypassSecurityTrustHtml('');
+
     this.output = '';
     this.selectedTool = 'none';
 
