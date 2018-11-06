@@ -78,6 +78,8 @@ html * {
     grid-template-columns: 1fr;
   
     height: 100%;
+
+    background: none;
   }
 
   .instructions {

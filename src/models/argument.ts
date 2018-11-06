@@ -66,7 +66,12 @@ export const ConceptStatementArguments: ArgumentManifest[] = [
       {number: 2, title: "via the old city", description: "something"},
       {number: 3, title: "via something in between", description: "something"}
     ]
-  }
+  },
+  {
+    number: "C >",
+    title: "precedents",
+    premises: []
+  },
 ];
 
 export const ProjectStatementArguments: ArgumentManifest[] = [
