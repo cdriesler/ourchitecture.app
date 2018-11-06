@@ -163,7 +163,7 @@ export class CiceroComponent implements OnInit {
     this.getDrawing(ref);
   }
 
-  public getDrawing(doc: AngularFirestoreDocument) {
+  public getDrawing(doc: AngularFirestoreDocument) : any {
     var getDoc = doc.get().toPromise().then(x => {
       if (x.data() == undefined) {
         console.log("Waiting...");
