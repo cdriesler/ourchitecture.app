@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore, DocumentChangeAction } from 'angularfire2/firestore';
+import { Observable } from 'rxjs';
+import { defineBase } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-cicero',
@@ -16,10 +19,22 @@ export class CiceroComponent implements OnInit {
   activeEndPoints: String[] = [];
   activeCornerPoints: String[] = [];
 
+  currentName: string = "test";
+
   output: String = "";
 
-  constructor() {
+  db: AngularFirestore;
 
+  public svgResponse: Observable<any[]>;
+
+  constructor(db: AngularFirestore) {
+    //this.svgResponse = db.collection('/results').doc('k')
+
+    this.db = db;
+
+
+
+    //console.log(item);
   }
 
   onEndPointSelect(coord: String) {
@@ -95,7 +110,7 @@ export class CiceroComponent implements OnInit {
 
       this.output = this.output + data;
 
-      document.getElementById("output").textContent = this.output.toString();
+      //document.getElementById("output_data").textContent = this.output.toString();
     }
 
     if (this.selectedTool == "box") {
@@ -103,7 +118,7 @@ export class CiceroComponent implements OnInit {
 
       this.output = this.output + data;
 
-      document.getElementById("output").textContent = this.output.toString();
+      //document.getElementById("output_data").textContent = this.output.toString();
     }
 
     this.clearCache();
@@ -126,6 +141,24 @@ export class CiceroComponent implements OnInit {
     this.activeCornerPoints[1] = '';
     this.activeEndPoints[0] = '';
     this.activeEndPoints[1] = '';
+  }
+
+  onDeploy() {
+    var id = this.db.createId();
+
+    var data = {
+      payload: this.output,
+    }
+
+    var newDoc = this.db.collection('/queue').doc(id).set(data);
+
+    var ref = this.db.collection('/results').doc(id);
+
+    var getDoc = ref.get().toPromise().then(doc => {
+      console.log(doc.data());
+    })
+
+
   }
 
   ngOnInit() {

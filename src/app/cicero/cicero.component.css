@@ -27,6 +27,14 @@
 
     animation-name: panel_enter;
     animation-duration: 0.5s;
+
+    text-align: center;
+}
+
+.output_data {
+    grid-row: 1 / span 1;
+
+    text-align: left;
 }
 
 .output_commit {

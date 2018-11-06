@@ -3,7 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: "AIzaSyAKLWCBHM6tmxRHWQQuiXPHikjZ92ZcTRc",
+    authDomain: "cicero-box.firebaseapp.com",
+    databaseURL: "https://cicero-box.firebaseio.com",
+    projectId: "cicero-box",
+    storageBucket: "cicero-box.appspot.com",
+    messagingSenderId: "682412589917"
+  }
 };
 
 /*

@@ -110,8 +110,11 @@
   </div>
 </div>
 
-  <div class="output" *ngIf="output != ''" id="output">
-    {{output}}
+  <div class="output" *ngIf="output != ''">
+    <div class="output_data" id="output_data">{{output}}</div>
+    <div class="output_commit">
+      <div class="output_commit_button" (click)="onDeploy()">></div>
+    </div>
   </div>
 
 </div>
