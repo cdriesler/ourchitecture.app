@@ -28,7 +28,7 @@
 
   <div class="drawing">
     <div class="drawing_square">
-        <div class="drawing_canvas" id="current-data" style="z-index:-10;" *ngIf="selectedTool==='none'">
+        <div #svgContainer class="drawing_canvas" id="current-data" style="z-index:-10;" *ngIf="selectedTool==='none'" [innerHtml]="svgData">
           </div>
   
           <div class="drawing_canvas" id="canvas" *ngIf="selectedTool === 'line'">

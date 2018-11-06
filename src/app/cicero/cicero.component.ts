@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { AngularFirestore, DocumentChangeAction } from 'angularfire2/firestore';
+import { Component, OnInit} from '@angular/core';
+import { AngularFirestore, DocumentChangeAction, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
 import { defineBase } from '@angular/core/src/render3';
+import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-cicero',
@@ -23,16 +24,18 @@ export class CiceroComponent implements OnInit {
 
   output: String = "";
 
+  waitCounter: number = 0;
+
+  svgData: SafeHtml;
+
   db: AngularFirestore;
 
   public svgResponse: Observable<any[]>;
 
-  constructor(db: AngularFirestore) {
+  constructor(db: AngularFirestore, private sanitizer: DomSanitizer) {
     //this.svgResponse = db.collection('/results').doc('k')
 
     this.db = db;
-
-
 
     //console.log(item);
   }
@@ -154,15 +157,32 @@ export class CiceroComponent implements OnInit {
 
     var ref = this.db.collection('/results').doc(id);
 
-    var getDoc = ref.get().toPromise().then(doc => {
-      console.log(doc.data());
+    this.output = '';
+    this.selectedTool = 'none';
+
+    this.getDrawing(ref);
+  }
+
+  public getDrawing(doc: AngularFirestoreDocument) {
+    var getDoc = doc.get().toPromise().then(x => {
+      if (x.data() == undefined) {
+        console.log("Waiting...");
+        this.waitCounter++;
+
+        if (this.waitCounter < 360) {
+        setTimeout(this.getDrawing(doc), 500);
+        }
+        return;
+      }
+
+      this.svgData = this.sanitizer.bypassSecurityTrustHtml(x.data().svg);
     })
-
-
   }
 
   ngOnInit() {
     this.selectedTool = "none";
+
+    
   }
 
 }
