@@ -14,7 +14,12 @@ export class CiceroComponent implements OnInit {
   ciceroTools: String[] = ["line", "box"];
   selectedTool: String;
 
-  allVerbs: String[] = ["regulate", "concentrate"]
+  allVerbs: String[] = [
+    "regulate", 
+    "concentrate",
+    "lift",
+    "shatter",
+  ]
   selectedVerb: String = '';
 
   activeEndPoints: String[] = [];
