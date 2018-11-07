@@ -1,0 +1,10 @@
+.analytic_wrapper {
+    display: grid;
+    grid-template-rows: 1fr 50vh 1fr;
+    grid-template-columns: 1fr 80vw 1fr;
+}
+
+.analytic_drawing {
+    grid-row: 2 / span 1;
+    grid-column: 2 / span 1;
+}

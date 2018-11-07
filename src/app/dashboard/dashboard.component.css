@@ -1,0 +1,194 @@
+.wrapper {
+    height: 100%;
+    width: 100%;
+
+    overflow-x: hidden;
+    overflow-y: hidden;
+    
+    min-height: 71vh;
+
+    display: grid;
+    grid-template-columns: 10vh 1fr 10vh 30vh 11vh 30vh 10vh 1fr 10vh;
+    grid-template-rows: 1fr 30vh 11vh 30vh 1fr;
+}
+
+.nav_lists {
+    list-style-type: none;
+    background: none;
+}
+
+.argument_card {
+    display:grid;
+    grid-template-columns: 4vh 1fr;
+    grid-template-rows: 1fr;
+
+    width: 100%;
+
+    margin-bottom: 1vh;
+}
+
+.active_arg {
+    color: black !important;
+}
+
+.argument_number {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+
+    font-weight: bold;
+    font-size: 1.5vh;
+    line-height: 1.5vh;
+
+    width: 100%;
+    line-height: 2.4vh;
+    text-align: left;
+
+    background: none;
+}
+
+.argument_title {
+    grid-row: 1 / span 1;
+    grid-column: 2 / span 1;
+
+    font-size: 2vh;
+
+    width: 100%;
+    line-height: 2.4vh;
+
+    color: gainsboro;
+}
+
+.argument_title:hover {
+    cursor: pointer;
+    color: black;
+}
+
+.intent {
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 3;
+
+    width: 100%;
+
+    padding-left: 0.5vh;
+
+    border: 3px solid white;
+
+    animation-name: panel_enter;
+    animation-duration: 0.5s;
+}
+
+.system {
+    grid-column: 8 / span 1;
+    grid-row: 2 / span 3;
+
+    width: 100%;
+    text-align: center;
+
+    background: none;
+    border: 3px solid white;
+
+    animation-name: panel_enter;
+    animation-duration: 0.5s;
+}
+
+.system_card {
+    display: inline-block;
+
+    color: gainsboro;
+
+    margin-bottom: 2.5vh;
+
+    font-size: 4.5vh;
+}
+
+.system_card:hover {
+    cursor: pointer;
+    color: black;
+}
+
+@keyframes panel_enter {
+    0%   {border: 3px solid black;}
+    100% {border: 3px solid white;}
+}
+
+.a {
+    text-decoration: none;
+    color: gainsboro;
+}
+
+.a:hover {
+    color:black;
+}
+
+.link{
+    color: gainsboro;
+    text-decoration: none;
+}
+
+.link:hover{
+    color: black;
+    cursor: pointer;
+}
+
+.navigation-right {
+    grid-row: 3 / span 1;
+    grid-column: 6 / span 2;
+    text-align: left;
+    margin-left: 5vh;
+
+    width: 100%;
+
+    line-height: 11vh;
+    font-size: 2.1vh;
+    vertical-align: middle;
+
+    color: gainsboro;
+    text-decoration: none;
+}
+
+.navigation-left {
+    grid-row: 3 / span 1;
+    grid-column: 3 / span 2;
+    text-align: right;
+    margin-right: 5vh;
+
+    background: none;
+
+    line-height: 11vh;
+    font-size: 2.1vh;
+    vertical-align: middle;
+
+    color: gainsboro;
+    text-decoration: none;
+}
+
+.box {
+    grid-row: 3 / span 1;
+    grid-column: 5 / span 1;
+
+    background: black;
+}
+
+.box:hover {
+    cursor: pointer;
+    animation-name: grow_border;
+    animation-duration: 0.33s;
+
+    outline: 3px solid black;
+    outline-offset: 12px;
+}
+
+@keyframes grow_border {
+    0%   {outline-offset: 0px; outline: 3px solid white}
+    100% {outline-offset: 12px; outline: 3px solid black}
+  }
+
+.news a {
+    color: gainsboro;
+    text-decoration: none;
+}
+
+.news a:hover {
+    color: black;
+    cursor: pointer;
+}

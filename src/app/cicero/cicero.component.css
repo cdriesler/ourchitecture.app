@@ -1,0 +1,196 @@
+.cicero-wrapper {
+    height: 100%;
+    width: 100%;
+
+    overflow-x: hidden;
+    overflow-y: hidden;
+    
+    min-height: 71vh;
+
+    display: grid;
+    grid-template-columns: 10vh 1fr 10vh 30vh 11vh 30vh 10vh 1fr 10vh;
+    grid-template-rows: 1fr 30vh 11vh 30vh 1fr;
+}
+
+@keyframes panel_enter {
+    0%   {border: 3px solid black;}
+    100% {border: 3px solid white;}
+}
+
+.output {
+    grid-row: 2 / span 3;
+    grid-column: 8 / span 1;
+
+    display: grid;
+    grid-template-rows: 1fr 10vh;
+    grid-template-columns: 100%;
+
+    animation-name: panel_enter;
+    animation-duration: 0.5s;
+
+    text-align: center;
+}
+
+.output_data {
+    grid-row: 1 / span 1;
+
+    text-align: left;
+}
+
+.output_commit {
+    grid-row: 2 / span 1;
+}
+
+.output_commit_button {
+    display: inline-block;
+
+    color: gainsboro;
+
+    font-size: 10vh;
+    line-height: 10vh;
+    vertical-align: top;
+
+    animation-name: button_appear;
+    animation-duration: 0.5s;
+}
+
+.output_commit_button:hover {
+    color: black;
+    cursor: pointer;
+}
+
+.input {
+    grid-row: 2 / span 3;
+    grid-column: 2 / span 1;
+
+    display: grid;
+    grid-template-rows: 1fr 10vh;
+    grid-template-columns: 100%;
+
+    animation-name: panel_enter;
+    animation-duration: 0.5s;
+
+    text-align: center;
+}
+
+.drawing {
+    grid-row: 2 / span 3;
+    grid-column: 4 / span 3;
+
+    padding:0;
+    margin: 0;
+
+    outline: 3px solid black;
+    outline-offset: -3px;
+
+    animation-name: load;
+    animation-duration: 2s;
+    animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+@keyframes load {
+    0%   {outline-offset: -35vh; outline-color: white}
+    100% {outline-offset: -3px; outline-color: black}
+}
+
+.verb_list {
+    list-style-type: none;
+}
+
+.verb {
+    font-size: 2vh;
+    color: gainsboro;
+    margin-bottom: 2vh;
+}
+
+.verb:hover {
+    color: black;
+    cursor: pointer;
+}
+
+.input_list {
+    grid-row: 1 / span 1;
+}
+
+.input_commit {
+    grid-row: 2 / span 1;
+}
+
+.input_commit_button {
+    display: inline-block;
+
+    color: gainsboro;
+
+    font-size: 10vh;
+    line-height: 10vh;
+    vertical-align: top;
+
+    animation-name: button_appear;
+    animation-duration: 0.5s;
+}
+
+@keyframes button_appear {
+    0%   {color: black;}
+    100% {color: gainsboro}
+}
+
+.input_commit_button:hover {
+    color:black;
+    cursor: pointer;
+}
+
+.nav_lists {
+    list-style-type: none;
+    background: none;
+}
+
+.tool_name {
+    display: inline-block;
+
+    color: gainsboro;
+
+    margin-bottom: 2.5vh;
+
+    font-size: 4.5vh;
+}
+
+.tool_name:hover {
+    color:black;
+    cursor: pointer;
+}
+
+.active_tool {
+    color: black;
+}
+
+.drawing_square {
+    height: 66vh;
+    width: 66vh;
+
+    margin: 2.75vh;
+
+    background: none;
+}
+
+.drawing_canvas {
+    width: 66vh;
+    height: 66vh;
+
+    z-index: 5;
+}
+
+.anchor-point {
+    r: 0.5vh;
+    stroke: black;
+    stroke-width: 2px;
+    fill: white;
+}
+
+.anchor-point:hover {
+    cursor: pointer;
+    fill: black;
+}
+
+.anchor-point-selected {
+    fill: black;
+}
