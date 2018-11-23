@@ -1,0 +1,27 @@
+{
+    "name": "Ourchitecture Box",
+    "short_name": "rch.box",
+    "start_url": "./",
+    "theme_color": "#008080",
+    "background_color": "#008B8B",
+    "display": "standalone",
+    "description": "Testing ourchitecture app",
+    "icons": [
+        {
+            "src": "/assets/images/icons/favicon-16x16.png",
+            "sizes": "16x16",
+            "type": "image/png"
+        },
+        {
+             "src": "/assets/images/icons/favicon-32x32.png",
+             "sizes": "32x32",
+             "type": "image/png"
+         },
+         {
+             "src": "/assets/images/icons/mstile-150x150.png",
+             "sizes": "150x150",
+             "type": "image/png"
+         }
+    ]
+ 
+ }
