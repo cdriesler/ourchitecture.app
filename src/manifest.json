@@ -1,10 +1,10 @@
 {
-    "name": "Ourchitecture Box",
-    "short_name": "rch.box",
+    "name": "Ourchitecture",
+    "short_name": "Ourchitecture",
     "start_url": "./",
     "theme_color": "#008080",
     "background_color": "#008B8B",
-    "display": "standalone",
+    "display": "fullscreen",
     "description": "Testing ourchitecture app",
     "icons": [
         {
@@ -21,6 +21,21 @@
              "src": "/assets/images/icons/mstile-150x150.png",
              "sizes": "150x150",
              "type": "image/png"
+         },
+         {
+             "src": "/assets/images/icons/android-chrome-192x192.png",
+             "sizes": "192x192",
+             "type": "image/png"
+         },
+         {
+             "src": "/assets/images/icons/android-chrome-256x256.png",
+             "sizes": "256x256",
+             "type": "image/png"
+         },
+         {
+            "src": "/assets/images/icons/favicon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
          }
     ]
  
