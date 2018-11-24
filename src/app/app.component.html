@@ -1,12 +1,15 @@
 <div class="wrapper_main">
 
   <div class="header">
-    <div class="icon"></div>
+    <div class="title"></div>
+    <div class="icon" id="header" (click)="onActivateHeader()" [ngClass]="{'active_header': headerActive === true}"></div>
   </div>
 
   <div class="content">
       <router-outlet></router-outlet>
   </div>
+
+  <div class="margin"></div>
 
 </div>
 

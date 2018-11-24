@@ -26,6 +26,35 @@
     border-left: 4px solid black;
 }
 
+.icon:hover {
+    cursor: pointer;
+    background: black;
+}
+
+.active_header {
+    width: 200vw;
+    background: black;
+    transform: translateX(-100vw);
+
+    animation-name: activate-header;
+    animation-duration: 1s;
+}
+
+@keyframes activate-header {
+    0%   {transform: translateX(0)}
+    100% {transform: translateX(-100vw)}
+}
+
+.margin {
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 1;
+
+    border-right: 4px dashed black;
+
+    background: none;
+    pointer-events: none;
+}
+
 .content {
     grid-row: 2 / span 1;
     grid-column: 1 / span 3;

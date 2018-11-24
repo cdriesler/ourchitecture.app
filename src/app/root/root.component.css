@@ -77,5 +77,14 @@
 }
 
 .overflow {
+    display: grid;
+    grid-template-columns: 11vh 1fr;
+
     height: 100vh;
+}
+
+.overflow_dash {
+    grid-column: 1 / span 1;
+
+    border-right: 4px dashed black;
 }
