@@ -1,9 +1,9 @@
 {
   "name": "boxboxbox",
   "short_name": "boxboxbox",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
-  "display": "standalone",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "fullscreen",
   "scope": "/",
   "start_url": "/",
   "icons": [

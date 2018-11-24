@@ -1,1 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
+html * {
+    font-family: "Consolas", monospace;
+
+    margin: 0;
+    padding: 0;
+    background-color: white;
+
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    width: 4px;
+    background: gainsboro; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    border-top: 10px solid black;
+    border-bottom: 10px solid black; 
+    background: white;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    cursor: pointer;
+}
