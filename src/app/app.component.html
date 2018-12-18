@@ -1,26 +1,16 @@
-<div class="main" id="wrapper">
- 
-    <!--
-  <div class="temp" id="temp">site is undergoing construction...functionality will (must?) return by midterm.</div>
-  
-  <div class="nav"><div class="idle top"></div></div>
-  -->
-  
+<div class="wrapper_main">
+
+  <div class="header">
+    <div class="title"></div>
+    <div class="icon" id="header" (click)="onActivateHeader()" [ngClass]="{'active_header': headerActive === true}"></div>
+  </div>
+
   <div class="content">
-  <router-outlet (sendReady)="makeReady()"></router-outlet>
+      <router-outlet></router-outlet>
   </div>
-  
-  <div class="notes">
-      <div class="idle bottom" *ngIf="onReady === false" (click)="setReady(true)"></div>
-      <div class="instructions" *ngIf="onReady === true">
-          <div class="topbar" (click)="setReady(false)"></div>
-          <div class="route">goto: {{currentRoute}}</div>
-          <div class="run_button"><a [routerLink]="currentRoute">></a></div>
-        </div>
-    </div>
-  
-  <!--
-  <div class="footer"><span class="version">v0.0.9 &nbsp; Last updated: 02 October 2018</span> &nbsp; [ <a href="https://github.com/cdriesler/cicero" target="_blank">View Source</a> ] </div>
-  -->
-  
-  </div>
+
+  <div class="margin"></div>
+
+</div>
+
+
