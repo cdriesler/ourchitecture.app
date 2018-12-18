@@ -1,36 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { AngularFireModule } from 'angularfire2';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { CiceroComponent } from './cicero/cicero.component';
-import { ArgumentDetailComponent } from './argument-detail/argument-detail.component';
-import { environment } from 'src/environments/environment';
-import { ArgConceptComponent } from './arg-concept/arg-concept.component';
-import { ArgAnalyticComponent } from './arg-analytic/arg-analytic.component';
-import { ArgVernacularComponent } from './arg-vernacular/arg-vernacular.component';
-import { ArgPrecedentsComponent } from './arg-precedents/arg-precedents.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { RootComponent } from './root/root.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
-    CiceroComponent,
-    ArgumentDetailComponent,
-    ArgConceptComponent,
-    ArgAnalyticComponent,
-    ArgVernacularComponent,
-    ArgPrecedentsComponent
+    RootComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]

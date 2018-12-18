@@ -1,290 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
 html * {
     font-family: "Consolas", monospace;
-  
+
     margin: 0;
     padding: 0;
     background-color: white;
-  }
-  
-  .main {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-  
-    display: grid;
-    grid-template-columns: 1fr 20vh 1fr 71vh 1fr 20vh 1fr;
-    grid-template-rows: 1fr 2vh 71vh 2vh 1fr;
-  
+
+    overflow-x: hidden;
     overflow-y: hidden;
-    z-index: 10;
-  }
-  
-  .temp {
-    grid-row: 1 / span 2;
-    grid-column: 4 / span 1;
-  
-    margin-top: 4vh;
-  
-    font-size: 1.5vh;
-    line-height: 1.75vh;
-  
-    z-index: 10;
-  }
-  
-  #wrapper {
-    min-height: 100%;
-  }
-  
-  .nav {
-    grid-column: 4 / span 1;
-    grid-row: 1 / span 2;
-  
-    display: grid;
-    grid-template-rows: 1vh 1fr 4vh;
-    grid-template-columns: 1fr;
-  }
-  
-  .idle {
-    background: gainsboro;
-  }
-  
-  .idle:hover {
-    background: black;
-    cursor: pointer;
-  }
-  
-  .top {
-    grid-row: 1 / span 1;
-    grid-column: 1 / span 1;
-  }
-  
-  .top:hover {
-    animation-name: peek_down !important;
-    animation-duration: 0.5s !important;
-    height: 2vh;
-  }
-  
-  @keyframes peek_down {
-    0%   {height: 1vh;}
-    100% {height: 2vh;}
-  }
-  
-  .notes {
-    grid-column: 4 / span 1;
-    grid-row: 4 / span 2;
-  
-    display: grid;
-    grid-template-rows: 4vh 1fr 1vh;
-    grid-template-columns: 1fr;
-  
-    height: 100%;
+}
 
-    background: none;
-  }
+::-webkit-scrollbar {
+    width: 10px;
+}
 
-  .instructions {
-    grid-row: 1 / span 3;
-    grid-column: 1 / span 1;
+::-webkit-scrollbar-track {
+    width: 4px;
+    background: gainsboro; 
+}
 
-    margin-top: 1vh;
-
-    display: grid;
-    grid-template-rows: 0.5vh 11vh 1fr;
-    grid-template-columns: 3fr 1fr 3fr;
-
+/* Handle */
+::-webkit-scrollbar-thumb {
     border-top: 10px solid black;
-    border-left: 3px solid black;
-    border-right: 3px solid black;
+    border-bottom: 10px solid black; 
+    background: white;
+}
 
-    animation-name: raise !important;
-    animation-duration: 1s !important;
-    animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
-  }
-
-  .route {
-    grid-row: 2 / span 1;
-    grid-column: 1 / span 1;    
-
-    display: inline-block;
-
-    margin-top: 4px;
-    margin-left: 8px; 
-
-    font-size: 1.5vh;
-    line-height: 11vh;
-    vertical-align: middle;
-  }
-
-  .run_button {
-    grid-row: 2 / span 1;
-    grid-column: 2 / span 1;
-
-    font-size: 10vh;
-    line-height: 11vh;
-    vertical-align: middle;
-    text-align: center;
-
-    background: none;
-
-    color: gainsboro;
-  }
-
-  .run_button a {
-    text-decoration: none;
-    color: gainsboro;
-  }
-
-  .run_button a:hover {
-    color: black;
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
     cursor: pointer;
-  }
-
-  .topbar {
-    grid-row: 1 / span 1;
-    grid-column: 1 / span 3;
-
-    width: 100%;
-
-    transform: translateY(-10px);
-
-    background:none;
-  }
-
-  .topbar:hover {
-    cursor: pointer;
-  }
-  
-  @keyframes raise {
-    0%   {transform: translateY(10vh)}
-    100% {}
-  }
-  
-  .bottom {
-    position: relative;
-  
-    grid-row: 3 / span 1;
-    grid-column: 1 / span 1;
-  }
-  
-  .bottom:hover {
-    animation-name: peek_up !important;
-    animation-duration: 0.5s !important;
-    height: 2vh;
-    bottom: 1vh;
-  }
-  
-  @keyframes peek_up {
-    0%   {height: 1vh; bottom: 0;}
-    100% {height: 2vh; bottom: 1vh;}
-  }
-  
-  .content{
-    grid-column: 1 / span 7;
-    grid-row: 3 / span 1;
-  
-    height: 100%;
-  }
-  
-  .navigation {
-    grid-column: 1 / span 5 !important;
-    grid-row: 2 / span 1 !important;
-  
-    padding-top: 1vh;
-    padding-bottom: 1vh;
-    padding-left: 2vh;
-  }
-  
-  .navigation a{
-    outline: 3px solid gainsboro;
-    outline-offset: -3px;
-    border-right: 6px solid gainsboro;
-    border-left: 6px solid gainsboro;
-    color: gainsboro;
-    font-size: 2.5vh;
-    vertical-align: middle; 
-    line-height: 4vh;
-  
-    text-decoration: none;
-  
-    padding-left: 1.75vh;
-    padding-right: 1.75vh;
-    padding-top: .5vh;
-    padding-bottom: .5vh;
-  }
-  
-  .navigation a:hover{
-    outline-color: black;
-    border-color: black;
-    color: black;
-  }
-  
-  .not-implemented {
-    cursor: pointer;
-  }
-  
-  .not-implemented:hover {
-    outline-color: brown !important;
-    border-color: brown !important;
-    color: brown !important;
-  }
-  
-  .active_link {
-    outline-color: black;
-    border-color: black;
-    color: black;
-  }
-  
-  .title {
-    grid-row: 1 / span 1;
-    grid-column: 1 / span 5;
-    font-size: 3.25vh;
-    line-height: 6vh;
-    vertical-align: center;
-  
-    padding-left: 2vh;
-  
-    border-bottom: 3px solid black;
-  }
-  
-  .footer {
-    grid-column: 1 / span 5;
-    grid-row: 4 / span 1;
-  
-    margin-top: 1vh;
-    padding-top: 3px;
-  
-    font-size: 1.5vh;
-    font-weight: normal;
-  
-    background-color: white;
-    z-index: 1;
-  
-    border-top: 3px solid black;
-  }
-  
-  .footer a {
-    color: gainsboro;
-  
-    text-decoration: none;
-  }
-  
-  .footer a:hover {
-    color: black;
-  }
-  
-  .version {
-    margin-left: 2vh;
-  }
-  
-  .version a {
-    color: gainsboro;
-  }
-  
-  .version a:hover{
-    color: black;
-  }
-  
-  .queue:hover {
-    cursor: pointer;
-    color: black;
-  }
+}
