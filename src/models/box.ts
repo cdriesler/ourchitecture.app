@@ -15,11 +15,27 @@ export class BoxManifestCategory {
 
 export const AllBoxes: BoxManifestCategory[] = [
     {
-        name: "key press",
+        name: "black box",
+        boxes: [
+            {
+                name: "cicero",
+                version: "1.1.0",
+                short_desc: "",
+                long_desc: [
+                    "",
+                    ""
+                ],
+                iconRoute: "",
+                tutorialRoute: ""
+            }
+        ]
+    },
+    {
+        name: "black swan",
         boxes: [
             { 
-                name: "cicero",
-                version: "0.0.5",
+                name: "ersatz",
+                version: "0.0.1",
                 short_desc: "placeholder",
                 long_desc: [
                     "placeholder",
@@ -30,8 +46,8 @@ export const AllBoxes: BoxManifestCategory[] = [
                 tutorialRoute: ""
             },
             {
-                name: "seneca",
-                version: "0.0.5",
+                name: "theano",
+                version: "0.6.0",
                 short_desc: "placeholder",
                 long_desc: [
                     "placeholder",
@@ -47,8 +63,8 @@ export const AllBoxes: BoxManifestCategory[] = [
         name: "black mirror",
         boxes: [
             {
-                name: "theano",
-                version: "0.0.5",
+                name: "wander",
+                version: "0.0.3",
                 short_desc: "placeholder",
                 long_desc: [
                     "placeholder",
