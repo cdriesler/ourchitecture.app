@@ -55,3 +55,5 @@ obj/
 .pub/
 
 .flutter-plugins
+
+*.exe
