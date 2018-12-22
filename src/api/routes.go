@@ -20,6 +20,8 @@ func InitRouter() *echo.Echo {
 
 	e := echo.New()
 
+	e.Pre(middleware.RemoveTrailingSlash())
+
 	e.Use(middleware.Static("../../dist/boxboxbox/"))
 	e.File("/", "../../dist/boxboxbox/index.html")
 
@@ -37,7 +39,7 @@ func InitRouter() *echo.Echo {
 var getRoutes = GetRoutes{
 	GetRoute{
 		"Version",
-		"/version/",
+		"/version",
 		handlers.GetVersion(),
 	},
 }

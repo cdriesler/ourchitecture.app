@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { RootComponent } from './root/root.component';
+import { CiceroComponent } from './cicero/cicero.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RootComponent
+    RootComponent,
+    CiceroComponent
   ],
   imports: [
     BrowserModule,
