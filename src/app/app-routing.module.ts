@@ -5,7 +5,8 @@ import { RootComponent } from './root/root.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "/root", pathMatch: "full" },
-  { path: "root", component: RootComponent}
+  { path: "root", component: RootComponent},
+  { path: "root/test", component: RootComponent}
 ];
 
 @NgModule({
