@@ -6,14 +6,20 @@ import (
 	"github.com/labstack/echo/middleware"
 )
 
-type GetRoute struct {
+// Route contains pattern and function for all requests. Type is determined by container.
+type Route struct {
 	Name        string
 	Pattern     string
 	HandlerFunc echo.HandlerFunc
 }
 
-type GetRoutes []GetRoute
+// GetRoutes is a slice of Route structs for GET requests.
+type GetRoutes []Route
 
+// PostRoutes is a slice of Route structs for POST requests.
+type PostRoutes []Route
+
+// InitRouter is called at the start of the function and returns the router with routes.
 func InitRouter() *echo.Echo {
 
 	currentVersion := "/api/v1"
@@ -33,13 +39,25 @@ func InitRouter() *echo.Echo {
 		e.GET(currentVersion+route.Pattern, route.HandlerFunc)
 	}
 
+	for _, route := range postRoutes {
+		e.POST(currentVersion+route.Pattern, route.HandlerFunc)
+	}
+
 	return e
 }
 
 var getRoutes = GetRoutes{
-	GetRoute{
+	Route{
 		"Version",
 		"/version",
 		handlers.GetVersion(),
+	},
+}
+
+var postRoutes = PostRoutes{
+	Route{
+		"Cicero-Main",
+		"/cicero",
+		handlers.CiceroTest(),
 	},
 }
