@@ -9,13 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CiceroComponent implements OnInit {
 
-  description$: Observable<string>;
+  description: string;
 
   constructor(private http:HttpClient) { }
 
   ngOnInit() {
     this.http.get("https://ourchitecture.app/api/cicero").subscribe((res)=>{
-      console.log(res);
+
+    this.description = res["message"];
   });
   }
 

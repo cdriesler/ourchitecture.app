@@ -7,14 +7,20 @@ export let ciceroRouter = express.Router();
 ciceroRouter.get("/", async function ciceroDesc(req: express.Request, res: express.Response) {
 
     res.set('Access-Control-Allow-Origin', '*');
-    res.status(200).send("cicero descriptions");
+    //res.status(200).send("cicero descriptions");
+
+    res.status(200).json({message: "cicero descriptions from api"})
 
 });
 
 ciceroRouter.get("/test", async function ciceroDescTest(req: express.Request, res: express.Response) {
 
     res.set('Access-Control-Allow-Origin', '*');
-    res.status(200).send("cicero descriptions test");
+
+    let data = {}
+    //res.status(200).send("cicero descriptions test");
+
+    res.status(200).json({message: "cicero descriptions from api test"})
 
 });
 
