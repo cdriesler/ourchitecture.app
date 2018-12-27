@@ -6,12 +6,14 @@ export let ciceroRouter = express.Router();
 
 ciceroRouter.get("/", async function ciceroDesc(req: express.Request, res: express.Response) {
 
+    res.set('Access-Control-Allow-Origin', '*');
     res.status(200).send("cicero descriptions");
 
 });
 
 ciceroRouter.get("/test", async function ciceroDescTest(req: express.Request, res: express.Response) {
 
+    res.set('Access-Control-Allow-Origin', '*');
     res.status(200).send("cicero descriptions test");
 
 });

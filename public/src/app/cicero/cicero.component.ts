@@ -1,3 +1,5 @@
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CiceroComponent implements OnInit {
 
-  constructor() { }
+  description$: Observable<string>;
+
+  constructor(private http:HttpClient) { }
 
   ngOnInit() {
+    this.http.get("https://ourchitecture.app/api/cicero").subscribe((res)=>{
+      console.log(res);
+  });
   }
+
+  
 
 }
