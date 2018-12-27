@@ -11,3 +11,9 @@ func GetTasks() echo.HandlerFunc {
 		return c.JSON(http.StatusOK, "tasks")
 	}
 }
+
+func CiceroTest() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		return c.JSON(http.StatusOK, "cicero")
+	}
+}

@@ -12,7 +12,7 @@
           <div class="box_item_icon" [ngClass]="{'active_box': box === selectedBox}"></div>
           <div class="box_item_footer" *ngIf="box === category.boxes[category.boxes.length - 1]"></div>
           <div class="box_item_details" *ngIf="box === selectedBox">
-              <div class="box_item_name">{{box.name}}</div>
+              <div class="box_item_name"><a routerLink="/{{box.name}}" routerLinkActive="active">{{box.name}}</a></div>
           </div>
         </li>
       </ul>
