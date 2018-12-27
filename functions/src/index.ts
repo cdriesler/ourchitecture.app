@@ -10,10 +10,12 @@ app.get("/users/:uid", async function getUser(req: express.Request, res: express
   res.status(200).send(`You requested user with UID = ${uid}`);
 });
 
-app.use("/cicero", ciceroApi.ciceroRouter);
+app.use("/api/cicero", ciceroApi.ciceroRouter);
 
+/*
 app.get("*", async (req: express.Request, res: express.Response) => {
 	res.status(404).send("This route does not exist.");
 });
+*/
 
 exports.api = functions.https.onRequest(app);

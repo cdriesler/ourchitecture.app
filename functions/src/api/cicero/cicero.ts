@@ -10,6 +10,12 @@ ciceroRouter.get("/", async function ciceroDesc(req: express.Request, res: expre
 
 });
 
+ciceroRouter.get("/test", async function ciceroDescTest(req: express.Request, res: express.Response) {
+
+    res.status(200).send("cicero descriptions test");
+
+});
+
 // Useful: Let's make sure we intercept un-matched routes and notify the client with a 404 status code
 ciceroRouter.get("*", async (req: express.Request, res: express.Response) => {
 	res.status(404).send("This route does not exist.");
