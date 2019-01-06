@@ -1,4 +1,5 @@
 import * as express from "express";
+import * as time from "../../services/timeService";
 
 // This is the router which will be imported in our
 // api hub (the index.ts which will be sent to Firebase Functions).
@@ -6,10 +7,14 @@ export let ciceroRouter = express.Router();
 
 ciceroRouter.get("/", async function ciceroDesc(req: express.Request, res: express.Response) {
 
+    let t = new Date();
+
     res.set('Access-Control-Allow-Origin', '*');
     //res.status(200).send("cicero descriptions");
 
-    res.status(200).json({message: "cicero descriptions from api"})
+    console.info(time.GetCurrentTime() + " : " + req.originalUrl);
+
+    res.status(200).json({message: "TODO: Top-level information for cicero."})
 
 });
 

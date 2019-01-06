@@ -16,6 +16,8 @@ export class CiceroComponent implements OnInit {
   ngOnInit() {
     this.http.get("https://ourchitecture.app/api/cicero").subscribe((res)=>{
 
+    //(<any>Object).values(res);
+
     this.description = res["message"];
   });
   }
