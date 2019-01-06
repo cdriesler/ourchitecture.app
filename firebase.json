@@ -1,12 +1,22 @@
 {
+  "functions": {
+    "predeploy": [
+      "npm --prefix ./functions run lint",
+      "npm --prefix ./functions run build"
+    ]
+  },
   "hosting": {
-    "public": "dist/boxboxbox",
+    "public": "public/dist/boxboxbox",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ],
     "rewrites": [
+      {
+        "source": "/api/**",
+        "function": "api"
+      },
       {
         "source": "**",
         "destination": "/index.html"
