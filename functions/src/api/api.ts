@@ -16,19 +16,21 @@ apiRouter.get("/", async function ciceroDesc(req: express.Request, res: express.
             [
                 {
                     name: "ersatz",
+                    version: "0.1.0",
                     description: "off-brand architecture",
                     dialects: 
                     [
-                        "cantley",
+                        {name: "cantley", version: "0.0.1"},
                     ]
                 },
                 {
-                    name: "hermes",
-                    description: "line and language games",
+                    name: "jargon",
+                    version: "0.2.0",
+                    description: "language based first year architecture machine",
                     dialects: 
                     [
-                        "cicero",
-                        "theano",
+                        {name: "cicero", version: "1.0.1"},
+                        {name: "theano", version: "0.2.0"},
                     ]
                 },
                 {
