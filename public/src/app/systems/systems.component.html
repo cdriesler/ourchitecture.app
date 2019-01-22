@@ -1,3 +1,23 @@
-<p>
-  systems works!
-</p>
+<div class="wrapper-systems">
+  <div class="content">
+    <div class="language" *ngFor="let lang of languages">
+      <div class="language__title">
+        <div class="language__title__name">{{lang.name}}</div>
+        <div class="language__title__version">{{lang.version}}</div>
+      </div>
+      <div class="language__description">{{lang.description}}</div>
+      <div class="language__dialects">
+        <div 
+        class="dialect" 
+        id="dialect_{{dialect.name}}"
+        *ngFor="let dialect of lang.dialects" 
+        [ngClass]="{'dialect--spaced' : dialect != lang.dialects[0], 'dialect--selected': selectedDialect == dialect}"
+        (click)="onSelectDialect(dialect)">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  
+</div>

@@ -15,7 +15,7 @@ export class Language{
     }
 }
 
-class Dialect{
+export class Dialect{
     name: string;
     version: string;
     description: string;

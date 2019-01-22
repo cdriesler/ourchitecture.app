@@ -1,0 +1,104 @@
+.wrapper-systems {
+    display: grid;
+    grid-template-columns: 10vw 80vw 10vw;
+    grid-template-rows: 1fr 1fr;
+}
+
+.content {
+    grid-column: 2 / span 1;
+    grid-template-rows: 1 / span 2;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.language {
+    margin-left: 5px;
+    margin-right: 5px;
+    width: calc(80vw - 10px);
+    margin-bottom: 5vw;
+
+    font-size: 1.6vw;
+    line-height: 2vw;
+    font-weight: bold;
+}
+
+.language__title {
+    display: grid;
+
+    grid-template-columns: 3fr 1fr;
+
+    margin-bottom: 1vw;
+}
+
+.language__title__name {
+    grid-template-columns: 1 / span 1;
+}
+
+.language__title__version {
+    grid-template-columns: 2 / span 1;
+    text-align: right;
+
+    font-weight: normal;
+}
+
+.language__description {
+    margin: 0;
+
+    margin-bottom: 2vw;
+}
+
+.language__dialects {
+    display: flex;
+    flex-direction: row;
+}
+
+.dialect {
+    width: 10vw;
+    height: 10vw;
+
+    border: 3px solid black;
+}
+
+.dialect--selected {
+    background: 
+    linear-gradient(to top left,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0) calc(50% - 2px),
+        rgba(0,0,0,1) calc(50% - 1.99px),
+        rgba(0,0,0,1) calc(50% + 1.99px),
+        rgba(0,0,0,0) calc(50% + 2px),
+        rgba(0,0,0,0) 100%),
+    linear-gradient(to top right,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0) calc(50% - 2px),
+        rgba(0,0,0,1) calc(50% - 1.99px),
+        rgba(0,0,0,1) calc(50% + 1.99px),
+        rgba(0,0,0,0) calc(50% + 2px),
+        rgba(0,0,0,0) 100%);
+}
+
+.dialect:hover {
+    cursor: pointer;
+
+    background: 
+    linear-gradient(to top left,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0) calc(50% - 2px),
+        rgba(0,0,0,1) calc(50% - 1.99px),
+        rgba(0,0,0,1) calc(50% + 1.99px),
+        rgba(0,0,0,0) calc(50% + 2px),
+        rgba(0,0,0,0) 100%),
+    linear-gradient(to top right,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0) calc(50% - 2px),
+        rgba(0,0,0,1) calc(50% - 1.99px),
+        rgba(0,0,0,1) calc(50% + 1.99px),
+        rgba(0,0,0,0) calc(50% + 2px),
+        rgba(0,0,0,0) 100%);
+}
+
+.dialect--spaced {
+    margin-left: 2vw;
+}
+
