@@ -21,7 +21,7 @@
         (click)="onSelectDialect(dialect)">
         {{dialect.name}}
         </div>
-        <a *ngIf="languageContainsSelectedDialect(lang)" routerLink="/{{lang.name}}/{{selectedDialect.name}}" class="language__dialects__launch">
+        <a *ngIf="languageContainsSelectedDialect(lang)" routerLink="/box/{{lang.name}}/{{selectedDialect.name}}" class="language__dialects__launch">
           >
         </a>
       </div>

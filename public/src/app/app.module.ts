@@ -6,16 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { RootComponent } from './root/root.component';
-import { CiceroComponent } from './cicero/cicero.component';
 import { SystemsComponent } from './systems/systems.component';
+import { BoxComponent } from './box/box.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RootComponent,
-    CiceroComponent,
-    SystemsComponent
+    SystemsComponent,
+    BoxComponent
   ],
   imports: [
     BrowserModule,

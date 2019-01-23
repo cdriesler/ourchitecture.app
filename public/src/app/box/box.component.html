@@ -1,0 +1,43 @@
+<div class="wrapper">
+  <div class="box">
+
+  </div>
+
+  <div class="progress">
+    <div class="progress__background-line">
+    </div>
+    <div class="progress-items">
+        <div 
+        class="progress-items__start"
+        [ngClass]="{'progress-items__start--started' : started}">
+        </div>
+        <div 
+        *ngFor="let dialectStep of activeDialectSteps" 
+        class="progress-items__step"
+        [ngClass]="{'progress-items__step--active' : dialectStep.number == activeStep}">
+        </div>
+        <div class="progress-items__end"></div>
+    </div>
+  </div>
+
+  <div class="instructions">
+    <div *ngIf="started" class="input">
+    </div>
+
+    <div *ngIf="!started" class="launch">
+      <div class="launch__description">
+        {{activeLanguage}}/{{activeDialect}} &nbsp;<span *ngIf="activeDialectVersion.length != ''" class="launch__description__version">v{{activeDialectVersion}}</span>
+        <br><br>
+        {{activeDialectDescription}}
+      </div>
+      <div class="launch__session-id">
+        <span class="launch__session-id__label">session id:</span>&nbsp;<input type="text" name="session-id" id="session-id" maxlength="6" value="{{defaultSessionId}}" />
+      </div>
+      <div class="launch__session-start">
+        <span class="launch__session-start__button" (click)="onStart()">start ></span>
+      </div>
+    </div>
+  </div>
+
+
+</div>
