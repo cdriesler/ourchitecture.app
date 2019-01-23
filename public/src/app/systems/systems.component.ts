@@ -17,7 +17,20 @@ export class SystemsComponent implements OnInit {
 
   onSelectDialect(selectedDialect:Dialect) {
     this.selectedDialect = selectedDialect;
-    window.
+  }
+
+  languageContainsSelectedDialect(lang:Language) : boolean {
+    let contains = false;
+
+    if (this.selectedDialect == undefined) { return false } 
+
+    for (let dialect of lang.dialects) {
+      if (dialect.name == this.selectedDialect.name) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   ngOnInit() {
@@ -26,7 +39,6 @@ export class SystemsComponent implements OnInit {
     for (let language of res["languages"]) {
       this.languages.push(new Language(language));
     }
-
     // for (let lang of this.languages) {
     //   console.log(lang.name);
     // }

@@ -18,15 +18,16 @@
     width: calc(80vw - 10px);
     margin-bottom: 5vw;
 
-    font-size: 1.6vw;
-    line-height: 2vw;
-    font-weight: bold;
+    font-size: 2.3vw;
+    line-height: 2.7vw;
 }
 
 .language__title {
     display: grid;
 
     grid-template-columns: 3fr 1fr;
+
+    font-weight: bold;
 
     margin-bottom: 1vw;
 }
@@ -53,9 +54,35 @@
     flex-direction: row;
 }
 
+.language__dialects__launch {
+    margin-left: 2vw;
+
+    border: 3px solid black;
+    width: 10vw;
+    height: 10vw;
+
+    font: "Comic Sans MS", cursive, sans-serif;
+    font-weight: normal;
+    line-height: 10vw;
+    vertical-align: middle;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+}
+
+.language__dialects__launch:hover {
+    background: black;
+}
+
 .dialect {
     width: 10vw;
     height: 10vw;
+
+    line-height: 10vw;
+    text-align: center;
+
+    font-size: 1.5vw;
+    vertical-align: middle;
 
     border: 3px solid black;
 }

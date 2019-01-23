@@ -20,7 +20,11 @@ apiRouter.get("/", async function ciceroDesc(req: express.Request, res: express.
                     description: "off-brand architecture",
                     dialects: 
                     [
-                        {name: "cantley", version: "0.0.1"},
+                        {
+                            name: "cantley", 
+                            version: "0.0.1",
+                            description: "riffing off components of bryan cantley's drawings"
+                        },
                     ]
                 },
                 {
@@ -29,16 +33,28 @@ apiRouter.get("/", async function ciceroDesc(req: express.Request, res: express.
                     description: "language based first year architecture machine",
                     dialects: 
                     [
-                        {name: "cicero", version: "1.0.1"},
-                        {name: "theano", version: "0.2.0"},
+                        {
+                            name: "cicero", 
+                            version: "1.0.1",
+                            description: "affecting lines that pass through regions with embedded forces"
+                        },
+                        {
+                            name: "theano", 
+                            version: "0.2.0",
+                            description: "something about a model"
+                        },
                     ]
                 },
                 {
-                    name: "prelim",
-                    description: "debug utilities!",
+                    name: "sapun",
+                    description: "on soap and certainty",
                     dialects:
                     [
-                        "rhinos",
+                        {
+                            name: "medina", 
+                            version: "0.0.1",
+                            description: "breakdown of the old suq"
+                        },
                     ]
                 }
             ]
