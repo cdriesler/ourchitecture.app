@@ -85,6 +85,21 @@
     vertical-align: middle;
 
     border: 3px solid black;
+    background-color: none;
+}
+
+.dialect--loading {
+    background-color: black !important;
+}
+
+.dialect--loaded {
+    animation-name: dialect--appear;
+    animation-duration: 0.5s;
+}
+
+@keyframes dialect--appear {
+    0% { background-color: black; }
+    100% { background-color: white; }
 }
 
 .dialect--selected {

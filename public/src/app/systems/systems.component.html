@@ -12,14 +12,18 @@
         {{lang.description}}
         <span *ngIf="languageContainsSelectedDialect(lang)"> / {{selectedDialect.description}}</span>
       </div>
-      <div class="language__dialects">
+      <div *ngIf="lang.dialectNames.length > 0" class="language__dialects">
         <div 
         class="dialect" 
-        *ngFor="let dialect of lang.dialects" 
-        id="dialect_{{dialect.name}}"
-        [ngClass]="{'dialect--spaced' : dialect != lang.dialects[0], 'dialect--selected': selectedDialect == dialect}"
-        (click)="onSelectDialect(dialect)">
-        {{dialect.name}}
+        *ngFor="let dialect of lang.dialectNames" 
+        id="dialect_{{dialect}}"
+        [ngClass]="{
+          'dialect--spaced' : dialect != lang.dialectNames[0], 
+          'dialect--selected': selectedDialectName == dialect,
+          'dialect--loading': !isDialectLoaded(lang, dialect),
+          'dialect--loaded': isDialectLoaded(lang, dialect)}"
+        (click)="onSelectDialect(lang, dialect)">
+        {{dialect}}
         </div>
         <a *ngIf="languageContainsSelectedDialect(lang)" routerLink="/box/{{lang.name}}/{{selectedDialect.name}}" class="language__dialects__launch">
           >
