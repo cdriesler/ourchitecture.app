@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from "@angular/common/http";
 
-import { DialectInputStep } from './../../models/dialect_manifest';
+import { DialectManifest, DialectInputStep } from './../../models/dialect_manifest';
 
 @Component({
   selector: 'app-box',
@@ -12,11 +12,11 @@ import { DialectInputStep } from './../../models/dialect_manifest';
 export class BoxComponent implements OnInit, OnDestroy {
   private sub: any;
 
-  activeLanguage: string;
-  activeDialect: string;
-  activeDialectVersion: string = "";
-  activeDialectDescription: string;
-  activeDialectSteps: DialectInputStep[] = [];
+  activeLanguageName: string;
+  activeDialectName: string;
+
+  activeDialect: DialectManifest;
+
   activeStep: number = -1;
   
   started: boolean;
@@ -35,20 +35,12 @@ export class BoxComponent implements OnInit, OnDestroy {
     this.defaultSessionId = "abcdef";
 
     this.sub = this.route.params.subscribe(params => {
-      this.activeLanguage = params["language"];
-      this.activeDialect = params["dialect"];      
+      this.activeLanguageName = params["language"];
+      this.activeDialectName = params["dialect"];      
     });
 
-    this.http.get("https://ourchitecture.app/api/box/" + this.activeLanguage + "/" + this.activeDialect).subscribe((res)=>{
-      this.activeDialectVersion = res["version"];
-      this.activeDialectDescription = res["description"];
-
-      let steps = res["inputSteps"];
-
-      for (let step of steps) {
-        console.log(step);
-          this.activeDialectSteps.push(new DialectInputStep(step));
-      }
+    this.http.get("https://ourchitecture.app/api/box/" + this.activeLanguageName + "/" + this.activeDialectName).subscribe((res)=>{
+      this.activeDialect = new DialectManifest(res);
     });
   }
 

@@ -15,8 +15,8 @@
       <div class="language__dialects">
         <div 
         class="dialect" 
-        id="dialect_{{dialect.name}}"
         *ngFor="let dialect of lang.dialects" 
+        id="dialect_{{dialect.name}}"
         [ngClass]="{'dialect--spaced' : dialect != lang.dialects[0], 'dialect--selected': selectedDialect == dialect}"
         (click)="onSelectDialect(dialect)">
         {{dialect.name}}

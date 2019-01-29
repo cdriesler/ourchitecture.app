@@ -1,6 +1,7 @@
-import { Language, Dialect} from './../../models/language';
+import { Language } from 'src/models/language';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
+import { DialectManifest } from 'src/models/dialect_manifest';
 
 @Component({
   selector: 'app-systems',
@@ -10,12 +11,11 @@ import { HttpClient } from "@angular/common/http";
 export class SystemsComponent implements OnInit {
   languages: Language[] = [];
 
-  selectedDialect: Dialect;
-  previousSelectedDialect: Dialect;
+  selectedDialect: DialectManifest;
 
   constructor(private http:HttpClient) { }
 
-  onSelectDialect(selectedDialect:Dialect) {
+  onSelectDialect(selectedDialect:DialectManifest) {
     this.selectedDialect = selectedDialect;
   }
 
@@ -37,11 +37,16 @@ export class SystemsComponent implements OnInit {
     this.http.get("https://ourchitecture.app/api/").subscribe((res)=>{
 
     for (let language of res["languages"]) {
-      this.languages.push(new Language(language));
+      let lang = new Language(language);
+
+      for (let dialect of lang.dialectNames) {
+        this.http.get("https://ourchitecture.app/api/box/" + lang.name + "/" + dialect).subscribe((result) => {
+          lang.dialects.push(new DialectManifest(result));
+        })
+      }
+
+      this.languages.push(lang);
     }
-    // for (let lang of this.languages) {
-    //   console.log(lang.name);
-    // }
     });
   }
 

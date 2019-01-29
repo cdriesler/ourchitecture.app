@@ -15,16 +15,13 @@ apiRouter.get("/", async function ciceroDesc(req: express.Request, res: express.
             languages: 
             [
                 {
-                    name: "ersatz",
+                    name: "medina",
                     version: "0.1.0",
-                    description: "off-brand architecture",
-                    dialects: 
+                    description: "investigating the marketplace",
+                    dialects:
                     [
-                        {
-                            name: "cantley", 
-                            version: "0.0.1",
-                            description: "riffing off components of bryan cantley's drawings"
-                        },
+                        { name: "aleppo", },
+                        { name: "swerve", }
                     ]
                 },
                 {
@@ -33,30 +30,19 @@ apiRouter.get("/", async function ciceroDesc(req: express.Request, res: express.
                     description: "language based first year architecture machine",
                     dialects: 
                     [
-                        {
-                            name: "cicero", 
-                            version: "1.0.1",
-                            description: "affecting lines that pass through regions with embedded forces"
-                        },
-                        {
-                            name: "theano", 
-                            version: "0.2.0",
-                            description: "something about a model"
-                        },
+                        { name: "cicero", },
+                        { name: "theano", },
                     ]
                 },
                 {
-                    name: "sapun",
-                    description: "on soap and certainty",
-                    dialects:
+                    name: "ersatz",
+                    version: "0.1.0",
+                    description: "off-brand architecture",
+                    dialects: 
                     [
-                        {
-                            name: "medina", 
-                            version: "0.0.1",
-                            description: "breakdown of the old suq"
-                        },
+                        { name: "cantley", },
                     ]
-                }
+                },
             ]
         }
     )

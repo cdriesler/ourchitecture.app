@@ -1,12 +1,33 @@
+
 import * as express from "express";
 
+//ersatz
 import { CantleyManifest } from './ersatz/cantley/cantley';
+
+//jargon
+import { CiceroManifest } from './jargon/cicero';
+import { TheanoManifest } from './jargon/theano';
+
+//medina
+import { AleppoManifest } from './medina/aleppo';
+import { SwerveManifest } from './medina/swerve';
+
 
 const mappings = {
     ersatz_cantley: CantleyManifest,
+
+    jargon_cicero: CiceroManifest,
+    jargon_theano: TheanoManifest,
+
+    medina_aleppo: AleppoManifest,
+    medina_swerve: SwerveManifest,
 }
 
 export let boxRouter = express.Router();
+
+boxRouter.get("/", async function allDialects(req: express.Request, res: express.Response) {
+    res.status(200).json(mappings);
+})
 
 boxRouter.get("/:language/:dialect", async function dialectManifest(req: express.Request, res: express.Response) {
 

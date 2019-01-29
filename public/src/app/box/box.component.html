@@ -3,7 +3,7 @@
 
   </div>
 
-  <div class="progress">
+  <div *ngIf="activeDialect != null" class="progress">
     <div class="progress__background-line">
     </div>
     <div class="progress-items">
@@ -12,23 +12,25 @@
         [ngClass]="{'progress-items__start--started' : started}">
         </div>
         <div 
-        *ngFor="let dialectStep of activeDialectSteps" 
+        *ngFor="let step of activeDialect.inputSteps" 
         class="progress-items__step"
-        [ngClass]="{'progress-items__step--active' : dialectStep.number == activeStep}">
+        [ngClass]="{'progress-items__step--active' : step.number == activeStep}">
         </div>
         <div class="progress-items__end"></div>
     </div>
   </div>
 
-  <div class="instructions">
+  <div *ngIf="activeDialect != null" class="instructions">
     <div *ngIf="started" class="input">
     </div>
 
     <div *ngIf="!started" class="launch">
       <div class="launch__description">
-        {{activeLanguage}}/{{activeDialect}} &nbsp;<span *ngIf="activeDialectVersion.length != ''" class="launch__description__version">v{{activeDialectVersion}}</span>
+        {{activeLanguageName}}/{{activeDialectName}} &nbsp;<span *ngIf="activeDialect.version.length != ''" class="launch__description__version">v{{activeDialect.version}}</span>
         <br><br>
-        {{activeDialectDescription}}
+        {{activeDialect.description}}
+        <br><br>
+        {{activeDialect.summary}}
       </div>
       <div class="launch__session-id">
         <span class="launch__session-id__label">session id:</span>&nbsp;<input type="text" name="session-id" id="session-id" maxlength="6" value="{{defaultSessionId}}" />

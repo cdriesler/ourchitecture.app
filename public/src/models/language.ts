@@ -1,8 +1,12 @@
+import { HttpClient } from '@angular/common/http';
+import { DialectManifest } from './dialect_manifest';
+
 export class Language{
     name: string;
     version: string;
     description: string;
-    dialects: Dialect[] = [];
+    dialectNames: string[] = [];
+    dialects: DialectManifest[] = [];
 
     constructor(lang:Object) {
         this.name = lang["name"];
@@ -10,7 +14,7 @@ export class Language{
         this.description = lang["description"];
 
         for(let dialect of lang["dialects"]) {
-            this.dialects.push(new Dialect(dialect));
+            this.dialectNames.push(dialect["name"]);
         }
     }
 }
