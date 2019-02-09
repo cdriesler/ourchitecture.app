@@ -304,10 +304,9 @@
     <Compile Include="Protocols\Motley\Swerve\Swerve.cs" />
     <Compile Include="Protocols\Motley\Vendor\Vendor.cs" />
     <Compile Include="Protocols\Motley\Vendor\VendorRequest.cs" />
-    <Compile Include="RhinoLib.cs" />
+    <Compile Include="Startup.cs" />
     <Compile Include="Routes\BaseModule.cs" />
     <Compile Include="Routes\GrasshopperModule.cs" />
-    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

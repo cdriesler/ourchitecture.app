@@ -1,64 +1,63 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using Microsoft.AspNetCore.Builder;
-using Nancy.Owin;
-using System.Reflection;
+﻿using System;
 using System.Runtime.InteropServices;
-using Newtonsoft.Json;
-using Rhino.Geometry;
 
 namespace Ourchitecture.Api
 {
     public class Startup
     {
-        static string systemDir = null;
-
-        public void InitializeRhino()
+        public enum LoadMode : int
         {
-            RhinoLib.LaunchInProcess(RhinoLib.LoadMode.Headless, 0);
-
-            Console.WriteLine("Initializing!");
-
-            // Set path to rhino system directory
-            string envPath = Environment.GetEnvironmentVariable("path");
-            string programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-            systemDir = System.IO.Path.Combine(programFiles, "Rhino WIP", "System");
-
-            // Add rhino system directory to path (for RhinoLibrary.dll)
-            Environment.SetEnvironmentVariable("path", envPath + ";" + systemDir);
-
-            // Add hook for .Net assmbly resolve (for RhinoCommmon.dll)
-            AppDomain.CurrentDomain.AssemblyResolve += ResolveRhinoCommon;
-
-            // Start headless Rhino process
-            LaunchInProcess(0, 0);
-
-            Console.WriteLine("Rhino loaded!");
+            Headless = 0,
+            FullUserInterface = 1
+        }
+        static Startup()
+        {
+            Init();
         }
 
-        private static Assembly ResolveRhinoCommon(object sender, ResolveEventArgs args)
+        private static bool _pathsSet = false;
+        public static string _rhpath;
+        public static void Init()
         {
-            var name = args.Name;
-
-            if (!name.StartsWith("RhinoCommon"))
+            if (!_pathsSet)
             {
-                return null;
-            }
+                string envPath = Environment.GetEnvironmentVariable("path");
 
-            var path = System.IO.Path.Combine(systemDir, "RhinoCommon.dll");
-            return Assembly.LoadFrom(path);
+                // Add Rhino WIP to the path. Let debug use the internal debug build of Rhino
+                // for internal McNeel development. For people without access to internal builds,
+                // use the Rhino WIP directory for both debug and release builds
+#if DEBUG
+                string rhinoSystemDir = @"C:\dev\github\mcneel\rhino\src4\bin\Debug";
+                if (!System.IO.Directory.Exists(rhinoSystemDir))
+                {
+                    string programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+                    rhinoSystemDir = System.IO.Path.Combine(programFiles, "Rhino WIP", "System");
+                }
+#else
+            string programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+            string rhinoSystemDir = System.IO.Path.Combine(programFiles, "Rhino WIP", "System");
+#endif
+                Environment.SetEnvironmentVariable("path", envPath + ";" + rhinoSystemDir);
+                _pathsSet = true;
+                _rhpath = rhinoSystemDir;
+                _rhinocommon = System.Reflection.Assembly.LoadFrom(System.IO.Path.Combine(rhinoSystemDir, "RhinoCommon.dll"));
+                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+            }
         }
 
-        public void CleanupRhino()
+        static System.Reflection.Assembly _rhinocommon;
+        private static System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
-            // Shutdown the rhino process at the end of the test run
-            ExitInProcess();
+            if (args.Name.Contains("RhinoCommon"))
+                return _rhinocommon;
+            return null;
         }
 
         [DllImport("RhinoLibrary.dll")]
-        internal static extern int LaunchInProcess(int reserved1, int reserved2);
+        internal static extern int LaunchInProcess(LoadMode mode, int reserved2);
 
         [DllImport("RhinoLibrary.dll")]
         internal static extern int ExitInProcess();
     }
 }
+

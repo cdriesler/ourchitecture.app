@@ -16,8 +16,14 @@ namespace Ourchitecture.Api.Routes
     {
         public GrasshopperModule()
         {
+            Get["/grasshopper"] = _ =>
+            {
+                return "ok";
+            };
             Post["/grasshopper"] = _ =>
             {
+                Console.WriteLine("Grasshopper called.");
+
                 var archive = new GH_Archive();
                 string json = string.Empty;
                 using (var reader = new StreamReader(Request.Body)) json = reader.ReadToEnd();
@@ -147,6 +153,7 @@ namespace Ourchitecture.Api.Routes
                                 item.TypeHint = "arc";
                                 outputs.Items.Add(item);
                             }
+                            /*
                             else if (goo.GetType() == typeof(GH_Point))
                             {
                                 var rhinoPoint = (goo as GH_Point).Value;
@@ -156,6 +163,7 @@ namespace Ourchitecture.Api.Routes
                                 item.TypeHint = "point";
                                 outputs.Items.Add(item);
                             }
+                            */
                             else if (goo.GetType() == typeof(GH_Curve))
                             {
                                 var rhinoCurve = (goo as GH_Curve).Value;
