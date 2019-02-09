@@ -1,6 +1,9 @@
 
 import * as express from "express";
 
+//motley
+
+
 //ersatz
 import { CantleyManifest } from './ersatz/cantley/cantley';
 
@@ -13,6 +16,7 @@ import { AleppoManifest } from './medina/aleppo';
 import { SwerveManifest } from './medina/swerve';
 
 
+//TODO: Find a better way 
 const mappings = {
     ersatz_cantley: CantleyManifest,
 

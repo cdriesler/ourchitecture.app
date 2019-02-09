@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ourchitecture.Api", "Ourchi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ourchitecture.Api.Tests", "Ourchitecture.Api.Tests\Ourchitecture.Api.Tests.csproj", "{BF57B195-9979-4FD7-B353-23AC871503C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ourchitecture.Api.Grasshopper", "Ourchitecture.Api.Grasshopper\Ourchitecture.Api.Grasshopper.csproj", "{C15AEBB9-8745-4644-8E75-4C1D68600ECE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,14 @@ Global
 		{BF57B195-9979-4FD7-B353-23AC871503C9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BF57B195-9979-4FD7-B353-23AC871503C9}.Release|x64.ActiveCfg = Release|x64
 		{BF57B195-9979-4FD7-B353-23AC871503C9}.Release|x64.Build.0 = Release|x64
+		{C15AEBB9-8745-4644-8E75-4C1D68600ECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C15AEBB9-8745-4644-8E75-4C1D68600ECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C15AEBB9-8745-4644-8E75-4C1D68600ECE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C15AEBB9-8745-4644-8E75-4C1D68600ECE}.Debug|x64.Build.0 = Debug|Any CPU
+		{C15AEBB9-8745-4644-8E75-4C1D68600ECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C15AEBB9-8745-4644-8E75-4C1D68600ECE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C15AEBB9-8745-4644-8E75-4C1D68600ECE}.Release|x64.ActiveCfg = Release|Any CPU
+		{C15AEBB9-8745-4644-8E75-4C1D68600ECE}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

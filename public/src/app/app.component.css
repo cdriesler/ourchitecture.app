@@ -1,28 +1,20 @@
 @media screen and (orientation:portrait) {      
     .wrapper_main {
         display: grid;
-        grid-template-rows: 10vw calc(100vh - 20vw) 10vw;
-        grid-template-columns: 10vw 80vw 10vw;
-    
+        grid-template-rows: 10vw calc(100vh - 30vw) 20vw;
+        grid-template-columns: 10vw 80vw 10vw;  
     }
     
     .content {
         grid-row: 2 / span 1;
         grid-column: 1 / span 3;
     }
-    
-    .navigation {
-        grid-row: 3 / span 1;
-        grid-column: 1 / span 3;
-        
-        background: green;
-    }
 }
 
 @media screen and (orientation:landscape) {
     .wrapper_main {
         display: grid;
-        grid-template-rows: 10vw calc(100vh - 20vw) 10vw;
+        grid-template-rows: 10vw calc(100vh - 20vw) 20vw;
         grid-template-columns: 5fr 7fr 5fr;
     
     }
@@ -31,11 +23,13 @@
         grid-row: 2 / span 1;
         grid-column: 2 / span 1;
     }
-    
-    .navigation {
-        grid-row: 3 / span 1;
-        grid-column: 2 / span 1;
-        
-        background: green;
-    }  
+}
+
+.navigation {
+    grid-row: 3 / span 1;
+    grid-column: 1 / span 3;
+
+    display: grid;
+    grid-template-columns: 10vw 1fr 10vw;
+    grid-template-rows: 5vw 1fr;
 }

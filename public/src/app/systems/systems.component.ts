@@ -69,7 +69,7 @@ export class SystemsComponent implements OnInit {
       for (let dialect of lang.dialectNames) {
         this.http.get("https://ourchitecture.app/api/box/" + lang.name + "/" + dialect).subscribe((result) => {
           lang.dialects.push(new DialectManifest(result));
-          console.log(dialect + " loaded")
+          //console.log(dialect + " loaded")
         })
       }
     }

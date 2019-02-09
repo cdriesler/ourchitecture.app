@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Builder;
 using Nancy.Owin;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using Newtonsoft.Json;
+using Rhino.Geometry;
 
 namespace Ourchitecture.Api
 {
@@ -13,7 +15,7 @@ namespace Ourchitecture.Api
 
         public void InitializeRhino()
         {
-            //app.UseOwin(x => x.UseNancy());
+            RhinoLib.LaunchInProcess(RhinoLib.LoadMode.Headless, 0);
 
             Console.WriteLine("Initializing!");
 
@@ -30,6 +32,8 @@ namespace Ourchitecture.Api
 
             // Start headless Rhino process
             LaunchInProcess(0, 0);
+
+            Console.WriteLine("Rhino loaded!");
         }
 
         private static Assembly ResolveRhinoCommon(object sender, ResolveEventArgs args)
@@ -47,7 +51,7 @@ namespace Ourchitecture.Api
 
         public void CleanupRhino()
         {
-            // Shotdown the rhino process at the end of the test run
+            // Shutdown the rhino process at the end of the test run
             ExitInProcess();
         }
 

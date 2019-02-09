@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Windows.Forms;
 using Topshelf;
 using System.Diagnostics;
 using Nancy.Hosting.Self;
+
+using Rhino.Geometry;
+using Newtonsoft.Json;
 
 namespace Ourchitecture.Api
 {
@@ -11,7 +15,7 @@ namespace Ourchitecture.Api
         {
             HostFactory.Run(x =>
             {
-                var init = new Startup();
+                //var init = new Startup();
            
                 //x.UseLinuxIfAvailable();
                 x.Service<NancySelfHost>(s =>
@@ -21,16 +25,17 @@ namespace Ourchitecture.Api
                     s.WhenStarted(tc =>
                     {
                         tc.Start();
-                        init.InitializeRhino();
+                        //init.InitializeRhino();
                     });
                     s.WhenStopped(tc =>
                     {
                         tc.Stop();
-                        init.CleanupRhino();
+                        //init.CleanupRhino();
                     });
                 });
 
                 x.RunAsLocalSystem();
+                x.OnException(e => MessageBox.Show(e.Message));
                 x.SetDescription("Geometric logic server for the ourchitecture app.");
                 x.SetDisplayName("Ourchitecture.Api");
                 x.SetServiceName("Ourchitecture");
@@ -44,6 +49,8 @@ namespace Ourchitecture.Api
 
         public void Start()
         {
+            RhinoLib.LaunchInProcess(RhinoLib.LoadMode.Headless, 0);
+            Console.WriteLine("Rhino loaded at port 88.");
             m_nancyHost = new NancyHost(new Uri("http://localhost:88"));
             m_nancyHost.Start();
 
@@ -51,6 +58,7 @@ namespace Ourchitecture.Api
 
         public void Stop()
         {
+            MessageBox.Show("Stopped!");
             m_nancyHost.Stop();
             Console.WriteLine("Stopped. Good bye!");
         }
