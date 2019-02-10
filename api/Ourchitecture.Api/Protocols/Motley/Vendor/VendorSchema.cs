@@ -21,8 +21,10 @@ namespace Ourchitecture.Api.Protocols.Motley
             //Generate initial massing.
             GeneratePathSamplePoints(result);
             GeneratePathFlanks(result);
+            GenerateMarketCells(result);
 
             //Generate cell and entrance masses.
+
 
             return result;
         }
@@ -185,7 +187,7 @@ namespace Ourchitecture.Api.Protocols.Motley
                     var randomVal = random.NextDouble() * segmentNoise.Max;
                     var noise = 4 * randomVal;
 
-                    var offset = dir * (8 + noise) * (i + 1);
+                    var offset = dir * (6.5 + noise) * (i + 1);
 
                     flankPts.Add(new Point3d(frames[j].Origin) + offset);
                 }
@@ -218,7 +220,7 @@ namespace Ourchitecture.Api.Protocols.Motley
                     var randomVal = random.NextDouble() * segmentNoise.Max;
                     var noise = 4 * randomVal;
 
-                    var offset = dir * (8 + noise) * (i + 1);
+                    var offset = dir * (6.5 + noise) * (i + 1);
 
                     flankPts.Add(new Point3d(frames[j].Origin) + offset);
                 }
@@ -229,6 +231,101 @@ namespace Ourchitecture.Api.Protocols.Motley
                 res.RightPathFlanks.Add(flank);
             }
 
+        }
+
+        private static void GenerateMarketCells(VendorManifest res)
+        {
+            var r = new Random(9);
+
+            //TODO: Fix code duplication here.
+
+            for (int i = res.LeftPathFlanks.Count - 1; i > 0; i--)
+            {
+                var activeFlank = res.LeftPathFlanks[i];
+                var nextFlank = res.LeftPathFlanks[i - 1];
+
+                for (int j = 0; j < activeFlank.FlankPoints.Count - 1; j++)
+                {
+                    var cell = new VendorCell();
+
+                    var ptA = nextFlank.FlankPoints[j + 1];
+                    var ptB = activeFlank.FlankPoints[j + 1];
+                    var ptC = activeFlank.FlankPoints[j];
+                    var ptD = nextFlank.FlankPoints[j];
+
+                    cell.CellProfile = new Polyline(new List<Point3d>()
+                    {
+                        ptA,
+                        ptB,
+                        ptC,
+                        ptD,
+                        new Point3d(ptA)
+                    }).ToNurbsCurve();
+
+                    var elevation = new Vector3d(0, 0, new Interval(9, 13).NoiseBasedValue(r, res.NoiseFromCellProfileSegments));
+
+                    var floor = Brep.CreatePlanarBreps(cell.CellProfile, 0.1);
+                    var extrusion = Extrusion.CreateExtrusion(cell.CellProfile, elevation).ToBrep();
+
+                    var roofCrv = cell.CellProfile.DuplicateCurve();
+                    roofCrv.Translate(elevation);
+
+                    var roof = Brep.CreatePlanarBreps(roofCrv, 0.1);
+
+                    var faces = new List<Brep>();
+                    faces.AddRange(floor);
+                    faces.Add(extrusion);
+                    faces.AddRange(roof);
+
+                    cell.CellVolume = Brep.JoinBreps(faces, 0.1)[0];
+
+                    res.MarketCells.Add(cell);
+                }
+            }
+
+            for (int i = res.RightPathFlanks.Count - 1; i > 0; i--)
+            {
+                var activeFlank = res.RightPathFlanks[i];
+                var nextFlank = res.RightPathFlanks[i - 1];
+
+                for (int j = 0; j < activeFlank.FlankPoints.Count - 1; j++)
+                {
+                    var cell = new VendorCell();
+
+                    var ptA = nextFlank.FlankPoints[j + 1];
+                    var ptB = activeFlank.FlankPoints[j + 1];
+                    var ptC = activeFlank.FlankPoints[j];
+                    var ptD = nextFlank.FlankPoints[j];
+
+                    cell.CellProfile = new Polyline(new List<Point3d>()
+                    {
+                        ptA,
+                        ptB,
+                        ptC,
+                        ptD,
+                        new Point3d(ptA)
+                    }).ToNurbsCurve();
+
+                    var elevation = new Vector3d(0, 0, new Interval(9, 13).NoiseBasedValue(r, res.NoiseFromCellProfileSegments));
+
+                    var floor = Brep.CreatePlanarBreps(cell.CellProfile, 0.1);
+                    var extrusion = Extrusion.CreateExtrusion(cell.CellProfile, elevation).ToBrep();
+
+                    var roofCrv = cell.CellProfile.DuplicateCurve();
+                    roofCrv.Translate(elevation);
+
+                    var roof = Brep.CreatePlanarBreps(roofCrv, 0.1);
+
+                    var faces = new List<Brep>();
+                    faces.AddRange(floor);
+                    faces.Add(extrusion);
+                    faces.AddRange(roof);
+
+                    cell.CellVolume = Brep.JoinBreps(faces, 0.1)[0];
+
+                    res.MarketCells.Add(cell);
+                }
+            }
         }
     }
 }

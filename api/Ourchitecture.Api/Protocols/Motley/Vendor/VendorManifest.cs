@@ -47,6 +47,7 @@ namespace Ourchitecture.Api.Protocols.Motley.Vendor
         public List<VendorPathFlank> RightPathFlanks { get; set; }
 
         //Placed geometry
+        public List<VendorCell> MarketCells { get; set; } = new List<VendorCell>();
         public List<VendorEntrance> Entrances { get; set; }
 
 

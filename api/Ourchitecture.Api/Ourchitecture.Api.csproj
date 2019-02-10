@@ -303,6 +303,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\NoiseBasedValue.cs" />
     <Compile Include="Extensions\Remap.cs" />
     <Compile Include="Extensions\StandardDeviation.cs" />
     <Compile Include="Program.cs" />
@@ -315,7 +316,6 @@
     <Compile Include="Protocols\Motley\Vendor\Logic\Measure.cs" />
     <Compile Include="Protocols\Motley\Vendor\Models\VendorCell.cs" />
     <Compile Include="Protocols\Motley\Vendor\Models\VendorEntrance.cs" />
-    <Compile Include="Protocols\Motley\Vendor\Models\VendorMarketMass.cs" />
     <Compile Include="Protocols\Motley\Vendor\Models\VendorPathFlank.cs" />
     <Compile Include="Protocols\Motley\Vendor\VendorSchema.cs" />
     <Compile Include="Protocols\Motley\Vendor\VendorManifest.cs" />

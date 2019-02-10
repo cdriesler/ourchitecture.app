@@ -63,7 +63,7 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
             geo.AddRange(res.RightPathFlanks.Select(x => x.FlankCurve).ToList());
 
             //DA.SetData(0, res.GetAllGeometry());
-            DA.SetDataList(0, geo );
+            DA.SetDataList(0, res.MarketCells.Select(x => x.CellVolume).ToList() );
         }
 
         /// <summary>
