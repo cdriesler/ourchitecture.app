@@ -314,6 +314,7 @@
     <Compile Include="Protocols\Motley\Swerve\Swerve.cs" />
     <Compile Include="Protocols\Motley\Vendor\Logic\Glue.cs" />
     <Compile Include="Protocols\Motley\Vendor\Logic\Measure.cs" />
+    <Compile Include="Protocols\Motley\Vendor\Logic\Motifs.cs" />
     <Compile Include="Protocols\Motley\Vendor\Models\VendorCell.cs" />
     <Compile Include="Protocols\Motley\Vendor\Models\VendorEntrance.cs" />
     <Compile Include="Protocols\Motley\Vendor\Models\VendorPathFlank.cs" />

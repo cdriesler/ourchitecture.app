@@ -25,7 +25,9 @@ namespace Ourchitecture.Api.Protocols.Motley
             GenerateRoofMass(result);
 
             //Sculpt out spaces from overall massing.
-            
+            GenerateMarketSolid(result);
+            SculptRoofArches(result);
+            SculptRoofWindows(result);
 
 
             return result;
@@ -396,8 +398,28 @@ namespace Ourchitecture.Api.Protocols.Motley
             res.RoofLongAxis = new Polyline(pts).ToNurbsCurve();
 
             res.RoofLongAxis.Translate(new Vector3d(0, 0, 9));
+        }     
+
+        private static void GenerateMarketSolid(VendorManifest res)
+        {
+            var masses = new List<Brep> { res.RoofMass };
+
+            masses.AddRange(res.MarketCells.Select(x => x.CellVolume));
+
+            res.AllMasses = masses;
+            //res.MarketMass = Brep.CreateBooleanUnion(masses, 0.1)[0];
         }
 
-        
+        private static void SculptRoofArches(VendorManifest res)
+        {
+            res.RoofLongAxis.PerpendicularFrameAt(0, out var plane);
+
+            Rhino.RhinoDoc.ActiveDoc.Objects.Add(Motifs.GothicProfile(plane, 5, 10, 5));
+        }
+
+        private static void SculptRoofWindows(VendorManifest res)
+        {
+
+        }
     }
 }

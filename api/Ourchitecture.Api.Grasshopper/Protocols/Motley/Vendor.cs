@@ -62,7 +62,7 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
             geo.AddRange(res.RoofShortAxis);
 
             //DA.SetData(0, res.GetAllGeometry());
-            DA.SetDataList(0, geo);
+            DA.SetDataList(0, res.AllMasses);
         }
 
         /// <summary>

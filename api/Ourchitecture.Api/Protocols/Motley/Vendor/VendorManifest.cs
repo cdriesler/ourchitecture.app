@@ -46,11 +46,14 @@ namespace Ourchitecture.Api.Protocols.Motley.Vendor
         public List<VendorPathFlank> LeftPathFlanks { get; set; }
         public List<VendorPathFlank> RightPathFlanks { get; set; }
 
+        public Brep RoofMass { get; set; }
         public List<Curve> RoofShortAxis { get; set; } = new List<Curve>();
         public Curve RoofLongAxis { get; set; }
 
+        public List<Brep> AllMasses = new List<Brep>();
+
         //Placed geometry
-        public Brep RoofMass { get; set; }
+        public Brep MarketMass { get; set; }
 
         public List<VendorCell> MarketCells { get; set; } = new List<VendorCell>();
         public List<VendorEntrance> Entrances { get; set; }
