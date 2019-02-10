@@ -18,6 +18,7 @@ namespace Ourchitecture.Api.Protocols.Motley
             ParsePathInput(result, request.Path);
 
             //Generate initial massing.
+            GeneratePathSamplePoints(result);
 
             //Generate cell and entrance masses.
 
@@ -42,7 +43,41 @@ namespace Ourchitecture.Api.Protocols.Motley
 
         private static void ParsePathInput(VendorManifest res, Curve path)
         {
-            res.Path
+            res.Path = path;
+        }
+
+        private static void GeneratePathSamplePoints(VendorManifest res)
+        {
+            var bayCount = Math.Round(res.Path.GetLength() / res.CellProfileWidth);
+            var sampleDistances = new List<double>();
+
+            var random = new Random();
+
+            for (int i = 0; i < bayCount + 1; i++)
+            {
+                var stepVal = 
+                    (res.CellProfileWidth * i)
+                    +
+                    ((random.Next(Convert.ToInt32(res.NoiseFromCellProfileSegments.Min * 100), Convert.ToInt32(res.NoiseFromCellProfileSegments.Max * 100)) / 100) * (res.CellProfileSegmentVolatility * 2));
+
+                if (stepVal > res.Path.GetLength()) break;
+
+                sampleDistances.Add(stepVal);
+            }
+
+            sampleDistances.Remap(new Interval(0, res.Path.GetLength()));
+
+            res.PathSamplePoints = sampleDistances.Select(x => res.Path.PointAtLength(x)).ToList();
+
+            res.PathSamplePointDistances = sampleDistances;
+
+            res.PathSamplePointFrames = new List<Plane>();
+            sampleDistances.ForEach(x =>
+            {
+                res.Path.LengthParameter(x, out var t);
+                res.Path.FrameAt(t, out var plane);
+                res.PathSamplePointFrames.Add(plane);
+            });
         }
     }
 }

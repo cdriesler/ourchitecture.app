@@ -312,6 +312,8 @@
     <Compile Include="Protocols\Motley\Vendor\Logic\Measure.cs" />
     <Compile Include="Protocols\Motley\Vendor\Models\VendorCell.cs" />
     <Compile Include="Protocols\Motley\Vendor\Models\VendorEntrance.cs" />
+    <Compile Include="Protocols\Motley\Vendor\Models\VendorMarketMass.cs" />
+    <Compile Include="Protocols\Motley\Vendor\Models\VendorPathFlank.cs" />
     <Compile Include="Protocols\Motley\Vendor\VendorSchema.cs" />
     <Compile Include="Protocols\Motley\Vendor\VendorManifest.cs" />
     <Compile Include="Protocols\Motley\Vendor\VendorRequest.cs" />

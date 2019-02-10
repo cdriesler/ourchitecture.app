@@ -56,7 +56,8 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
 
             var res = VendorSchema.Solve(new VendorRequest(bounds, path, cell));
 
-            DA.SetData(0, res.GetAllGeometry());
+            //DA.SetData(0, res.GetAllGeometry());
+            DA.SetDataList(0, res.PathSamplePointFrames);
         }
 
         /// <summary>

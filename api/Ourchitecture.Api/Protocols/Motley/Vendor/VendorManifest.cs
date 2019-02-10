@@ -22,10 +22,16 @@ namespace Ourchitecture.Api.Protocols.Motley.Vendor
         public double CellProfileCornerAngleVolatility { get; set; }
 
         //Path
+        public Curve Path { get; set; }
 
         //Noise intervals
         public Interval NoiseFromCellProfileSegments { get; set; }
         public Interval NoiseFromCellProfileCorners { get; set; }
+
+        //Intermediate geometry
+        public List<Point3d> PathSamplePoints { get; set; }
+        public List<double> PathSamplePointDistances { get; set; }
+        public List<Plane> PathSamplePointFrames { get; set; }
 
         //Placed geometry
         public List<VendorEntrance> Entrances { get; set; }
@@ -36,13 +42,25 @@ namespace Ourchitecture.Api.Protocols.Motley.Vendor
 
         }
 
-        public List<Brep> GetAllGeometry()
+        public List<GeometryBase> GetAllGeometry()
         {
-            var geo = new List<Brep>();
+            var geo = new List<GeometryBase>();
 
-            Entrances.ForEach(x => geo.AddRange(x.Entrance));
+
+            //Entrances.ForEach(x => geo.AddRange(x.Entrance));
 
             return geo;
         }
+
+        public string ToSvg(VendorDrawing type)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public enum VendorDrawing
+    {
+        DefaultPlan,
+        Section
     }
 }

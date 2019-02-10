@@ -32,7 +32,7 @@ namespace Ourchitecture.Api.Protocols.Motley
 
         private static string RunVendor(string request)
         {
-            return VendorSchema.Solve(new VendorRequest(request));
+            return VendorSchema.Solve(new VendorRequest(request)).ToSvg(Vendor.VendorDrawing.DefaultPlan);
         }
     }
 }
