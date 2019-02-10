@@ -417,11 +417,26 @@ namespace Ourchitecture.Api.Protocols.Motley
             var firstFrame = Motifs.GothicProfile(plane, res.RoofShortAxis[0].GetLength(), 15, 9);
             firstFrame.Translate(new Vector3d(0, 0, -9));
 
-            var carve = Brep.CreateFromSweep(res.RoofLongAxis, firstFrame, true, 0.1)[0];
+            var carveSweep = Brep.CreateFromSweep(res.RoofLongAxis, firstFrame, true, 0.1)[0];
+            var capA = Brep.CreatePlanarBreps(firstFrame, 0.1)[0];
 
-            Rhino.RhinoDoc.ActiveDoc.Objects.Add(carve);
+            res.RoofLongAxis.LengthParameter(res.RoofLongAxis.GetLength(), out var t);
+            res.RoofLongAxis.PerpendicularFrameAt(t, out var endPlane);
+            var endFrame = Motifs.GothicProfile(endPlane, res.RoofShortAxis[0].GetLength(), 15, 9);
+            endFrame.Translate(new Vector3d(0, 0, -9));
+            var capB = Brep.CreatePlanarBreps(endFrame, 0.1)[0];
 
-            
+            var carve = new List<Brep>
+            {
+                carveSweep,
+                capA,
+                capB
+            };
+
+            var removal = Brep.JoinBreps(carve, 0.1)[0];
+
+            var sculptedRoof = Brep.CreateBooleanDifference(res.RoofMass, removal, 0.1);
+            res.SculptedRoofMass = sculptedRoof == null ? res.RoofMass : sculptedRoof[0];            
         }
 
         private static void SculptRoofWindows(VendorManifest res)

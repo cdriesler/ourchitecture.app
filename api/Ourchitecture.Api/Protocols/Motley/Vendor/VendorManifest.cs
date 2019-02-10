@@ -53,7 +53,7 @@ namespace Ourchitecture.Api.Protocols.Motley.Vendor
         public List<Brep> AllMasses = new List<Brep>();
 
         //Placed geometry
-        public Brep MarketMass { get; set; }
+        public Brep SculptedRoofMass { get; set; }
 
         public List<VendorCell> MarketCells { get; set; } = new List<VendorCell>();
         public List<VendorEntrance> Entrances { get; set; }
