@@ -27,16 +27,32 @@ namespace Ourchitecture.Api.Protocols.Motley.Vendor
             leftArc.LengthParameter(leftArc.GetLength(), out var t);
             var leftTop = leftArc.Trim(new Interval(ccx.ParameterB, t));
 
-            var segments = new List<Curve>
+            var bottomHalfSegments = new List<Curve>()
             {
                 new LineCurve(ptA, ptB).ToNurbsCurve(),
                 new LineCurve(ptA, ptD).ToNurbsCurve(),
                 new LineCurve(ptB, ptC).ToNurbsCurve(),
+            };
+
+            var topHalfSegments = new List<Curve>
+            {
                 rightTop,
                 leftTop
             };
 
-            return Curve.JoinCurves(segments)[0];
+            var bottom = Curve.JoinCurves(bottomHalfSegments)[0];
+            var top = Curve.JoinCurves(topHalfSegments)[0];
+
+            var topBox = top.GetBoundingBox(Plane.WorldXY);
+            var topHeight = topBox.Max.Z - topBox.Min.Z;
+
+            top.Transform(Transform.Scale(new Plane(top.PointAtStart, Vector3d.XAxis, Vector3d.YAxis), 1, 1, (h - p) / topHeight));
+
+            var allSegments = new List<Curve>();
+            allSegments.AddRange(bottomHalfSegments);
+            allSegments.Add(top);
+
+            return Curve.JoinCurves(allSegments)[0];
         }
     }
 }

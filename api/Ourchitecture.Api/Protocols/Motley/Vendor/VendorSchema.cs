@@ -414,7 +414,14 @@ namespace Ourchitecture.Api.Protocols.Motley
         {
             res.RoofLongAxis.PerpendicularFrameAt(0, out var plane);
 
-            Rhino.RhinoDoc.ActiveDoc.Objects.Add(Motifs.GothicProfile(plane, 5, 10, 5));
+            var firstFrame = Motifs.GothicProfile(plane, res.RoofShortAxis[0].GetLength(), 15, 9);
+            firstFrame.Translate(new Vector3d(0, 0, -9));
+
+            var carve = Brep.CreateFromSweep(res.RoofLongAxis, firstFrame, true, 0.1)[0];
+
+            Rhino.RhinoDoc.ActiveDoc.Objects.Add(carve);
+
+            
         }
 
         private static void SculptRoofWindows(VendorManifest res)
