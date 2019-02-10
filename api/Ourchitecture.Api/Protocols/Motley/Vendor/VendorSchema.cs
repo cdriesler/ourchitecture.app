@@ -14,6 +14,7 @@ namespace Ourchitecture.Api.Protocols.Motley
             var result = new VendorManifest();
 
             //Parse inputs from request for dimensions and system constraints.
+            ParseBoundaryInput(result, request.Boundary);
             ParseCellProfileInput(result, request.Cell);
             ParsePathInput(result, request.Path);
 
@@ -24,6 +25,15 @@ namespace Ourchitecture.Api.Protocols.Motley
             //Generate cell and entrance masses.
 
             return result;
+        }
+
+        private static void ParseBoundaryInput(VendorManifest res, Curve bounds)
+        {
+            res.PlanarBounds = bounds;
+
+            var box = bounds.GetBoundingBox(Plane.WorldXY);
+
+            res.VolumeBounds = new BoundingBox(box.Min, new Point3d(box.Max.X, box.Max.Y, 100)).ToBrep();
         }
 
         private static void ParseCellProfileInput(VendorManifest res, Curve cell)
@@ -44,13 +54,15 @@ namespace Ourchitecture.Api.Protocols.Motley
 
         private static void ParsePathInput(VendorManifest res, Curve path)
         {
+            //Set path reference
             res.Path = path;
 
+            //Measure path volatility
             var baseline = new LineCurve(path.PointAtStart, path.PointAtEnd);
             var driftPts = path.DivideByCount(10, false, out var pts);
 
             pts.ToList().RemoveAt(8);
-
+ 
             res.PathDriftVolatility = pts.Select(x =>
             {
                 baseline.ClosestPoint(x, out var t);
@@ -98,8 +110,35 @@ namespace Ourchitecture.Api.Protocols.Motley
 
         private static void GeneratePathFlanks(VendorManifest res)
         {
-            var numFlanks = Convert.ToInt32(4 + ((Math.Round(res.NoiseFromPathDrift.Max / 0.4)) * 2));
+            var numFlanks = Convert.ToInt32(4 + ((Math.Round(res.NoiseFromPathDrift.Max / 0.3)) * 2));
             var random = new Random(9);
+
+            //Generate placement vectors for flanks
+            var outerBounds = res.PlanarBounds.DuplicateCurve();
+            outerBounds.Transform(Transform.Scale(outerBounds.GetBoundingBox(Plane.WorldXY).Center, 1.25));
+            var divider = res.Path.DuplicateCurve().Extend(CurveEnd.Both, 50, CurveExtensionStyle.Line);
+
+            var ccx = Rhino.Geometry.Intersect.Intersection.CurveCurve(outerBounds, divider, 0.1, 0.1);
+
+            outerBounds.ClosestPoint(divider.PointAtStart, out var tA);
+            outerBounds.ClosestPoint(divider.PointAtEnd, out var tB);
+
+            var splitPts = new List<double>() { tA, tB };
+
+            var outerCrvs = outerBounds.Split(ccx.Where(x => x.IsPoint).Select(x => x.ParameterA)).OrderBy(x => x.PointAtNormalizedLength(0.5).Y);
+            var dividerCrv = divider.Split(ccx.Where(x => x.IsPoint).Select(x => x.ParameterB)).OrderBy(x => x.GetLength()).Last();
+
+            res.RightFlankRegion = Curve.JoinCurves(new List<Curve>()
+            {
+                outerCrvs.First(),
+                dividerCrv.DuplicateCurve()
+            })[0];
+
+            res.LeftFlankRegion = Curve.JoinCurves(new List<Curve>()
+            {
+                outerCrvs.Last(),
+                dividerCrv.DuplicateCurve()
+            })[0];
 
             //Generate left-hand flanks.
 
