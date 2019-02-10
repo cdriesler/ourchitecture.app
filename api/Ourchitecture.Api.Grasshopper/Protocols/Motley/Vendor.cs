@@ -57,13 +57,12 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
 
             var res = VendorSchema.Solve(new VendorRequest(bounds, path, cell));
 
-            var geo = new List<Curve>();
+            var geo = new List<Curve>() { res.RoofLongAxis };
 
-            geo.AddRange(res.LeftPathFlanks.Select(x => x.FlankCurve).ToList());
-            geo.AddRange(res.RightPathFlanks.Select(x => x.FlankCurve).ToList());
+            geo.AddRange(res.RoofShortAxis);
 
             //DA.SetData(0, res.GetAllGeometry());
-            DA.SetDataList(0, res.MarketCells.Select(x => x.CellPlane).ToList() );
+            DA.SetDataList(0, geo);
         }
 
         /// <summary>

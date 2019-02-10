@@ -22,8 +22,10 @@ namespace Ourchitecture.Api.Protocols.Motley
             GeneratePathSamplePoints(result);
             GeneratePathFlanks(result);
             GenerateMarketCells(result);
+            GenerateRoofMass(result);
 
-            //Generate cell and entrance masses.
+            //Sculpt out spaces from overall massing.
+            
 
 
             return result;
@@ -317,6 +319,83 @@ namespace Ourchitecture.Api.Protocols.Motley
 
                 return cells;
             }
+        }
+
+        private static void GenerateRoofMass(VendorManifest res)
+        {
+            //Find closed regions of flanks closest to path.
+            var leftPts = new List<Point3d>(res.LeftPathFlanks[0].FlankPoints);
+            var leftCrv = new Polyline(res.LeftPathFlanks[0].FlankPoints).ToNurbsCurve();
+            var rightPts = new List<Point3d>(res.RightPathFlanks[0].FlankPoints);
+            var rightCrv = new Polyline(rightPts).ToNurbsCurve();
+
+            Curve leftCorrection = null;
+            Curve rightCorrection = null;
+
+            res.PlanarBounds.ClosestPoint(leftCrv.PointAtEnd, out var tL);
+            if (leftCrv.PointAtEnd.DistanceTo(res.PlanarBounds.PointAt(tL)) > 0) leftCorrection = new LineCurve(leftCrv.PointAtEnd, res.PlanarBounds.PointAt(tL));
+
+            res.PlanarBounds.ClosestPoint(rightCrv.PointAtEnd, out var tR);
+            if (rightCrv.PointAtEnd.DistanceTo(res.PlanarBounds.PointAt(tR)) > 0) rightCorrection = new LineCurve(rightCrv.PointAtEnd, res.PlanarBounds.PointAt(tR));
+
+            var roofCrvs = new List<Curve>()
+            {
+                leftCrv,
+                rightCrv,
+                new LineCurve(leftCrv.PointAtStart, rightCrv.PointAtStart)
+            };
+
+            var leftEndPt = leftCorrection == null ? leftCrv.PointAtEnd : leftCorrection.PointAtEnd;
+            var rightEndPt = rightCorrection == null ? rightCrv.PointAtEnd : rightCorrection.PointAtEnd;
+
+            if (leftCorrection != null) roofCrvs.Add(leftCorrection);
+            if (rightCorrection != null) roofCrvs.Add(rightCorrection);
+
+            roofCrvs.Add(new LineCurve(leftEndPt, rightEndPt));
+
+            var roofProfiles = Curve.JoinCurves(roofCrvs);
+
+            var roofMasses = roofProfiles.Select(x =>
+            {
+                var scale = Transform.Scale(x.GetBoundingBox(Plane.WorldXY).Center, 1.1);
+                x.Transform(scale);
+                var groundFace = Brep.CreatePlanarBreps(x, 0.1)[0];
+                var extrusion = Extrusion.CreateExtrusion(x, Vector3d.ZAxis * 7).ToBrep();
+                var topFace = Brep.CreatePlanarBreps(x, 0.1)[0];
+                topFace.Translate(new Vector3d(0, 0, 7));
+
+                return Brep.JoinBreps(new List<Brep> { groundFace, extrusion, topFace }, 0.1)[0];             
+            });
+
+            var roofMass = Brep.CreateBooleanUnion(roofMasses, 0.1)[0];
+            roofMass.Translate(new Vector3d(0, 0, 9));
+
+            res.RoofMass = roofMass;
+
+            //Generate short and long axis lines
+            var longAxisPts = new List<Point3d>();
+
+            for (int i = 0; i < rightPts.Count; i++)
+            {               
+                if (i != rightPts.Count - 1)
+                {
+                    var rightAnchor = (rightPts[i] + rightPts[i + 1]) / 2;
+                    var leftAnchor = (leftPts[i] + leftPts[i + 1]) / 2;
+
+                    res.RoofShortAxis.Add(new LineCurve(rightAnchor, leftAnchor));
+
+                    longAxisPts.Add((rightAnchor + leftAnchor) / 2);
+
+                    longAxisPts[i].Transform(Transform.Translation(new Vector3d(0, 0, 9)));
+                }
+            }
+
+            var longAxis = new Polyline(longAxisPts).ToNurbsCurve().Extend(CurveEnd.Both, 10, CurveExtensionStyle.Line);
+            var adjustedLongAxisPts = longAxis.DivideByCount(8, true, out var pts);
+
+            res.RoofLongAxis = new Polyline(pts).ToNurbsCurve();
+
+            res.RoofLongAxis.Translate(new Vector3d(0, 0, 9));
         }
 
         
