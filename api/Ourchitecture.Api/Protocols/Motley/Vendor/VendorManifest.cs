@@ -40,9 +40,9 @@ namespace Ourchitecture.Api.Protocols.Motley.Vendor
         public List<Plane> PathSamplePointFrames { get; set; }
 
         public Curve LeftFlankRegion { get; set; }
-        public List<Vector3d> LeftFlankVectors { get; set; }
+        public List<Vector3d> LeftFlankVectors { get; set; } = new List<Vector3d>();
         public Curve RightFlankRegion { get; set; }
-        public List<Vector3d> RightFlankVectors { get; set; }
+        public List<Vector3d> RightFlankVectors { get; set; } = new List<Vector3d>();
         public List<VendorPathFlank> LeftPathFlanks { get; set; }
         public List<VendorPathFlank> RightPathFlanks { get; set; }
 

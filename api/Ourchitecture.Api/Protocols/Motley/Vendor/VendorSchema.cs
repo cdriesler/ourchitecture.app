@@ -140,9 +140,29 @@ namespace Ourchitecture.Api.Protocols.Motley
                 dividerCrv.DuplicateCurve()
             })[0];
 
-            //Generate left-hand flanks.
-
             var frames = res.PathSamplePointFrames;
+
+            frames.ForEach(x =>
+            {
+                var dirA = new Vector3d(x.YAxis);
+                var dirB = new Vector3d(x.YAxis);
+                dirB.Reverse();
+
+                var testPt = x.Origin + dirA;
+
+                if (res.LeftFlankRegion.Contains(testPt, Plane.WorldXY, 0.1) == PointContainment.Inside)
+                {
+                    res.LeftFlankVectors.Add(dirA);
+                    res.RightFlankVectors.Add(dirB);
+                }
+                else
+                {
+                    res.LeftFlankVectors.Add(dirB);
+                    res.RightFlankVectors.Add(dirA);
+                }
+            });
+
+            //Generate left-hand flanks.
             var segmentNoise = res.NoiseFromCellProfileSegments;
             var angleNoise = res.NoiseFromCellProfileCorners;
             var pathNoise = res.NoiseFromPathDrift;
@@ -155,11 +175,11 @@ namespace Ourchitecture.Api.Protocols.Motley
                 var flankPts = new List<Point3d>();
 
                 var steps = i > 1 
-                    ? Convert.ToInt32(Math.Round(frames.Count * (1 - ((i - 1) * .33))))
+                    ? Convert.ToInt32(Math.Round(frames.Count * (1 - ((i - 1) * .4))))
                     : frames.Count;
 
                 for (int j = 0; j < steps; j++) {
-                    var dir = new Vector3d(frames[j].YAxis);
+                    var dir = res.LeftFlankVectors[j];
                     dir.Unitize();
 
                     var randomVal = random.NextDouble() * segmentNoise.Max;
@@ -174,6 +194,39 @@ namespace Ourchitecture.Api.Protocols.Motley
                 flank.FlankPoints = flankPts;
 
                 res.LeftPathFlanks.Add(flank);
+            }
+
+            //Generate right flanks
+            res.RightPathFlanks = new List<VendorPathFlank>();
+
+            for (int i = 0; i < numFlanks / 2; i++)
+            {
+                var flank = new VendorPathFlank();
+                var flankPts = new List<Point3d>();
+
+                var steps = i > 1
+                    ? Convert.ToInt32(Math.Round(frames.Count * (1 - ((i - 1) * .4))))
+                    : frames.Count;
+
+                for (int j = 0; j < steps; j++)
+                {
+                    var dirs = new List<Vector3d>(res.RightFlankVectors);
+                    dirs.Reverse();
+                    var dir = dirs[j];
+                    dir.Unitize();
+
+                    var randomVal = random.NextDouble() * segmentNoise.Max;
+                    var noise = 4 * randomVal;
+
+                    var offset = dir * (8 + noise) * (i + 1);
+
+                    flankPts.Add(new Point3d(frames[j].Origin) + offset);
+                }
+
+                flank.FlankCurve = new Polyline(flankPts).ToNurbsCurve();
+                flank.FlankPoints = flankPts;
+
+                res.RightPathFlanks.Add(flank);
             }
 
         }
