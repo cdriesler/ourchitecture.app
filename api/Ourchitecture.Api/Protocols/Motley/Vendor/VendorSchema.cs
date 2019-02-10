@@ -19,6 +19,7 @@ namespace Ourchitecture.Api.Protocols.Motley
 
             //Generate initial massing.
             GeneratePathSamplePoints(result);
+            GeneratePathFlanks(result);
 
             //Generate cell and entrance masses.
 
@@ -44,6 +45,19 @@ namespace Ourchitecture.Api.Protocols.Motley
         private static void ParsePathInput(VendorManifest res, Curve path)
         {
             res.Path = path;
+
+            var baseline = new LineCurve(path.PointAtStart, path.PointAtEnd);
+            var driftPts = path.DivideByCount(10, false, out var pts);
+
+            pts.ToList().RemoveAt(8);
+
+            res.PathDriftVolatility = pts.Select(x =>
+            {
+                path.ClosestPoint(x, out var t);
+                return x.DistanceTo(path.PointAt(t));
+            }).Average();
+
+            res.NoiseFromPathDrift = new Interval(0, res.PathDriftVolatility.Remap(new Interval(0, 100), new Interval(0, 1)));
         }
 
         private static void GeneratePathSamplePoints(VendorManifest res)
@@ -70,6 +84,7 @@ namespace Ourchitecture.Api.Protocols.Motley
             res.PathSamplePoints = sampleDistances.Select(x => res.Path.PointAtLength(x)).ToList();
 
             res.PathSamplePointDistances = sampleDistances;
+            res.PathSamplePointNormalizedDistances = sampleDistances.Remap(new Interval(0, 1));
 
             res.PathSamplePointFrames = new List<Plane>();
             sampleDistances.ForEach(x =>
@@ -78,6 +93,45 @@ namespace Ourchitecture.Api.Protocols.Motley
                 res.Path.FrameAt(t, out var plane);
                 res.PathSamplePointFrames.Add(plane);
             });
+        }
+
+        private static void GeneratePathFlanks(VendorManifest res)
+        {
+            var numFlanks = Convert.ToInt32(4 + ((Math.Round(res.NoiseFromPathDrift.Max / 0.4)) * 2));
+            var random = new Random();
+
+            //Generate left-hand flanks.
+
+            var frames = res.PathSamplePointFrames;
+            var segmentNoise = res.NoiseFromCellProfileSegments;
+            var angleNoise = res.NoiseFromCellProfileCorners;
+
+            res.LeftPathFlanks = new List<VendorPathFlank>();
+
+            for (int i = 0; i < numFlanks / 2; i++)
+            {
+                var flank = new VendorPathFlank();
+                var flankPts = new List<Point3d>();
+
+                var steps = i > 1 
+                    ? Convert.ToInt32(Math.Round(frames.Count * (1 - ((i - 1) * .33))))
+                    : frames.Count;
+
+                for (int j = 0; j < steps; j++) {
+                    var dir = new Vector3d(frames[j].YAxis);
+                    dir.Unitize();
+
+                    var offset = dir * (8 + (4 * (random.Next(Convert.ToInt32(segmentNoise.Min * 100), Convert.ToInt32(segmentNoise.Max * 100)) / 100)));
+
+                    flankPts.Add(new Point3d(frames[j].Origin) + offset);
+                }
+
+                flank.FlankCurve = new Polyline(flankPts).ToNurbsCurve();
+                flank.FlankPoints = flankPts;
+
+                res.LeftPathFlanks.Add(flank);
+            }
+
         }
     }
 }

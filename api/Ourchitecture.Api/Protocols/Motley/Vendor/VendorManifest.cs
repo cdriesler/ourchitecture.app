@@ -23,15 +23,24 @@ namespace Ourchitecture.Api.Protocols.Motley.Vendor
 
         //Path
         public Curve Path { get; set; }
+        public List<Curve> PathSegments { get; set; }
+        public List<Point3d> PathPoints { get; set; }
+
+        public double PathDriftVolatility { get; set; }
 
         //Noise intervals
         public Interval NoiseFromCellProfileSegments { get; set; }
         public Interval NoiseFromCellProfileCorners { get; set; }
+        public Interval NoiseFromPathDrift { get; set; }
 
         //Intermediate geometry
         public List<Point3d> PathSamplePoints { get; set; }
         public List<double> PathSamplePointDistances { get; set; }
+        public List<double> PathSamplePointNormalizedDistances { get; set; }
         public List<Plane> PathSamplePointFrames { get; set; }
+
+        public List<VendorPathFlank> LeftPathFlanks { get; set; }
+        public List<VendorPathFlank> RightPathFlanks { get; set; }
 
         //Placed geometry
         public List<VendorEntrance> Entrances { get; set; }

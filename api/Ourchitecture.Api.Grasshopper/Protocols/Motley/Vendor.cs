@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Ourchitecture.Api.Protocols.Motley;
 using Grasshopper.Kernel;
@@ -57,7 +58,7 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
             var res = VendorSchema.Solve(new VendorRequest(bounds, path, cell));
 
             //DA.SetData(0, res.GetAllGeometry());
-            DA.SetDataList(0, res.PathSamplePointFrames);
+            DA.SetDataList(0, res.LeftPathFlanks.Select(x => x.FlankCurve).ToList());
         }
 
         /// <summary>
