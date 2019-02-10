@@ -253,6 +253,7 @@ namespace Ourchitecture.Api.Protocols.Motley
                     {
                         var cell = new VendorCell();
 
+                        //Draw cell profile
                         var ptA = nextFlank.FlankPoints[j + 1];
                         var ptB = activeFlank.FlankPoints[j + 1];
                         var ptC = activeFlank.FlankPoints[j];
@@ -267,6 +268,31 @@ namespace Ourchitecture.Api.Protocols.Motley
                         new Point3d(ptA)
                     }).ToNurbsCurve();
 
+                        //Determine cell orientation and edges
+                        cell.BackEdge = new LineCurve(ptC, ptB);
+                        cell.FrontEdge = new LineCurve(ptD, ptA);
+                        cell.RightEdge = new LineCurve(ptC, ptD);
+                        cell.LeftEdge = new LineCurve(ptB, ptA);
+
+                        var ctr = cell.CellProfile.GetBoundingBox(Plane.WorldXY).Center;
+                        res.Path.ClosestPoint(ctr, out var t);
+                        var toPath = new Vector3d(res.Path.PointAt(t) - ctr);
+
+                        var testRotA = new Vector3d(toPath);
+                        testRotA.Rotate(Math.PI / 2, Vector3d.ZAxis);
+                        var testRotB = new Vector3d(toPath);
+                        testRotB.Rotate(Math.PI / -2, Vector3d.ZAxis);
+
+                        var testPtA = new Point3d(ctr);
+                        testPtA.Transform(Transform.Translation(testRotA));
+                        var testPtB = new Point3d(ctr);
+                        testPtB.Transform(Transform.Translation(testRotB));
+
+                        var toNext = testPtA.DistanceTo(ptB) < testPtB.DistanceTo(ptB) ? testRotA : testRotB;
+
+                        cell.CellPlane = new Plane(ctr, toNext, toPath);
+
+                        //Create cell volume
                         var elevation = new Vector3d(0, 0, new Interval(9, 13).NoiseBasedValue(r, noise));
 
                         var floor = Brep.CreatePlanarBreps(cell.CellProfile, 0.1);
@@ -284,6 +310,7 @@ namespace Ourchitecture.Api.Protocols.Motley
 
                         cell.CellVolume = Brep.JoinBreps(faces, 0.1)[0];
 
+                        //Dispath cell to list
                         cells.Add(cell);
                     }
                 }
