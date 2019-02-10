@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Ourchitecture.Api.Protocols.Motley.Vendor
 {
-    public class VendorCell
+    public static class Glue
     {
 
     }

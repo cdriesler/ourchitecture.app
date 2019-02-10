@@ -46,15 +46,17 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             Curve bounds = null;
-            if (!DA.SetData(0, bounds)) return;
+            if (!DA.GetData(0, ref bounds)) return;
 
             Curve path = null;
-            if (!DA.SetData(1, path)) return;
+            if (!DA.GetData(1, ref path)) return;
 
             Curve cell = null;
-            if (!DA.SetData(2, cell)) return;
+            if (!DA.GetData(2, ref cell)) return;
 
             var res = VendorSchema.Solve(new VendorRequest(bounds, path, cell));
+
+            DA.SetData(0, res.GetAllGeometry());
         }
 
         /// <summary>
