@@ -302,10 +302,13 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Protocols\Intent\IntentModule.cs" />
     <Compile Include="Protocols\Motley\MotleyModule.cs" />
     <Compile Include="Protocols\Motley\MotleyRequest.cs" />
     <Compile Include="Protocols\Motley\Swerve\Swerve.cs" />
-    <Compile Include="Protocols\Motley\Vendor\Vendor.cs" />
+    <Compile Include="Protocols\Motley\Vendor\Models\VendorCell.cs" />
+    <Compile Include="Protocols\Motley\Vendor\VendorSchema.cs" />
+    <Compile Include="Protocols\Motley\Vendor\VendorManifest.cs" />
     <Compile Include="Protocols\Motley\Vendor\VendorRequest.cs" />
     <Compile Include="Resthopper\Exceptions\PayAttentionException.cs" />
     <Compile Include="Resthopper\Models\GhPath.cs" />
@@ -317,8 +320,6 @@
     <Compile Include="Resthopper\ResthopperModule.cs" />
     <Compile Include="Resthopper\Utilities\Base64Encode.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Routes\BaseModule.cs" />
-    <Compile Include="Routes\GrasshopperModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -330,7 +331,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Styles\" />
+    <Folder Include="Drawing\" />
+    <Folder Include="Protocols\Motley\Vendor\Logic\" />
+    <Folder Include="Protocols\Motley\Vendor\Styles\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -341,7 +344,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>

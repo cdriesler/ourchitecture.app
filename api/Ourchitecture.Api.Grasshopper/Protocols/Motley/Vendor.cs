@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using Ourchitecture.Api.Protocols;
+using Ourchitecture.Api.Protocols.Motley;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
 namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
 {
-    public class Swerve : GH_Component
+    public class Vendor : GH_Component
     {
         /// <summary>
-        /// Initializes a new instance of the Swerve class.
+        /// Initializes a new instance of the Vendor class.
         /// </summary>
-        public Swerve(): base(
-            "Swerve", 
-            "Swerve",
+        public Vendor() : base(
+            "Vendor", 
+            "Vendor",
             "Description",
             "Protocol", 
-            "Motley"
-            )
+            "Motley")
         {
         }
 
@@ -26,6 +25,7 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
+            pManager.AddCurveParameter("Boundary", "B", "Square boundary of operation.", GH_ParamAccess.item);
             pManager.AddCurveParameter("Path", "P", "Path to aggregate along.", GH_ParamAccess.item);
             pManager.AddCurveParameter("Cell", "C", "Basic cell geometry.", GH_ParamAccess.item);
         }
@@ -45,7 +45,16 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            Curve bounds = null;
+            if (!DA.SetData(0, bounds)) return;
 
+            Curve path = null;
+            if (!DA.SetData(1, path)) return;
+
+            Curve cell = null;
+            if (!DA.SetData(2, cell)) return;
+
+            var res = VendorSchema.Solve(new VendorRequest(bounds, path, cell));
         }
 
         /// <summary>
@@ -66,7 +75,7 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("83460d82-1092-4643-b025-5be4bf872ea6"); }
+            get { return new Guid("54d74b40-bf08-4a54-a281-35769738d2e2"); }
         }
     }
 }

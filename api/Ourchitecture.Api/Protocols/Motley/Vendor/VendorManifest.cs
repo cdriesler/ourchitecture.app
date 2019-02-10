@@ -5,12 +5,8 @@ using System.Web;
 
 namespace Ourchitecture.Api.Protocols.Motley.Vendor
 {
-    public static class Vendor
+    public class VendorManifest
     {
-        //Package request
 
-        //Operate
-
-        //Style and deploy result
     }
 }
