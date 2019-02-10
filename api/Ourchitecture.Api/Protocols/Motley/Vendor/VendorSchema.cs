@@ -53,11 +53,12 @@ namespace Ourchitecture.Api.Protocols.Motley
 
             res.PathDriftVolatility = pts.Select(x =>
             {
-                path.ClosestPoint(x, out var t);
-                return x.DistanceTo(path.PointAt(t));
+                baseline.ClosestPoint(x, out var t);
+                var dist = x.DistanceTo(baseline.PointAt(t));
+                return dist;
             }).Average();
 
-            res.NoiseFromPathDrift = new Interval(0, res.PathDriftVolatility.Remap(new Interval(0, 100), new Interval(0, 1)));
+            res.NoiseFromPathDrift = new Interval(0, res.PathDriftVolatility.Remap(new Interval(0, 40), new Interval(0, 1)));
         }
 
         private static void GeneratePathSamplePoints(VendorManifest res)
@@ -65,7 +66,7 @@ namespace Ourchitecture.Api.Protocols.Motley
             var bayCount = Math.Round(res.Path.GetLength() / res.CellProfileWidth);
             var sampleDistances = new List<double>();
 
-            var random = new Random();
+            var random = new Random(9);
 
             for (int i = 0; i < bayCount + 1; i++)
             {
@@ -98,13 +99,14 @@ namespace Ourchitecture.Api.Protocols.Motley
         private static void GeneratePathFlanks(VendorManifest res)
         {
             var numFlanks = Convert.ToInt32(4 + ((Math.Round(res.NoiseFromPathDrift.Max / 0.4)) * 2));
-            var random = new Random();
+            var random = new Random(9);
 
             //Generate left-hand flanks.
 
             var frames = res.PathSamplePointFrames;
             var segmentNoise = res.NoiseFromCellProfileSegments;
             var angleNoise = res.NoiseFromCellProfileCorners;
+            var pathNoise = res.NoiseFromPathDrift;
 
             res.LeftPathFlanks = new List<VendorPathFlank>();
 
@@ -121,7 +123,10 @@ namespace Ourchitecture.Api.Protocols.Motley
                     var dir = new Vector3d(frames[j].YAxis);
                     dir.Unitize();
 
-                    var offset = dir * (8 + (4 * (random.Next(Convert.ToInt32(segmentNoise.Min * 100), Convert.ToInt32(segmentNoise.Max * 100)) / 100)));
+                    var randomVal = random.NextDouble() * segmentNoise.Max;
+                    var noise = 4 * randomVal;
+
+                    var offset = dir * (8 + noise) * (i + 1);
 
                     flankPts.Add(new Point3d(frames[j].Origin) + offset);
                 }

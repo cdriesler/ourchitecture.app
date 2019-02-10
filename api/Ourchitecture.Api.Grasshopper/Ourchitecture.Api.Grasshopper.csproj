@@ -38,15 +38,18 @@
     </Reference>
     <Reference Include="GH_IO, Version=6.12.19029.6380, Culture=neutral, PublicKeyToken=6a29997d2e6b4f97, processorArchitecture=MSIL">
       <HintPath>..\packages\Grasshopper.6.12.19029.6381\lib\net45\GH_IO.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Grasshopper, Version=6.12.19029.6380, Culture=neutral, PublicKeyToken=dda4f5ec2cd80803, processorArchitecture=MSIL">
       <HintPath>..\packages\Grasshopper.6.12.19029.6381\lib\net45\Grasshopper.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Rhino.UI, Version=6.12.19029.6380, Culture=neutral, PublicKeyToken=552281e97c755530, processorArchitecture=MSIL">
       <HintPath>..\packages\RhinoCommon.6.12.19029.6381\lib\net45\Rhino.UI.dll</HintPath>
     </Reference>
     <Reference Include="RhinoCommon, Version=6.12.19029.6380, Culture=neutral, PublicKeyToken=552281e97c755530, processorArchitecture=MSIL">
       <HintPath>..\packages\RhinoCommon.6.12.19029.6381\lib\net45\RhinoCommon.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
