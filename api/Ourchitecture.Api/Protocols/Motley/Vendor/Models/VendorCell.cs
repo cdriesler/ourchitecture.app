@@ -16,6 +16,14 @@ namespace Ourchitecture.Api.Protocols.Motley.Vendor
         public Curve RightEdge { get; set; }
 
         public Brep CellVolume { get; set; }
+        public Brep SculptedCellMass { get; set; }
+
+        public Curve InteriorProfile { get; set; }
+        public Curve PartitionProfile { get; set; }
+
+        public Brep EntranceRemovalMass { get; set; }
+        public Brep PrimaryInteriorRemovalMass { get; set; }
+        public Brep SecondaryInteriorRemovalMass { get; set; }
 
         public VendorCell()
         {

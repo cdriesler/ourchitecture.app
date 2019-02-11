@@ -303,6 +303,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\ExtrudeAndCap.cs" />
     <Compile Include="Extensions\NoiseBasedValue.cs" />
     <Compile Include="Extensions\Remap.cs" />
     <Compile Include="Extensions\SafeBooleanDifference.cs" />

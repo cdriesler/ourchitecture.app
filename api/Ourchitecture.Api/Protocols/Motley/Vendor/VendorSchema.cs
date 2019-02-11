@@ -28,7 +28,8 @@ namespace Ourchitecture.Api.Protocols.Motley
             GenerateMarketSolid(result);
             SculptRoofArches(result);
             SculptRoofWindows(result);
-
+            SculptCellEntrances(result);
+            SculptCellInteriors(result);
 
             return result;
         }
@@ -191,7 +192,9 @@ namespace Ourchitecture.Api.Protocols.Motley
                     var randomVal = random.NextDouble() * segmentNoise.Max;
                     var noise = 4 * randomVal;
 
-                    var offset = dir * (6.5 + noise) * (i + 1);
+                    var offset = i == 0
+                        ? dir * (6.5 + noise) * (i + 1)
+                        : dir * (((12 + noise) * (i + 1)) - 7);
 
                     flankPts.Add(new Point3d(frames[j].Origin) + offset);
                 }
@@ -224,7 +227,9 @@ namespace Ourchitecture.Api.Protocols.Motley
                     var randomVal = random.NextDouble() * segmentNoise.Max;
                     var noise = 4 * randomVal;
 
-                    var offset = dir * (6.5 + noise) * (i + 1);
+                    var offset = i == 0
+                        ? dir * (6.5 + noise) * (i + 1)
+                        : dir * (((12 + noise) * (i + 1)) - 7);
 
                     flankPts.Add(new Point3d(frames[j].Origin) + offset);
                 }
@@ -546,6 +551,134 @@ namespace Ourchitecture.Api.Protocols.Motley
             }
 
             res.SculptedRoofMass = res.SculptedRoofMass.SafeBooleanDifference(skylightRemovals);
+        }
+
+        private static void SculptCellEntrances(VendorManifest res)
+        {
+            var r = new Random(9);
+
+            foreach (var cell in res.MarketCells)
+            {
+                var edge = cell.FrontEdge;
+                edge.LengthParameter((edge.GetLength() / 2) - 3.75, out var tD);
+                edge.NormalizedLengthParameter(0.5, out var tN);
+
+                var plane = new Plane(edge.PointAt(tN), new Vector3d(edge.PointAtEnd - edge.PointAtStart), Vector3d.ZAxis);
+
+                var profile = Motifs.GothicProfile(plane, new Interval(6, 8).NoiseBasedValue(r, res.NoiseFromPathDrift), 8.5, 7);
+
+                var entranceDepth = res.LeftPathFlanks.Count > 2
+                    ? new Interval(8, 25).NoiseBasedValue(r, res.NoiseFromPathDrift)
+                    : 1.25;
+
+                var extrusion = Extrusion.CreateExtrusion(profile, cell.CellPlane.YAxis * -entranceDepth).ToBrep();
+
+                var cap = profile.DuplicateCurve();
+                cap.Translate(cell.CellPlane.YAxis * -entranceDepth);
+
+                var faces = new List<Brep>
+                {
+                    extrusion,
+                    Brep.CreatePlanarBreps(profile, 0.1)[0],
+                    Brep.CreatePlanarBreps(cap, 0.1)[0]
+                };
+
+                cell.EntranceRemovalMass = Brep.JoinBreps(faces, 0.1)[0];
+                cell.EntranceRemovalMass.Translate(new Vector3d(0, 0, -0.5));
+
+                if (res.NoiseFromPathDrift.Max > 0.1)
+                {
+                    cell.EntranceRemovalMass.Translate(plane.XAxis * new Interval(0, 7).NoiseBasedValue(r, res.NoiseFromPathDrift));
+                }
+                
+                cell.SculptedCellMass = cell.CellVolume.SafeBooleanDifference(new List<Brep> { cell.EntranceRemovalMass });
+            }
+        }
+
+        private static void SculptCellInteriors(VendorManifest res)
+        {
+            var r = new Random(9);
+
+            foreach (var cell in res.MarketCells)
+            {
+                var ptA = cell.RightEdge.PointAtLength(cell.RightEdge.GetLength() - 1.25);
+                var ptB = cell.LeftEdge.PointAtLength(cell.LeftEdge.GetLength() - 1.25);
+                var ptC = cell.LeftEdge.PointAtLength(2);
+                var ptD = cell.RightEdge.PointAtLength(2);
+
+                cell.InteriorProfile = new Polyline(new List<Point3d>
+                {
+                    ptA,
+                    ptB,
+                    ptC,
+                    ptD,
+                    new Point3d(ptA)
+                }).ToNurbsCurve();
+
+                var thickness = 0.9;
+
+                var partitionPts = new List<Point3d>
+                {
+                    new Point3d(cell.RightEdge.PointAtStart) + (cell.CellPlane.XAxis * (thickness / 2)),
+                    new Point3d(cell.RightEdge.PointAtStart) + (cell.CellPlane.XAxis * (thickness / -2)),
+                    new Point3d(cell.RightEdge.PointAtEnd) + (cell.CellPlane.XAxis * (thickness / -2)),
+                    new Point3d(cell.RightEdge.PointAtEnd) + (cell.CellPlane.XAxis * (thickness / 2)),
+                    new Point3d(cell.RightEdge.PointAtStart) + (cell.CellPlane.XAxis * (thickness / 2)),
+                };
+
+                cell.PartitionProfile = new Polyline(partitionPts).ToNurbsCurve();
+
+                var partitionBox = cell.PartitionProfile.GetBoundingBox(Plane.WorldXY);
+                cell.PartitionProfile.Rotate(
+                    res.NoiseFromCellProfileCorners.Max > 0.1
+                    ? new Interval(-0.2, 0.2).NoiseBasedValue(r, res.NoiseFromCellProfileCorners)
+                    : 0
+                    , Vector3d.ZAxis, partitionBox.Center);
+
+                //Rhino.RhinoDoc.ActiveDoc.Objects.Add(cell.PrimaryInteriorRemovalMass);
+                //Rhino.RhinoDoc.ActiveDoc.Objects.Add(cell.SecondaryInteriorRemovalMass);
+
+                //cell.SculptedCellMass = cell.SculptedCellMass.SafeBooleanDifference(new List<Brep> { cell.PrimaryInteriorRemovalMass, cell.SecondaryInteriorRemovalMass });
+            }
+
+            foreach (var cell in res.MarketCells)
+            {
+                foreach (var otherCell in res.MarketCells)
+                {
+                    //Update interior profile.
+                    var diff = Curve.CreateBooleanDifference(cell.InteriorProfile, otherCell.PartitionProfile, 0.1);
+                    if (diff != null && diff.Count() > 0) cell.InteriorProfile = diff[0];
+                }
+
+                var interiorDiff = Curve.CreateBooleanDifference(cell.InteriorProfile, cell.PartitionProfile, 0.1);
+                cell.InteriorProfile = interiorDiff != null && interiorDiff.Count() > 0 ? interiorDiff[0] : cell.InteriorProfile;
+                var interiorProfileBox = cell.InteriorProfile.GetBoundingBox(Plane.WorldXY);
+
+                cell.PrimaryInteriorRemovalMass = cell.InteriorProfile.ExtrudeAndCap(new Vector3d(0, 0, 8.5));
+                cell.PrimaryInteriorRemovalMass.Translate(new Vector3d(0, 0, -0.25));
+
+                var secondaryInteriorProfile = cell.InteriorProfile.DuplicateCurve();
+                secondaryInteriorProfile.Transform(Transform.Scale(interiorProfileBox.Center, new Interval(1, 1.2).NoiseBasedValue(r, res.NoiseFromCellProfileSegments)));
+                secondaryInteriorProfile.Rotate(
+                    res.NoiseFromCellProfileCorners.Max > 0.1
+                    ? new Interval(-0.25, 0.25).NoiseBasedValue(r, res.NoiseFromCellProfileCorners)
+                    : 0
+                    , Vector3d.ZAxis, interiorProfileBox.Center);
+
+                cell.SecondaryInteriorRemovalMass = secondaryInteriorProfile.ExtrudeAndCap(new Vector3d(0, 0, new Interval(5, 9).NoiseBasedValue(r, res.NoiseFromPathDrift)));
+                cell.SecondaryInteriorRemovalMass.Translate(new Vector3d(0, 0, -0.25));
+                cell.SecondaryInteriorRemovalMass.Translate(cell.CellPlane.YAxis * -1 * new Interval(0, 5).NoiseBasedValue(r, res.NoiseFromCellProfileSegments));
+            }
+
+            var removals = new List<Brep>();
+
+            removals.AddRange(res.MarketCells.Select(x => x.PrimaryInteriorRemovalMass));
+            removals.AddRange(res.MarketCells.Select(x => x.SecondaryInteriorRemovalMass));
+ 
+            foreach (var cell in res.MarketCells)
+            {
+                cell.SculptedCellMass = cell.SculptedCellMass.SafeBooleanDifference(removals);
+            }
         }
     }
 }
