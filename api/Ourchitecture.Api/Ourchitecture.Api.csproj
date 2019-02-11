@@ -305,6 +305,7 @@
   <ItemGroup>
     <Compile Include="Extensions\NoiseBasedValue.cs" />
     <Compile Include="Extensions\Remap.cs" />
+    <Compile Include="Extensions\SafeBooleanDifference.cs" />
     <Compile Include="Extensions\StandardDeviation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

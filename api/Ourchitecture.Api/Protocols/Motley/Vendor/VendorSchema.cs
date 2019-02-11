@@ -359,7 +359,7 @@ namespace Ourchitecture.Api.Protocols.Motley
 
             var roofMasses = roofProfiles.Select(x =>
             {
-                var scale = Transform.Scale(x.GetBoundingBox(Plane.WorldXY).Center, 1.1);
+                var scale = Transform.Scale(x.GetBoundingBox(Plane.WorldXY).Center, 1.25);
                 x.Transform(scale);
                 var groundFace = Brep.CreatePlanarBreps(x, 0.1)[0];
                 var extrusion = Extrusion.CreateExtrusion(x, Vector3d.ZAxis * 7).ToBrep();
@@ -397,6 +397,9 @@ namespace Ourchitecture.Api.Protocols.Motley
 
             res.RoofLongAxis = new Polyline(pts).ToNurbsCurve();
 
+            //Rhino.RhinoDoc.ActiveDoc.Objects.Add(res.RoofLongAxis);
+            //res.RoofShortAxis.ForEach(x => Rhino.RhinoDoc.ActiveDoc.Objects.Add(x));
+
             res.RoofLongAxis.Translate(new Vector3d(0, 0, 9));
         }     
 
@@ -412,6 +415,7 @@ namespace Ourchitecture.Api.Protocols.Motley
 
         private static void SculptRoofArches(VendorManifest res)
         {
+            //Sculpt along long axis
             res.RoofLongAxis.PerpendicularFrameAt(0, out var plane);
 
             var firstFrame = Motifs.GothicProfile(plane, res.RoofShortAxis[0].GetLength(), 15, 9);
@@ -435,13 +439,50 @@ namespace Ourchitecture.Api.Protocols.Motley
 
             var removal = Brep.JoinBreps(carve, 0.1)[0];
 
-            var sculptedRoof = Brep.CreateBooleanDifference(res.RoofMass, removal, 0.1);
-            res.SculptedRoofMass = sculptedRoof == null ? res.RoofMass : sculptedRoof[0];            
+            res.SculptedRoofMass = res.RoofMass.SafeBooleanDifference(new List<Brep> { removal });
+
+            //Sculpt along each short axis
+            var shortAxisRemovals = new List<Brep>();
+
+            var rightFlankPts = res.RightPathFlanks[0].FlankPoints;
+            var leftFlankPts = res.LeftPathFlanks[0].FlankPoints;
+
+            for (int i = 0; i < res.RoofShortAxis.Count; i++)
+            {
+                //Generate current right profile
+                var rightWidth = rightFlankPts[i].DistanceTo(rightFlankPts[i + 1]) - 2;
+                res.RoofShortAxis[i].PerpendicularFrameAt(0, out var rightPlane);
+                var rightProfile = Motifs.GothicProfile(rightPlane, rightWidth, 15, 9);
+                if (rightProfile == null) continue;
+                //rightProfile.Translate(new Vector3d(0, 0, -9));
+
+                //Generate current left profile
+                var leftWidth = leftFlankPts[i].DistanceTo(leftFlankPts[i + 1]) - 2;
+                res.RoofShortAxis[i].LengthParameter(res.RoofShortAxis[i].GetLength(), out var tL);
+                res.RoofShortAxis[i].PerpendicularFrameAt(tL, out var leftPlane);
+                var leftProfile = Motifs.GothicProfile(leftPlane, leftWidth, 15, 9);
+                if (leftProfile == null) continue;
+                //leftProfile.Translate(new Vector3d(0, 0, -9));
+
+                if (rightWidth < 2 || leftWidth < 2) continue;
+
+                var extrusion = Brep.CreateFromLoft(new List<Curve> { rightProfile, leftProfile }, Point3d.Unset, Point3d.Unset, LoftType.Straight, false)[0];
+                var endA = Brep.CreatePlanarBreps(rightProfile, 0.1)[0];
+                var endB = Brep.CreatePlanarBreps(leftProfile, 0.1)[0];
+
+                var shortCarve = Brep.JoinBreps(new List<Brep> { extrusion, endA, endB }, 0.1)[0];
+
+                shortAxisRemovals.Add(shortCarve);
+            }
+
+            res.ShortAxisRemovals = shortAxisRemovals;
+
+            res.SculptedRoofMass = res.SculptedRoofMass.SafeBooleanDifference(res.ShortAxisRemovals);
         }
 
         private static void SculptRoofWindows(VendorManifest res)
         {
-
+            
         }
     }
 }

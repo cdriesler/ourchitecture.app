@@ -8,8 +8,18 @@ namespace Ourchitecture.Api.Protocols.Motley.Vendor
 {
     public static class Motifs
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="plane">Plane to draw on.</param>
+        /// <param name="w">Width of profile.</param>
+        /// <param name="h">Height of profile.</param>
+        /// <param name="p">Vertical distance from bottom of profile to point where arches begin.</param>
+        /// <returns></returns>
         public static Curve GothicProfile(Plane plane, double w, double h, double p)
         {
+            if (w < 0) return null;
+
             var ptA = plane.PointAt(w / -2, 0);
             var ptB = plane.PointAt(w / 2, 0);
 
@@ -21,7 +31,9 @@ namespace Ourchitecture.Api.Protocols.Motley.Vendor
             var rightArc = new Arc(plane, ptD, w, Math.PI).ToNurbsCurve();
             var leftArc = new Arc(plane, ptC, w, Math.PI).ToNurbsCurve();
 
-            var ccx = Rhino.Geometry.Intersect.Intersection.CurveCurve(rightArc, leftArc, 0.1, 0.1).Where(x => x.IsPoint).First();
+            var ccx = Rhino.Geometry.Intersect.Intersection.CurveCurve(rightArc, leftArc, 0.1, 0.1).Where(x => x.IsPoint).FirstOrDefault();
+
+            if (ccx == null) return null;
 
             var rightTop = rightArc.Trim(new Interval(0, ccx.ParameterA));
             leftArc.LengthParameter(leftArc.GetLength(), out var t);
