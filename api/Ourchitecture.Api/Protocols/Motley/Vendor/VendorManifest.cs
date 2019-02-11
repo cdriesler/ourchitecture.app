@@ -53,6 +53,7 @@ namespace Ourchitecture.Api.Protocols.Motley.Vendor
         public List<Brep> AllMasses = new List<Brep>();
         public Brep LongAxisRemoval { get; set; }
         public List<Brep> ShortAxisRemovals { get; set; } = new List<Brep>();
+        public List<Brep> ShortAxisWindowRemovals { get; set; } = new List<Brep>();
 
         //Placed geometry
         public Brep SculptedRoofMass { get; set; }

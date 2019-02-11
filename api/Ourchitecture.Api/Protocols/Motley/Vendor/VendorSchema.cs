@@ -482,7 +482,70 @@ namespace Ourchitecture.Api.Protocols.Motley
 
         private static void SculptRoofWindows(VendorManifest res)
         {
-            
+            //Carve out larger transverse windows
+            var transverseWindows = new List<Brep>();
+
+            foreach (var axis in res.RoofShortAxis)
+            {
+                axis.PerpendicularFrameAt(0, out var frame);
+                var profile = new Rectangle3d(frame, frame.PointAt(1, 1.75), frame.PointAt(-1, -1.75)).ToNurbsCurve();
+                profile.Translate(new Vector3d(0, 0, 11.5));
+                profile.Translate(frame.ZAxis * -10);
+
+                var endCap = profile.DuplicateCurve();
+                endCap.Translate(frame.ZAxis * 50);
+
+                var extrusion = Extrusion.CreateExtrusion(profile, frame.ZAxis * 50).ToBrep();
+
+                var carve = new List<Brep>
+                {
+                    extrusion,
+                    Brep.CreatePlanarBreps(profile, 0.1)[0],
+                    Brep.CreatePlanarBreps(endCap, 0.1)[0]
+                };
+
+                var window = Brep.JoinBreps(carve, 0.1)[0];
+
+                transverseWindows.Add(window);
+            }
+
+            res.SculptedRoofMass = res.SculptedRoofMass.SafeBooleanDifference(transverseWindows);
+
+            //Carve out skylights
+            var cxPts = new List<Point3d>();
+
+            foreach (var axis in res.RoofShortAxis)
+            {
+                axis.Translate(new Vector3d(0, 0, 9));
+
+                var ccx = Rhino.Geometry.Intersect.Intersection.CurveCurve(axis, res.RoofLongAxis, 0.1, 0.1);
+                var ccxPts = ccx.Where(x => x.IsPoint).Select(x => x.PointA);
+
+                if (ccxPts != null && ccxPts.Count() > 0) cxPts.Add(ccxPts.First());
+            }
+
+            var skylightRemovals = new List<Brep>();
+
+            for (int i = 0; i < cxPts.Count; i++)
+            {
+                var plane = new Plane(cxPts[i], Vector3d.ZAxis);
+                plane.Rotate(Vector3d.VectorAngle(Vector3d.YAxis, new Vector3d(res.RoofShortAxis[i].PointAtEnd - res.RoofShortAxis[i].PointAtStart)), Vector3d.ZAxis);
+                var skylightProfile = new Rectangle3d(plane, new Interval(-0.75, 0.75), new Interval(-0.75, 0.75)).ToNurbsCurve();
+                var extrusion = Extrusion.CreateExtrusion(skylightProfile, new Vector3d(0, 0, 35)).ToBrep();
+                var skylightEndCap = skylightProfile.DuplicateCurve();
+                skylightEndCap.Translate(new Vector3d(0, 0, 35));
+
+                var carve = new List<Brep>
+                {
+                    extrusion,
+                    Brep.CreatePlanarBreps(skylightProfile, 0.1)[0],
+                    Brep.CreatePlanarBreps(skylightEndCap, 0.1)[0]
+                };
+
+                skylightRemovals.Add(Brep.JoinBreps(carve, 0.1)[0]);
+            }
+
+            res.SculptedRoofMass = res.SculptedRoofMass.SafeBooleanDifference(skylightRemovals);
         }
     }
 }
