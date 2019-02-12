@@ -52,7 +52,11 @@
     outline: 3px solid black;
     outline-offset: -3px;
 
-    background: grey;
+    background-image: 
+    linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black  75%, black), 
+    linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
+    background-size: 4px 4px, 4px 4px, 100% 100%;
+    background-position: 0px 0px, 2px 2px, 0px 0px;
 }
 
 .progress-items__start--started {
@@ -82,12 +86,15 @@
 }
 
 .progress-items__step--active {
-    background: grey;
-
+    background-image: 
+    linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black  75%, black), 
+    linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
+    background-size: 4px 4px, 4px 4px, 100% 100%;
+    background-position: 0px 0px, 2px 2px, 0px 0px;
 }
 
 .progress-items__step--completed {
-
+    background: black;
 }
 
 .instructions {
@@ -97,7 +104,7 @@
 
 .launch {
     display: grid;
-    grid-template-rows: 1fr 5vw;
+    grid-template-rows: 1fr 15vw;
     grid-template-columns: 1fr 1fr;
 
     height: 100%;

@@ -1,4 +1,4 @@
-import { DialectManifest } from './../../../../models/dialect_manifest';
+import { DialectManifest } from './../../../../../../public/src/models/dialect_manifest';
 
 export const CantleyManifest: DialectManifest = {
     name: "cantley",
@@ -11,16 +11,19 @@ export const CantleyManifest: DialectManifest = {
             number: 0,
             inputType: "",
             instructions: "make ground",
+            completed: false,
         },
         {
             number: 1,
             inputType: "",
             instructions: "draw region",
+            completed: false,
         },
         {
             number: 2,
             inputType: "",
             instructions: "draw armature axis",
+            completed:false,
         },
     ]
 }

@@ -1,4 +1,4 @@
-import { DialectManifest } from './../../../models/dialect_manifest';
+import { DialectManifest } from './../../../../../public/src/models/dialect_manifest';
 
 export const AleppoManifest: DialectManifest = {
     name: "aleppo",
@@ -11,6 +11,7 @@ export const AleppoManifest: DialectManifest = {
             number: 0,
             inputType: "",
             instructions: "pick sector",
+            completed: false,
         },
     ]
 }
