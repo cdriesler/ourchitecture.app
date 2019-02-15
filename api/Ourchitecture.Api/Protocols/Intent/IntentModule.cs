@@ -1,11 +1,15 @@
-﻿using Nancy;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Nancy;
 using Rhino.Geometry;
 
-namespace Ourchitecture.Api.Routes
+namespace Ourchitecture.Api.Protocols.Intent
 {
-    public class BaseModule : NancyModule
+    public class IntentModule : NancyModule
     {
-        public BaseModule()
+        public IntentModule()
         {
             Get["/"] = _ => "Hello World!";
             Get["/health"] = _ => "Healthy!";

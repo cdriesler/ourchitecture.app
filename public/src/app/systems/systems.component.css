@@ -1,0 +1,143 @@
+.wrapper-systems {
+    display: grid;
+    grid-template-columns: 10vw 80vw 10vw;
+    grid-template-rows: 1fr 1fr;
+}
+
+.content {
+    grid-column: 2 / span 1;
+    grid-template-rows: 1 / span 2;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.language {
+    margin-left: 5px;
+    margin-right: 5px;
+    width: calc(80vw - 10px);
+    margin-bottom: 5vw;
+
+    font-size: 2.3vw;
+    line-height: 2.7vw;
+}
+
+.language__title {
+    display: grid;
+
+    grid-template-columns: 3fr 1fr;
+
+    font-weight: bold;
+
+    margin-bottom: 1vw;
+}
+
+.language__title__name {
+    grid-template-columns: 1 / span 1;
+}
+
+.language__title__version {
+    grid-template-columns: 2 / span 1;
+    text-align: right;
+
+    font-weight: normal;
+}
+
+.language__description {
+    margin: 0;
+
+    margin-bottom: 2vw;
+}
+
+.language__dialects {
+    display: flex;
+    flex-direction: row;
+}
+
+.language__dialects__launch {
+    margin-left: 2vw;
+
+    border: 3px solid black;
+    width: 10vw;
+    height: 10vw;
+
+    font: "Comic Sans MS", cursive, sans-serif;
+    font-weight: normal;
+    line-height: 10vw;
+    vertical-align: middle;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+}
+
+.language__dialects__launch:hover {
+    background: black;
+}
+
+.dialect {
+    width: 10vw;
+    height: 10vw;
+
+    line-height: 10vw;
+    text-align: center;
+
+    font-size: 1.5vw;
+    vertical-align: middle;
+
+    border: 3px solid black;
+    background-color: none;
+}
+
+.dialect--loading {
+    background-color: black !important;
+}
+
+.dialect--loaded {
+    animation-name: dialect--appear;
+    animation-duration: 0.5s;
+}
+
+@keyframes dialect--appear {
+    0% { background-color: black; }
+    100% { background-color: white; }
+}
+
+.dialect--selected {
+    background-image: 
+        linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black  75%, black), 
+        linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
+    background-size: 4px 4px, 4px 4px, 100% 100%;
+    background-position: 0px 0px, 2px 2px, 0px 0px;
+}
+
+.dialect--offline {
+    background: 
+    linear-gradient(to top left,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0) calc(50% - 2px),
+        rgba(0,0,0,1) calc(50% - 1.99px),
+        rgba(0,0,0,1) calc(50% + 1.99px),
+        rgba(0,0,0,0) calc(50% + 2px),
+        rgba(0,0,0,0) 100%),
+    linear-gradient(to top right,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0) calc(50% - 2px),
+        rgba(0,0,0,1) calc(50% - 1.99px),
+        rgba(0,0,0,1) calc(50% + 1.99px),
+        rgba(0,0,0,0) calc(50% + 2px),
+        rgba(0,0,0,0) 100%);
+}
+
+.dialect:hover {
+    cursor: pointer;
+    background-image: 
+        linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black  75%, black), 
+        linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
+    background-size: 4px 4px, 4px 4px, 100% 100%;
+    background-position: 0px 0px, 2px 2px, 0px 0px;
+}
+
+.dialect--spaced {
+    margin-left: 2vw;
+}
+

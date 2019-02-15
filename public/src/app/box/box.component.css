@@ -1,0 +1,144 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: 10vw 80vw 10vw;
+    grid-template-rows: 80vw 10vw 7fr;
+
+    height: calc(100vh - 20vw);
+
+    font-size: 2.3vw;
+    line-height: 2.7vw;
+}
+
+.box {
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 1;
+
+    outline: 3px solid black;
+    outline-offset: -3px;
+}
+
+.progress {
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+
+    display: grid;
+    grid-template-rows: 1fr 3px 1fr;
+    grid-template-columns: 1fr 1fr;
+}
+
+.progress__background-line{
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 2;
+
+    background: black;
+}
+
+.progress-items {
+    grid-row: 1 / span 3;
+    grid-column: 1 / span 2;
+
+    background: none;
+
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
+.progress-items__start {
+    height: 5vw;
+    width: 5vw;
+    margin-top: 2.5vw;
+
+    outline: 3px solid black;
+    outline-offset: -3px;
+
+    background-image: 
+    linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black  75%, black), 
+    linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
+    background-size: 4px 4px, 4px 4px, 100% 100%;
+    background-position: 0px 0px, 2px 2px, 0px 0px;
+}
+
+.progress-items__start--started {
+    background: black;
+}
+
+.progress-items__end {
+    height: 5vw;
+    width: 5vw;
+    margin-top: 2.5vw;
+
+    outline: 3px solid black;
+    outline-offset: -3px;
+
+    background: white;
+}
+
+.progress-items__step {
+    height: 5vw;
+    width: 5vw;
+    margin-top: 2.5vw;
+
+    outline: 3px solid black;
+    outline-offset: -3px;
+
+    background: white;
+}
+
+.progress-items__step--active {
+    background-image: 
+    linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black  75%, black), 
+    linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
+    background-size: 4px 4px, 4px 4px, 100% 100%;
+    background-position: 0px 0px, 2px 2px, 0px 0px;
+}
+
+.progress-items__step--completed {
+    background: black;
+}
+
+.instructions {
+    grid-column: 2 / span 1;
+    grid-row: 3 / span 1;
+}
+
+.launch {
+    display: grid;
+    grid-template-rows: 1fr 15vw;
+    grid-template-columns: 1fr 1fr;
+
+    height: 100%;
+
+    background: gray;
+}
+
+.launch__description {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 2;
+}
+
+.launch__session-id {
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 1;
+}
+
+.launch__session-id input {
+    outline: none;
+    border: none;
+    border-bottom: 3px solid black;
+
+    width: 10vw;
+    font-size: 2.3vw;
+}
+
+.launch__session-start {
+    grid-row: 2 / span 1;
+    grid-column: 2 / span 1;
+
+    text-align: right;
+}
+
+.launch__session-start__button:hover {
+    background: black;
+    cursor: pointer;
+}

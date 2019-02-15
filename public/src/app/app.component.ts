@@ -6,10 +6,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'ourchitecture';
+  title = 'ourchitecture.app';
   headerActive: boolean;
+
+  constructor() {}
 
   onActivateHeader() {
     this.headerActive = !this.headerActive;
   }
+
+  ngOnInit() {
+  }
 }
+
+//(<any>Object).values(res);
