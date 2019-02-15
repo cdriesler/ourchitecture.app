@@ -311,12 +311,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protocols\Intent\IntentModule.cs" />
+    <Compile Include="Protocols\Motley\Common\Measure.cs" />
+    <Compile Include="Protocols\Motley\Common\Motifs.cs" />
     <Compile Include="Protocols\Motley\MotleyModule.cs" />
     <Compile Include="Protocols\Motley\MotleyRequest.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Impact\ImpactRequest.cs" />
     <Compile Include="Protocols\Motley\Praxis\Swerve\Swerve.cs" />
-    <Compile Include="Protocols\Motley\Praxis\Vendor\Logic\Glue.cs" />
-    <Compile Include="Protocols\Motley\Praxis\Vendor\Logic\Measure.cs" />
-    <Compile Include="Protocols\Motley\Praxis\Vendor\Logic\Motifs.cs" />
     <Compile Include="Protocols\Motley\Praxis\Vendor\Models\VendorCell.cs" />
     <Compile Include="Protocols\Motley\Praxis\Vendor\Models\VendorEntrance.cs" />
     <Compile Include="Protocols\Motley\Praxis\Vendor\Models\VendorPathFlank.cs" />
@@ -346,7 +346,9 @@
   <ItemGroup>
     <Folder Include="Drawing\" />
     <Folder Include="Protocols\Motley\Assets\" />
-    <Folder Include="Protocols\Motley\Common\" />
+    <Folder Include="Protocols\Motley\Praxis\Impact\Diagrams\" />
+    <Folder Include="Protocols\Motley\Praxis\Impact\Models\" />
+    <Folder Include="Protocols\Motley\Praxis\Impact\Styles\" />
     <Folder Include="Protocols\Motley\Praxis\Vendor\Styles\" />
   </ItemGroup>
   <PropertyGroup>

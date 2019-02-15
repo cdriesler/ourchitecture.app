@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Rhino.Geometry;
 
-namespace Ourchitecture.Api.Protocols.Motley.Vendor
+namespace Ourchitecture.Api.Protocols.Motley
 {
     public static class Motifs
     {
