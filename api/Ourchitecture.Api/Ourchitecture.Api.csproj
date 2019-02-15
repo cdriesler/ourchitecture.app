@@ -313,16 +313,16 @@
     <Compile Include="Protocols\Intent\IntentModule.cs" />
     <Compile Include="Protocols\Motley\MotleyModule.cs" />
     <Compile Include="Protocols\Motley\MotleyRequest.cs" />
-    <Compile Include="Protocols\Motley\Swerve\Swerve.cs" />
-    <Compile Include="Protocols\Motley\Vendor\Logic\Glue.cs" />
-    <Compile Include="Protocols\Motley\Vendor\Logic\Measure.cs" />
-    <Compile Include="Protocols\Motley\Vendor\Logic\Motifs.cs" />
-    <Compile Include="Protocols\Motley\Vendor\Models\VendorCell.cs" />
-    <Compile Include="Protocols\Motley\Vendor\Models\VendorEntrance.cs" />
-    <Compile Include="Protocols\Motley\Vendor\Models\VendorPathFlank.cs" />
-    <Compile Include="Protocols\Motley\Vendor\VendorSchema.cs" />
-    <Compile Include="Protocols\Motley\Vendor\VendorManifest.cs" />
-    <Compile Include="Protocols\Motley\Vendor\VendorRequest.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Swerve\Swerve.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Vendor\Logic\Glue.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Vendor\Logic\Measure.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Vendor\Logic\Motifs.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Vendor\Models\VendorCell.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Vendor\Models\VendorEntrance.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Vendor\Models\VendorPathFlank.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Vendor\VendorSchema.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Vendor\VendorManifest.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Vendor\VendorRequest.cs" />
     <Compile Include="Resthopper\Exceptions\PayAttentionException.cs" />
     <Compile Include="Resthopper\Models\GhPath.cs" />
     <Compile Include="Resthopper\Models\GhTypeCodes.cs" />
@@ -345,7 +345,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Drawing\" />
-    <Folder Include="Protocols\Motley\Vendor\Styles\" />
+    <Folder Include="Protocols\Motley\Assets\" />
+    <Folder Include="Protocols\Motley\Common\" />
+    <Folder Include="Protocols\Motley\Praxis\Vendor\Styles\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
