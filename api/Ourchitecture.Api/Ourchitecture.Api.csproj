@@ -315,7 +315,9 @@
     <Compile Include="Protocols\Motley\Common\Motifs.cs" />
     <Compile Include="Protocols\Motley\MotleyModule.cs" />
     <Compile Include="Protocols\Motley\MotleyRequest.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Impact\ImpactManifest.cs" />
     <Compile Include="Protocols\Motley\Praxis\Impact\ImpactRequest.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Impact\ImpactSchema.cs" />
     <Compile Include="Protocols\Motley\Praxis\Swerve\Swerve.cs" />
     <Compile Include="Protocols\Motley\Praxis\Vendor\Models\VendorCell.cs" />
     <Compile Include="Protocols\Motley\Praxis\Vendor\Models\VendorEntrance.cs" />

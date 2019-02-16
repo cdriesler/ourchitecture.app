@@ -1,23 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using Ourchitecture.Api.Protocols;
+
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
+namespace Ourchitecture.Api.Grasshopper.Create
 {
-    public class Swerve : GH_Component
+    public class CreateDiagram : GH_Component
     {
         /// <summary>
-        /// Initializes a new instance of the Swerve class.
+        /// Initializes a new instance of the CreateDiagram class.
         /// </summary>
-        public Swerve(): base(
-            "Swerve", 
-            "Swerve",
-            "Description",
-            "Protocol", 
-            "Motley"
-            )
+        public CreateDiagram()
+          : base("Create Diagram", "Diagram",
+              "Parse praxis for diagrams.",
+              Properties.Resources.Category_Name, "Create")
         {
         }
 
@@ -26,8 +23,6 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddCurveParameter("Path", "P", "Path to aggregate along.", GH_ParamAccess.item);
-            pManager.AddCurveParameter("Cell", "C", "Basic cell geometry.", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -35,8 +30,6 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddGeometryParameter("Result Geometry", "G", "Resultant construct in rhino geometry.", GH_ParamAccess.list);
-            pManager.AddTextParameter("Result SVG", "SVG", "Resultant construct as svg drawing.", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -45,7 +38,6 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-
         }
 
         /// <summary>
@@ -66,7 +58,7 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("83460d82-1092-4643-b025-5be4bf872ea6"); }
+            get { return new Guid("08ac47c5-e709-4400-a279-902084fcd82c"); }
         }
     }
 }

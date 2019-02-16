@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using Ourchitecture.Api.Protocols.Motley.Impact;
 using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
 using Rhino.Geometry;
 
-namespace Ourchitecture.Api.Grasshopper.Protocols.Intent
+namespace Ourchitecture.Api.Grasshopper.Create.Geometry
 {
-    public class ModelToJson : GH_Component
+    public enum GeometryRequestType { Test, All }
+
+    public class CreateGeometry : GH_Component
     {
         /// <summary>
-        /// Initializes a new instance of the ModelToJson class.
+        /// Initializes a new instance of the CreateGeometry class.
         /// </summary>
-        public ModelToJson()
-          : base("ModelToJson", 
-                "Json",
-              "Given a 3dm object, output its correlated text-based json.",
-              Properties.Resources.Category_Name, "Intent")
+        public CreateGeometry()
+          : base("Create Geometry", "Geometry",
+              "Parse praxis result for a subset of useful geometry.",
+              Properties.Resources.Category_Name, "Create")
         {
         }
 
@@ -24,7 +26,8 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Intent
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGeometryParameter("Geometry", "G", "Geometry to convert.", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Manifest", "[?][?]", "Manifest to parse for geometry.", GH_ParamAccess.item);
+            pManager.AddIntegerParameter("Type", "T", "Type of geometry to request. 0 = Test, 1 = All", GH_ParamAccess.item, 0);
         }
 
         /// <summary>
@@ -32,7 +35,7 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Intent
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddTextParameter("Json", "J", "Output json.", GH_ParamAccess.item);
+            pManager.AddGeometryParameter("Geometry", "G", "Output geometry.", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -41,14 +44,23 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Intent
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            GeometryBase geo = null;
-            if (!DA.GetData(0, ref geo)) return;
+            ImpactManifest manifest = null;
+            if (!DA.GetData(0, ref manifest)) return;
 
-            var data = JsonConvert.SerializeObject(geo);
+            int type = 0;
+            if (!DA.GetData(1, ref type)) return;
 
-            System.IO.File.WriteAllText(@"C:\Users\cdrie\Google Drive\academic\prattsoa\2019SP\ARCH 503\_protocols\motley\_intent\memory\model_json.txt", data);
+            var geo = new List<GeometryBase>();
+     
+            if (manifest != null)
+            {
+                geo = ImpactGeometry.GetGeometry(manifest, (GeometryRequestType)type);
+                DA.SetDataList(0, geo);
+                return;
+            }
 
-            DA.SetData(0, data);
+            AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "No geometry parsing logic found for supplied manifest type.");
+            return;
         }
 
         /// <summary>
@@ -69,7 +81,7 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Intent
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("121fb4fe-9408-4591-bce3-80935c05e938"); }
+            get { return new Guid("e511fcbf-accb-4a5f-9a8e-4c0302f0c82d"); }
         }
     }
 }

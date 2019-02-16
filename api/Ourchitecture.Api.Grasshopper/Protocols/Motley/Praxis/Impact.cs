@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using Ourchitecture.Api.Protocols.Motley;
+using Ourchitecture.Api.Protocols.Motley.Impact;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace Ourchitecture.Api.Grasshopper.Protocols.Intent
+namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
 {
-    public class ModelToJson : GH_Component
+    public class Impact : GH_Component
     {
         /// <summary>
-        /// Initializes a new instance of the ModelToJson class.
+        /// Initializes a new instance of the Impact class.
         /// </summary>
-        public ModelToJson()
-          : base("ModelToJson", 
-                "Json",
-              "Given a 3dm object, output its correlated text-based json.",
-              Properties.Resources.Category_Name, "Intent")
+        public Impact()
+          : base("Impact", "Impact",
+              "",
+              Properties.Resources.Category_Name, "Motley")
         {
         }
 
@@ -24,7 +24,9 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Intent
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGeometryParameter("Geometry", "G", "Geometry to convert.", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Motley Request", "[M]", "Input packaged for motley protocol.", GH_ParamAccess.item);
+            pManager.AddCurveParameter("Ruin Regions", "R", "Regions to interact with.", GH_ParamAccess.list);
+            pManager.AddIntegerParameter("Market Cell Quota", "Q", "Number of market cells to request.", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -32,7 +34,7 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Intent
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddTextParameter("Json", "J", "Output json.", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Impact Manifest", "[M][I]", "Unformatted results from impact praxis.", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -41,14 +43,19 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Intent
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            GeometryBase geo = null;
-            if (!DA.GetData(0, ref geo)) return;
+            MotleyRequest req = null;
+            if (!DA.GetData(0, ref req)) return;
 
-            var data = JsonConvert.SerializeObject(geo);
+            var regions = new List<Curve>();
+            if (!DA.GetDataList(1, regions)) return;
 
-            System.IO.File.WriteAllText(@"C:\Users\cdrie\Google Drive\academic\prattsoa\2019SP\ARCH 503\_protocols\motley\_intent\memory\model_json.txt", data);
+            int quota = 0;
+            if (!DA.GetData(2, ref quota)) return;
 
-            DA.SetData(0, data);
+            var request = new ImpactRequest(req, regions, quota);
+            var result = ImpactSchema.Solve(request);
+
+            DA.SetData(0, result);
         }
 
         /// <summary>
@@ -69,7 +76,7 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Intent
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("121fb4fe-9408-4591-bce3-80935c05e938"); }
+            get { return new Guid("fb8ce6ea-5e7e-434a-bba1-d7abf6911dd2"); }
         }
     }
 }
