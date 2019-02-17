@@ -52,6 +52,11 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
             return Rhino.Geometry.Intersect.Intersection.CurveCurve(crv, QuadRegion, 0.1, 0.1).Any(x => x.IsPoint);
         }
 
+        public bool CrossesQuadRegion(Curve crv)
+        {
+            return Rhino.Geometry.Intersect.Intersection.CurveCurve(crv, QuadRegion, 0.1, 0.1).Where(x => x.IsPoint).Count() > 1;
+        }
+
         public Curve FirstSegmentIntersection(Curve crv)
         {
             throw new NotImplementedException();

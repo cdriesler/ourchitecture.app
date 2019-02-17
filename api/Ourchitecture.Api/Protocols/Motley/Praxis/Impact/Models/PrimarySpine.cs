@@ -57,10 +57,12 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
                     cxRegions.RemoveAt(0);
                 }
 
+                var validCxRegions = cxRegions.Where(x => x.CrossesQuadRegion(PrimarySpineCurve)).ToList();
+
                 //Generate truncated spine.
-                if (cxRegions.Any())
+                if (validCxRegions.Any())
                 {
-                    var endPt = Rhino.Geometry.Intersect.Intersection.CurveCurve(PrimarySpineCurve, cxRegions[0].QuadRegion, 0.1, 0.1)
+                    var endPt = Rhino.Geometry.Intersect.Intersection.CurveCurve(PrimarySpineCurve, validCxRegions[0].QuadRegion, 0.1, 0.1)
                         .Where(x => x.IsPoint)
                         .Select(x => x.PointA)
                         .OrderBy(x => PrimarySpineCurve.PointAtStart.DistanceTo(x))
@@ -69,6 +71,8 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
                     PrimarySpineCurve = new LineCurve(PrimarySpineCurve.PointAtStart, endPt);
 
                     complete += Convert.ToInt32(Math.Floor(PrimarySpineCurve.GetLength() / step) * 2);
+
+                    return target - complete;
                 }
 
                 //Generate primary splinter curve.
@@ -76,11 +80,10 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
                 //If less than half of quota fulfilled, generate secondary spliter curves.
 
                 //Generate tertiary splinter curves.
-
-                return target - complete;
             }
 
             //If not, check if edges intersect any regions.
+
 
 
             //If no intersections, trim path to bounds.
