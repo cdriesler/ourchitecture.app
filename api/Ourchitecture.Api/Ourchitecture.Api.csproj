@@ -319,8 +319,9 @@
     <Compile Include="Protocols\Motley\Praxis\Impact\ImpactManifest.cs" />
     <Compile Include="Protocols\Motley\Praxis\Impact\ImpactRequest.cs" />
     <Compile Include="Protocols\Motley\Praxis\Impact\ImpactSchema.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Impact\Schema\Composition.cs" />
     <Compile Include="Protocols\Motley\Praxis\Impact\Schema\Noise.cs" />
-    <Compile Include="Protocols\Motley\Praxis\Impact\Schema\Volatility.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Impact\Schema\Variance.cs" />
     <Compile Include="Protocols\Motley\Praxis\Swerve\Swerve.cs" />
     <Compile Include="Protocols\Motley\Praxis\Vendor\Models\VendorCell.cs" />
     <Compile Include="Protocols\Motley\Praxis\Vendor\Models\VendorEntrance.cs" />
