@@ -18,11 +18,14 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
         {
             var res = new ImpactManifest(req);
 
+            //Measure input
             EvaluateInputComposition(res);
             EvaluateInputMeasurements(res);
             EvaluateAverages(res);
             EvaluateVariance(res);
             EvaluateNoise(res);
+
+            //Begin path construction
 
             return res;
         }
@@ -31,6 +34,8 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
         {
             res.PathSegments = Composition.GetCurveAsLinearSegments(res.PrimaryPathCurve);
             res.MarketCellSegments = Composition.GetCurveAsLinearSegments(res.PrimaryMarketCellCurve);
+
+            res.PrimaryRuinRegions.ForEach(x => res.MemorialRegions.Add(new MemorialRegion(x)));
         }
 
         private static void EvaluateInputMeasurements(ImpactManifest res)

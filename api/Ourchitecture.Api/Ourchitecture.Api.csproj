@@ -320,6 +320,7 @@
     <Compile Include="Protocols\Motley\Praxis\Impact\ImpactManifest.cs" />
     <Compile Include="Protocols\Motley\Praxis\Impact\ImpactRequest.cs" />
     <Compile Include="Protocols\Motley\Praxis\Impact\ImpactSchema.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Impact\Models\MemorialRegion.cs" />
     <Compile Include="Protocols\Motley\Praxis\Impact\Schema\Composition.cs" />
     <Compile Include="Protocols\Motley\Praxis\Impact\Schema\Noise.cs" />
     <Compile Include="Protocols\Motley\Praxis\Impact\Schema\Variance.cs" />
@@ -353,7 +354,6 @@
   <ItemGroup>
     <Folder Include="Drawing\" />
     <Folder Include="Protocols\Motley\Assets\" />
-    <Folder Include="Protocols\Motley\Praxis\Impact\Models\" />
     <Folder Include="Protocols\Motley\Praxis\Impact\Styles\" />
     <Folder Include="Protocols\Motley\Praxis\Vendor\Styles\" />
   </ItemGroup>

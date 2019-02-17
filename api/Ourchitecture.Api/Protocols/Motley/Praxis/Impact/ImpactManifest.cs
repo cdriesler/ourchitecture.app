@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Rhino.Geometry;
 
+
 namespace Ourchitecture.Api.Protocols.Motley.Impact
 {
     public class ImpactManifest
@@ -68,6 +69,10 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
         public double NoiseFromPrimaryMarketCellSegmentLengthVariance { get; set; }
         public double NoiseFromPrimaryMarketCellSegmentSlopeVariance { get; set; }
         public double NoiseFromPrimaryMarketCellAreaVariance { get; set; }
+
+        //Intermediate geometric models
+        public List<MemorialRegion> MemorialRegions { get; set; } = new List<MemorialRegion>();
+
 
         public ImpactManifest(ImpactRequest req)
         {
