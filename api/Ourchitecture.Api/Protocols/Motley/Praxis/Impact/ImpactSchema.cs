@@ -51,6 +51,8 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
             res.MarketCellDepth = Math.Abs(box.Max.Y - box.Min.Y);
             res.MarketCellBoundingBoxArea = new Rectangle3d(Plane.WorldXY, new Point3d(box.Min.X, box.Min.Y, 0), new Point3d(box.Max.X, box.Max.Y, 0)).Area;
             res.MarketCellArea = AreaMassProperties.Compute(res.PrimaryMarketCellCurve).Area;
+
+
         }
 
         private static void EvaluateAverages(ImpactManifest res)

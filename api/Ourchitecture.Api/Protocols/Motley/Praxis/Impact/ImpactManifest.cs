@@ -29,6 +29,7 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
         public double MarketCellDepth { get; set; }
         public double MarketCellBoundingBoxArea { get; set; }
         public double MarketCellArea { get; set; }
+        public double PrecastArchWidth { get; set; }
 
         //Average values
         public double AverageFromPrimaryPathSegmentLengths { get; set; }
@@ -72,7 +73,13 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
 
         //Intermediate geometric models
         public List<MemorialRegion> MemorialRegions { get; set; } = new List<MemorialRegion>();
+        public List<PrimarySpine> PrimarySpines { get; set; } = new List<PrimarySpine>();
+        public List<SecondarySpine> SecondarySpines { get; set; } = new List<SecondarySpine>();
+        public List<TertiarySpine> TertiarySpine { get; set; } = new List<TertiarySpine>();
 
+        //Intermediate population statistics
+        public int MarketCellsRemaining { get; set; }
+        public int MarketCellsPlaced { get; set; }
 
         public ImpactManifest(ImpactRequest req)
         {

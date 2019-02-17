@@ -306,6 +306,7 @@
     <Compile Include="Extensions\Contain.cs" />
     <Compile Include="Extensions\ExtrudeAndCap.cs" />
     <Compile Include="Extensions\NoiseBasedValue.cs" />
+    <Compile Include="Extensions\PartitionByApproximateSize.cs" />
     <Compile Include="Extensions\PlanarSlope.cs" />
     <Compile Include="Extensions\Remap.cs" />
     <Compile Include="Extensions\SafeBooleanDifference.cs" />
@@ -324,6 +325,9 @@
     <Compile Include="Protocols\Motley\Praxis\Impact\ImpactRequest.cs" />
     <Compile Include="Protocols\Motley\Praxis\Impact\ImpactSchema.cs" />
     <Compile Include="Protocols\Motley\Praxis\Impact\Models\MemorialRegion.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Impact\Models\PrimarySpine.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Impact\Models\SecondarySpine.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Impact\Models\TertiarySpine.cs" />
     <Compile Include="Protocols\Motley\Praxis\Swerve\Swerve.cs" />
     <Compile Include="Protocols\Motley\Praxis\Vendor\Models\VendorCell.cs" />
     <Compile Include="Protocols\Motley\Praxis\Vendor\Models\VendorEntrance.cs" />
