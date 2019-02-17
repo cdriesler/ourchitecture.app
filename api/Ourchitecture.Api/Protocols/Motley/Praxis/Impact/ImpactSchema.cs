@@ -26,6 +26,7 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
 
             //Begin path construction
             GenerateMemorialRegions(res);
+            GeneratePrimarySpine(res);
 
             return res;
         }
@@ -52,7 +53,7 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
             res.MarketCellBoundingBoxArea = new Rectangle3d(Plane.WorldXY, new Point3d(box.Min.X, box.Min.Y, 0), new Point3d(box.Max.X, box.Max.Y, 0)).Area;
             res.MarketCellArea = AreaMassProperties.Compute(res.PrimaryMarketCellCurve).Area;
 
-
+            res.PrecastArchWidth = res.MarketCellWidth.PartitionByApproximateSize(5);
         }
 
         private static void EvaluateAverages(ImpactManifest res)
@@ -94,6 +95,19 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
         private static void GenerateMemorialRegions(ImpactManifest res)
         {
             res.PrimaryRuinRegions.ForEach(x => res.MemorialRegions.Add(new MemorialRegion(x)));
+        }
+
+        private static void GeneratePrimarySpine(ImpactManifest res)
+        {
+            res.MarketCellsRemaining = res.PrimaryMarketQuota;
+
+            //First pass maximal extensions and reactions.
+            foreach(var segment in res.PathSegments)
+            {
+                var spine = new PrimarySpine(segment);
+                res.PrimarySpines.Add(spine);
+                res.MarketCellsRemaining = spine.Grow(res.MarketCellsRemaining, res.PrecastArchWidth);
+            }
         }
     }
 }

@@ -19,15 +19,9 @@ namespace Ourchitecture.Api.Grasshopper.Create.Geometry
 
         private static List<GeometryBase> TestGeometry(ImpactManifest manifest)
         {
-            var testMemorialRegion = manifest.MemorialRegions[0];
+            var geo = new List<GeometryBase>();
 
-            var geo = new List<GeometryBase>
-            {
-                testMemorialRegion.QuadSegmentA,
-                testMemorialRegion.QuadSegmentB,
-                testMemorialRegion.QuadSegmentC,
-                testMemorialRegion.QuadSegmentD,
-            };
+            manifest.PrimarySpines.ForEach(x => geo.Add(x.PrimarySpineCurve));
 
             return geo;
         }

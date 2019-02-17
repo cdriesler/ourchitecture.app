@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Ourchitecture.Api.Protocols.Motley;
 using Ourchitecture.Api.Protocols.Motley.Impact;
@@ -50,6 +51,7 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
 
             var regions = new List<Curve>();
             if (!DA.GetDataList(1, regions)) return;
+            if (regions.Any(x => x == null)) return;
 
             int quota = 0;
             if (!DA.GetData(2, ref quota)) return;
@@ -57,12 +59,7 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
             var request = new ImpactRequest(req, regions, quota);
             var result = ImpactSchema.Solve(request);
 
-            RhinoApp.WriteLine(result.NoiseFromPrimaryPathDeflectionVariance.ToString());
-            RhinoApp.WriteLine(result.NoiseFromPrimaryPathSegmentLengthVariance.ToString());
-            RhinoApp.WriteLine(result.NoiseFromPrimaryPathSegmentSlopeVariance.ToString());
-            RhinoApp.WriteLine(result.NoiseFromPrimaryMarketCellSegmentLengthVariance.ToString());
-            RhinoApp.WriteLine(result.NoiseFromPrimaryMarketCellSegmentSlopeVariance.ToString());
-            RhinoApp.WriteLine(result.NoiseFromPrimaryMarketCellAreaVariance.ToString());
+            //RhinoApp.WriteLine(result.PrecastArchWidth.ToString());
 
             DA.SetData(0, result);
         }
