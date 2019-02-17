@@ -28,9 +28,11 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
             Direction.Unitize();
         }
 
-        public int Grow(int target, double step, List<MemorialRegion> regions)
+        public int Grow(int target, double step, List<MemorialRegion> regions, Curve bounds)
         {
             var complete = 0;
+
+            Rhino.RhinoApp.WriteLine(target.ToString());
 
             //Generate ideal condition.
             var targetLength = (target / 2) * step;
@@ -82,11 +84,35 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
 
 
             //If no intersections, trim path to bounds.
+            var cxBounds = Rhino.Geometry.Intersect.Intersection.CurveCurve(PrimarySpineCurve, bounds, 0.1, 0.1);
 
+            if (cxBounds.Any(x => x.IsPoint))
+            {
+                var cxPts = cxBounds
+                    .Where(x => x.IsPoint)
+                    .Select(x => x.PointA)
+                    .OrderBy(x => PrimarySpineCurve.PointAtStart.DistanceTo(x))
+                    .ToList();
+
+                if (cxPts.First().DistanceTo(PrimarySpineCurve.PointAtStart) < 0.01)
+                {
+                    cxPts.RemoveAt(0);
+                }
+
+                if (cxPts.Any())
+                {
+                    PrimarySpineCurve = new LineCurve(PrimarySpineCurve.PointAtStart, cxPts[0]).ToNurbsCurve();
+
+                    complete += Convert.ToInt32(Math.Floor(PrimarySpineCurve.GetLength() / step) * 2);
+
+                    return target - complete;
+                }
+            }
 
             //Return unfulfilled target.
+            complete += Convert.ToInt32(Math.Floor(PrimarySpineCurve.GetLength() / step) * 2);
 
-            return target;
+            return target - complete;
         }
     }
 }
