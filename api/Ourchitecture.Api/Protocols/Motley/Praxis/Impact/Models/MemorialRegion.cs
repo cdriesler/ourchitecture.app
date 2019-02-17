@@ -40,7 +40,11 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
             }
 
             //Identify composition of quad region (i.e. relative positions of all segments)
-
+            QuadSegments = Composition.GetCurveAsSegmentsInClockwiseOrder(QuadRegion);
+            QuadSegmentA = QuadSegments[0];
+            QuadSegmentB = QuadSegments[1];
+            QuadSegmentC = QuadSegments[2];
+            QuadSegmentD = QuadSegments[3];
         }
         
     }

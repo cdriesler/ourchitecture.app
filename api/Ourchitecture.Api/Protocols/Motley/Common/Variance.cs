@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Rhino.Geometry;
 
-namespace Ourchitecture.Api.Protocols.Motley.Impact.Schema
+namespace Ourchitecture.Api.Protocols.Motley
 {
     /// <summary>
     /// Suite of evaluation methods for how "irregular" a given input is in the context of the current praxis.

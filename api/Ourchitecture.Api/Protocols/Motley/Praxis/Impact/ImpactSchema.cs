@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Ourchitecture.Api.Protocols.Motley.Impact.Schema;
 using Rhino.Geometry;
 
 namespace Ourchitecture.Api.Protocols.Motley.Impact
@@ -26,6 +25,7 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
             EvaluateNoise(res);
 
             //Begin path construction
+            GenerateMemorialRegions(res);
 
             return res;
         }
@@ -87,6 +87,11 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
             res.NoiseFromPrimaryMarketCellSegmentLengthVariance = res.VarianceFromPrimaryMarketCellSegmentLengths.Remap(cellSegmentLengthExtents, rng).Contain(rng);
             res.NoiseFromPrimaryMarketCellSegmentSlopeVariance = (res.VarianceFromPrimaryMarketCellSegmentSlopes.Remap(cellSegmentSlopeExtents, rng) - 0.1).Contain(rng);
             res.NoiseFromPrimaryMarketCellAreaVariance = res.VarianceFromPrimaryMarketCellArea.Remap(cellAreaExtents, rng).Contain(rng);
+        }
+
+        private static void GenerateMemorialRegions(ImpactManifest res)
+        {
+            res.PrimaryRuinRegions.ForEach(x => res.MemorialRegions.Add(new MemorialRegion(x)));
         }
     }
 }
