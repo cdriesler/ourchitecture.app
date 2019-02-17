@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Ourchitecture.Api.Protocols.Motley;
 using Ourchitecture.Api.Protocols.Motley.Impact;
 using Grasshopper.Kernel;
+using Grasshopper.Kernel.Parameters;
 using Rhino;
 using Rhino.Geometry;
 

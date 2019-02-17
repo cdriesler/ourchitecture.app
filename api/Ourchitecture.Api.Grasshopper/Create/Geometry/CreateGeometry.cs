@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Ourchitecture.Api.Protocols.Motley.Impact;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
+using Grasshopper.Kernel.Parameters;
 using Rhino.Geometry;
 
 namespace Ourchitecture.Api.Grasshopper.Create.Geometry
@@ -28,6 +29,10 @@ namespace Ourchitecture.Api.Grasshopper.Create.Geometry
         {
             pManager.AddGenericParameter("Manifest", "[?][?]", "Manifest to parse for geometry.", GH_ParamAccess.item);
             pManager.AddIntegerParameter("Type", "T", "Type of geometry to request. 0 = Test, 1 = All", GH_ParamAccess.item, 0);
+
+            Param_Integer param = pManager[1] as Param_Integer;
+            param.AddNamedValue("Test", 0);
+            param.AddNamedValue("All", 1);
         }
 
         /// <summary>
