@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Ourchitecture.Api.Protocols.Motley;
 using Ourchitecture.Api.Protocols.Motley.Impact;
 using Grasshopper.Kernel;
+using Rhino;
 using Rhino.Geometry;
 
 namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
@@ -54,6 +55,12 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
 
             var request = new ImpactRequest(req, regions, quota);
             var result = ImpactSchema.Solve(request);
+
+            RhinoApp.WriteLine(result.PrimaryPathLinearVolatility.ToString());
+            RhinoApp.WriteLine(result.PrimaryPathSegmentSlopeVolatility.ToString());
+            RhinoApp.WriteLine(result.PrimaryMarketCellSegmentLengthVolatility.ToString());
+            RhinoApp.WriteLine(result.PrimaryMarketCellSegmentSlopeVolatility.ToString());
+            RhinoApp.WriteLine(result.PrimaryMarketCellAreaVolatility.ToString());
 
             DA.SetData(0, result);
         }

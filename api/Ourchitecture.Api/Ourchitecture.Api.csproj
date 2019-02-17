@@ -305,6 +305,7 @@
   <ItemGroup>
     <Compile Include="Extensions\ExtrudeAndCap.cs" />
     <Compile Include="Extensions\NoiseBasedValue.cs" />
+    <Compile Include="Extensions\PlanarSlope.cs" />
     <Compile Include="Extensions\Remap.cs" />
     <Compile Include="Extensions\SafeBooleanDifference.cs" />
     <Compile Include="Extensions\StandardDeviation.cs" />
@@ -318,6 +319,8 @@
     <Compile Include="Protocols\Motley\Praxis\Impact\ImpactManifest.cs" />
     <Compile Include="Protocols\Motley\Praxis\Impact\ImpactRequest.cs" />
     <Compile Include="Protocols\Motley\Praxis\Impact\ImpactSchema.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Impact\Schema\Noise.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Impact\Schema\Volatility.cs" />
     <Compile Include="Protocols\Motley\Praxis\Swerve\Swerve.cs" />
     <Compile Include="Protocols\Motley\Praxis\Vendor\Models\VendorCell.cs" />
     <Compile Include="Protocols\Motley\Praxis\Vendor\Models\VendorEntrance.cs" />
@@ -348,7 +351,6 @@
   <ItemGroup>
     <Folder Include="Drawing\" />
     <Folder Include="Protocols\Motley\Assets\" />
-    <Folder Include="Protocols\Motley\Praxis\Impact\Diagrams\" />
     <Folder Include="Protocols\Motley\Praxis\Impact\Models\" />
     <Folder Include="Protocols\Motley\Praxis\Impact\Styles\" />
     <Folder Include="Protocols\Motley\Praxis\Vendor\Styles\" />
