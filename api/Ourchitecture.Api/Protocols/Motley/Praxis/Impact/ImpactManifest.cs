@@ -62,13 +62,12 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
         public double VarianceFromPrimaryMarketCellArea { get; set; }
 
         //Noise values (variance values normalized between 0 and 1 based on praxis qualities)
-        public double NoiseFromPrimaryPathLinearVolatility { get; set; }
-        public double NoiseFromPrimaryPathSegmentVolatility { get; set; }
-        public double NoiseFromPrimaryMarketCellSegmentLengthVolatility { get; set; }
-        public double NoiseFromPrimaryMarketCellSegmentSlopeVolatility { get; set; }
-        public double NoiseFromPrimaryMarketCellAreaVolatility { get; set; }
-
-
+        public double NoiseFromPrimaryPathDeflectionVariance { get; set; }
+        public double NoiseFromPrimaryPathSegmentLengthVariance { get; set; }
+        public double NoiseFromPrimaryPathSegmentSlopeVariance { get; set; }
+        public double NoiseFromPrimaryMarketCellSegmentLengthVariance { get; set; }
+        public double NoiseFromPrimaryMarketCellSegmentSlopeVariance { get; set; }
+        public double NoiseFromPrimaryMarketCellAreaVariance { get; set; }
 
         public ImpactManifest(ImpactRequest req)
         {

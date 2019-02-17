@@ -57,12 +57,12 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
             var request = new ImpactRequest(req, regions, quota);
             var result = ImpactSchema.Solve(request);
 
-            RhinoApp.WriteLine(result.VarianceFromPrimaryPathDeflection.ToString());
-            RhinoApp.WriteLine(result.VarianceFromPrimaryPathSegmentLengths.ToString());
-            RhinoApp.WriteLine(result.VarianceFromPrimaryPathSegmentSlopes.ToString());
-            RhinoApp.WriteLine(result.VarianceFromPrimaryMarketCellSegmentLengths.ToString());
-            RhinoApp.WriteLine(result.VarianceFromPrimaryMarketCellSegmentSlopes.ToString());
-            RhinoApp.WriteLine(result.VarianceFromPrimaryMarketCellArea.ToString());
+            RhinoApp.WriteLine(result.NoiseFromPrimaryPathDeflectionVariance.ToString());
+            RhinoApp.WriteLine(result.NoiseFromPrimaryPathSegmentLengthVariance.ToString());
+            RhinoApp.WriteLine(result.NoiseFromPrimaryPathSegmentSlopeVariance.ToString());
+            RhinoApp.WriteLine(result.NoiseFromPrimaryMarketCellSegmentLengthVariance.ToString());
+            RhinoApp.WriteLine(result.NoiseFromPrimaryMarketCellSegmentSlopeVariance.ToString());
+            RhinoApp.WriteLine(result.NoiseFromPrimaryMarketCellAreaVariance.ToString());
 
             DA.SetData(0, result);
         }

@@ -303,6 +303,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\Contain.cs" />
     <Compile Include="Extensions\ExtrudeAndCap.cs" />
     <Compile Include="Extensions\NoiseBasedValue.cs" />
     <Compile Include="Extensions\PlanarSlope.cs" />

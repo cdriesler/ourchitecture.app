@@ -68,7 +68,20 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
 
         private static void EvaluateNoise(ImpactManifest res)
         {
+            var rng = new Interval(0, 1);
+            var pathDeflectionExtents = new Interval(0, 200);
+            var pathSegmentLengthExtents = new Interval(0, 150);
+            var pathSegmentSlopeExtents = new Interval(0, 1);
+            var cellSegmentLengthExtents = new Interval(0, 5);
+            var cellSegmentSlopeExtents = new Interval(0, 2.5);
+            var cellAreaExtents = new Interval(0, 100);
 
+            res.NoiseFromPrimaryPathDeflectionVariance = res.VarianceFromPrimaryPathDeflection.Remap(pathDeflectionExtents, rng).Contain(rng);
+            res.NoiseFromPrimaryPathSegmentLengthVariance = res.VarianceFromPrimaryPathSegmentLengths.Remap(pathSegmentLengthExtents, rng).Contain(rng);
+            res.NoiseFromPrimaryPathSegmentSlopeVariance = res.VarianceFromPrimaryPathSegmentSlopes.Remap(pathSegmentSlopeExtents, rng).Contain(rng);
+            res.NoiseFromPrimaryMarketCellSegmentLengthVariance = res.VarianceFromPrimaryMarketCellSegmentLengths.Remap(cellSegmentLengthExtents, rng).Contain(rng);
+            res.NoiseFromPrimaryMarketCellSegmentSlopeVariance = (res.VarianceFromPrimaryMarketCellSegmentSlopes.Remap(cellSegmentSlopeExtents, rng) - 0.1).Contain(rng);
+            res.NoiseFromPrimaryMarketCellAreaVariance = res.VarianceFromPrimaryMarketCellArea.Remap(cellAreaExtents, rng).Contain(rng);
         }
     }
 }
