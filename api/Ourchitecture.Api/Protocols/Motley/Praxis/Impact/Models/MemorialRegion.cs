@@ -46,6 +46,21 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
             QuadSegmentC = QuadSegments[2];
             QuadSegmentD = QuadSegments[3];
         }
+
+        public bool IntersectsWithQuadRegion(Curve crv)
+        {
+            return Rhino.Geometry.Intersect.Intersection.CurveCurve(crv, QuadRegion, 0.1, 0.1).Any(x => x.IsPoint);
+        }
+
+        public Curve FirstSegmentIntersection(Curve crv)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Curve GetSplinterSegment(Curve crv)
+        {
+            throw new NotImplementedException();
+        }
         
     }
 }

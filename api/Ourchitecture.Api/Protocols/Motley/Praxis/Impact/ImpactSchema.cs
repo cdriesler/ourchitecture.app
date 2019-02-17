@@ -106,7 +106,7 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
             {
                 var spine = new PrimarySpine(segment);
                 res.PrimarySpines.Add(spine);
-                res.MarketCellsRemaining = spine.Grow(res.MarketCellsRemaining, res.PrecastArchWidth);
+                res.MarketCellsRemaining = spine.Grow(res.MarketCellsRemaining, res.PrecastArchWidth, res.MemorialRegions);
             }
         }
     }

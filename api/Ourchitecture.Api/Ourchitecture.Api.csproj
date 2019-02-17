@@ -305,6 +305,7 @@
   <ItemGroup>
     <Compile Include="Extensions\Contain.cs" />
     <Compile Include="Extensions\ExtrudeAndCap.cs" />
+    <Compile Include="Extensions\GetIntersectingRegions.cs" />
     <Compile Include="Extensions\NoiseBasedValue.cs" />
     <Compile Include="Extensions\PartitionByApproximateSize.cs" />
     <Compile Include="Extensions\PlanarSlope.cs" />
