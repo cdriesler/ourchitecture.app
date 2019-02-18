@@ -81,6 +81,9 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
         public int MarketCellsRemaining { get; set; }
         public int MarketCellsPlaced { get; set; }
 
+        //Output geometry
+        public List<Curve> Outlines { get; set; } = new List<Curve>();
+
         public ImpactManifest(ImpactRequest req)
         {
             PlanarBounds = req.ParentRequest.Boundary;

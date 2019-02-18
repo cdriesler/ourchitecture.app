@@ -27,6 +27,7 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
             //Begin path construction
             GenerateMemorialRegions(res);
             GeneratePrimarySpine(res);
+            GenerateBullshitOutlines(res);
 
             return res;
         }
@@ -223,6 +224,12 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
 
             res.PrimarySpines.ForEach(x => x.PrimarySpineCurve = x.PrimarySpineCurve.TrimLineWithinRegion(res.PlanarBounds));
             res.SecondarySpines.ForEach(x => x.Centerline = x.Centerline.TrimLineWithinRegion(res.PlanarBounds));
+        }
+
+        private static void GenerateBullshitOutlines(ImpactManifest res)
+        {
+            res.PrimarySpines.ForEach(x => res.Outlines.Add(Motifs.RoundedOffset(x.PrimarySpineCurve, 30)));
+            res.SecondarySpines.ForEach(x => res.Outlines.Add(Motifs.RoundedOffset(x.Centerline, 15)));
         }
     }
 }
