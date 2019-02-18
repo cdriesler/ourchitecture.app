@@ -96,7 +96,9 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
 
                 if (target - complete > target * 0.5)
                 {
-                    SecondarySplinterCurves.Add(PrimarySpineCurve.SafeOffsetMove(7.5, Point3d.Origin, true));
+                    SecondarySplinterCurves.Add(PrimarySpineCurve.SafeOffsetMove(22.5, Point3d.Origin, false));
+                    SecondarySplinterCurves.Add(PrimarySpineCurve.SafeOffsetMove(22.5, Point3d.Origin, true));
+                    SecondarySplinterCurves[SecondarySplinterCurves.Count - 1].Reverse();
                 }
 
                 return target - complete;
@@ -133,7 +135,9 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
                     if (target - complete > 5)
                     {
                         //Generate secondary paths.
-                        SecondarySplinterCurves.Add(PrimarySpineCurve.SafeOffsetMove(7.5, Point3d.Origin, false));
+                        SecondarySplinterCurves.Add(PrimarySpineCurve.SafeOffsetMove(22.5, Point3d.Origin, false));
+                        SecondarySplinterCurves.Add(PrimarySpineCurve.SafeOffsetMove(22.5, Point3d.Origin, true));
+                        SecondarySplinterCurves[SecondarySplinterCurves.Count - 1].Reverse();
                     }
 
                     return target - complete;

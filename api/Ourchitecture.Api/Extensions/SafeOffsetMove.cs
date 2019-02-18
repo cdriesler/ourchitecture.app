@@ -12,7 +12,7 @@ namespace Ourchitecture.Api
             crv.FrameAt(0, out var plane);
 
             var dirA = plane.YAxis * 1;
-            var dirB = plane.YAxis * -1;
+            var dirB = plane.YAxis * 1;
 
             var crvA = crv.DuplicateCurve();
             crvA.Translate(dirA * distance);

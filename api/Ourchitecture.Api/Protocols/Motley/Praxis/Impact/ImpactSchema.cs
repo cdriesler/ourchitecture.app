@@ -159,8 +159,33 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
                         //Generate secondary splinters
                         foreach (var secondary in secondaryCurves)
                         {
-                            secondary.Transform(Transform.Scale(secondary.PointAtNormalizedLength(0.5), (Math.Round(r.NextDouble() * res.MarketCellsRemaining) * res.PrecastArchWidth) / secondary.GetLength()));
-                            var delta = Convert.ToInt32(Math.Floor(secondary.GetLength() / res.PrecastArchWidth));
+                            secondary.Transform(Transform.Scale(secondary.PointAtNormalizedLength(0.5), (((1.5 - res.NoiseFromPrimaryMarketCellAreaVariance) * (res.MarketCellsRemaining / 2)) * res.PrecastArchWidth) / secondary.GetLength()));
+                            //secondary.Translate(new Vector3d(secondary.PointAtEnd - secondary.PointAtStart) * (10 * res.NoiseFromPrimaryPathDeflectionVariance));
+                            secondary.Transform(Transform.Rotation(r.NextDouble() * res.NoiseFromPrimaryPathDeflectionVariance * 1.2, secondary.PointAtNormalizedLength(res.NoiseFromPrimaryPathSegmentSlopeVariance)));
+
+                            var cx = Rhino.Geometry.Intersect.Intersection.CurveCurve(secondary, res.PlanarBounds, 0.1, 0.1).Where(x => x.IsPoint).Select(x => x.PointA).ToList();
+
+                            Curve secondaryCurve = null;
+
+                            if (cx.Count == 0)
+                            {
+                                secondaryCurve = secondary;
+                            }
+                            else if (cx.Count == 1)
+                            {
+                                secondaryCurve = new LineCurve(secondary.PointAtStart, cx[0]);
+                            }
+                            else if (cx.Count == 2)
+                            {
+                                secondaryCurve = new LineCurve(cx[0], cx[1]);
+                            }
+                            else
+                            {
+                                secondaryCurve = secondary;
+                                Rhino.RhinoApp.WriteLine("Secondary curve is really weird...");
+                            }
+
+                            var delta = Convert.ToInt32(Math.Floor(secondaryCurve.GetLength() / res.PrecastArchWidth));
 
                             if (delta == 0)
                             {
@@ -169,7 +194,7 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
                             }
 
                             res.MarketCellsRemaining -= delta;
-                            res.SecondarySpines.Add(new SecondarySpine(secondary));
+                            res.SecondarySpines.Add(new SecondarySpine(secondaryCurve));
                         }
 
                         //Commit any secondary splinters
