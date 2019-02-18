@@ -185,6 +185,11 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
                                 Rhino.RhinoApp.WriteLine("Secondary curve is really weird...");
                             }
 
+                            if (res.PlanarBounds.Contains(secondaryCurve.PointAtStart, Plane.WorldXY, 0.1) == PointContainment.Outside && res.PlanarBounds.Contains(secondaryCurve.PointAtEnd, Plane.WorldXY, 0.1) == PointContainment.Outside)
+                            {
+                                continue;
+                            }
+
                             var delta = Convert.ToInt32(Math.Floor(secondaryCurve.GetLength() / res.PrecastArchWidth));
 
                             if (delta == 0)
@@ -215,6 +220,9 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
                     }
                 }
             }
+
+            res.PrimarySpines.ForEach(x => x.PrimarySpineCurve = x.PrimarySpineCurve.TrimLineWithinRegion(res.PlanarBounds));
+            res.SecondarySpines.ForEach(x => x.Centerline = x.Centerline.TrimLineWithinRegion(res.PlanarBounds));
         }
     }
 }

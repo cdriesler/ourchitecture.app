@@ -314,6 +314,7 @@
     <Compile Include="Extensions\SafeOffsetMove.cs" />
     <Compile Include="Extensions\ShiftLeft.cs" />
     <Compile Include="Extensions\StandardDeviation.cs" />
+    <Compile Include="Extensions\TrimLineWithinRegion.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protocols\Intent\IntentModule.cs" />
