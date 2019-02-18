@@ -16,8 +16,8 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
         public Curve RightEdge { get; set; }
         public Curve RightAxis { get; set; }
 
-        public Curve PrimarySplinterCurves { get; set; }
-        public Curve SecondarySplinterCurves { get; set; }
+        public List<Curve> PrimarySplinterCurves { get; set; } = new List<Curve>();
+        public List<Curve> SecondarySplinterCurves { get; set; } = new List<Curve>();
 
         public List<Curve> LotProfiles { get; set; } = new List<Curve>();
 
@@ -32,14 +32,16 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
         {
             var complete = 0;
 
-            Rhino.RhinoApp.WriteLine(target.ToString());
+            //Rhino.RhinoApp.WriteLine(target.ToString());
 
             //Generate ideal condition.
             var targetLength = (target / 2) * step;
 
-            PrimarySpineCurve = new LineCurve(Centerline.PointAtStart, Centerline.PointAtLength(1));
+            PrimarySpineCurve = new LineCurve(Centerline.PointAtStart, Centerline.GetLength() > 1 ? Centerline.PointAtLength(1) : Centerline.PointAtEnd);
 
             PrimarySpineCurve.Transform(Transform.Scale(PrimarySpineCurve.PointAtStart, targetLength));
+
+            //Rhino.RhinoDoc.ActiveDoc.Objects.Add(PrimarySpineCurve);
 
             //Check if new line intersects any regions.
             var cxRegions = regions
@@ -62,22 +64,42 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
                 //Generate truncated spine.
                 if (validCxRegions.Any())
                 {
-                    var endPt = Rhino.Geometry.Intersect.Intersection.CurveCurve(PrimarySpineCurve, validCxRegions[0].QuadRegion, 0.1, 0.1)
+                    var endPts = Rhino.Geometry.Intersect.Intersection.CurveCurve(PrimarySpineCurve, validCxRegions[0].QuadRegion, 0.1, 0.1)
                         .Where(x => x.IsPoint)
                         .Select(x => x.PointA)
-                        .OrderBy(x => PrimarySpineCurve.PointAtStart.DistanceTo(x))
-                        .First();
+                        .OrderBy(x => PrimarySpineCurve.PointAtStart.DistanceTo(x));
 
-                    PrimarySpineCurve = new LineCurve(PrimarySpineCurve.PointAtStart, endPt);
+                    PrimarySpineCurve = new LineCurve(PrimarySpineCurve.PointAtStart, endPts.First());
 
                     complete += Convert.ToInt32(Math.Floor(PrimarySpineCurve.GetLength() / step) * 2);
 
-                    return target - complete;
+                    //Generate primary splinter curve.
+                    var splinterCurve = validCxRegions[0].GetSplinterSegment(PrimarySpineCurve);
+
+                    if (splinterCurve != null)
+                    {
+                        var splinterAxis = splinterCurve.SafeOffsetMove(15, validCxRegions[0].QuadRegion.GetBoundingBox(Plane.WorldXY).Center, false);
+
+                        //Rhino.RhinoDoc.ActiveDoc.Objects.Add(splinterAxis);
+
+                        splinterAxis.Transform(Transform.Scale(splinterAxis.PointAtNormalizedLength(0.5), 1 / splinterAxis.GetLength()));
+
+                        //splinterAxis.Translate(new Vector3d(splinterAxis.PointAtEnd - splinterAxis.PointAtStart) * 15)
+
+                        PrimarySplinterCurves.Add(splinterAxis);
+                    }
+
+                    PrimarySplinterCurves.Add(new LineCurve(endPts.Last(), new Point3d(endPts.Last()) + new Vector3d(endPts.First() - PrimarySpineCurve.PointAtStart)));
                 }
 
-                //Generate primary splinter curve.
-
                 //If less than half of quota fulfilled, generate secondary spliter curves.
+
+                if (target - complete > target * 0.5)
+                {
+                    SecondarySplinterCurves.Add(PrimarySpineCurve.SafeOffsetMove(7.5, Point3d.Origin, true));
+                }
+
+                return target - complete;
 
                 //Generate tertiary splinter curves.
             }
@@ -107,6 +129,12 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
                     PrimarySpineCurve = new LineCurve(PrimarySpineCurve.PointAtStart, cxPts[0]).ToNurbsCurve();
 
                     complete += Convert.ToInt32(Math.Floor(PrimarySpineCurve.GetLength() / step) * 2);
+
+                    if (target - complete > 5)
+                    {
+                        //Generate secondary paths.
+                        SecondarySplinterCurves.Add(PrimarySpineCurve.SafeOffsetMove(7.5, Point3d.Origin, false));
+                    }
 
                     return target - complete;
                 }

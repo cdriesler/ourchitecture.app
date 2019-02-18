@@ -64,7 +64,27 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
 
         public Curve GetSplinterSegment(Curve crv)
         {
-            throw new NotImplementedException();
+            var ccx = Rhino.Geometry.Intersect.Intersection.CurveCurve(crv, QuadRegion, 0.1, 0.1)
+                .Where(x => x.IsPoint);
+
+            if (!ccx.Any()) return null;
+
+            var targetPt = ccx
+                .OrderBy(x => crv.PointAtStart.DistanceTo(x.PointA))
+                .First()
+                .PointA;
+
+            var targetSegment = new List<Curve>(QuadSegments)
+                .OrderBy(x =>
+                {
+                    x.ClosestPoint(targetPt, out var t);
+                    return targetPt.DistanceTo(x.PointAt(t));
+                })
+                .First();
+
+            var targetIndex = (QuadSegments.IndexOf(targetSegment) + 1) % 4;
+
+            return QuadSegments[targetIndex];
         }
         
     }

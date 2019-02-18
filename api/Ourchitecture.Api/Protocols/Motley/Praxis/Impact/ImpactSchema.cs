@@ -107,6 +107,88 @@ namespace Ourchitecture.Api.Protocols.Motley.Impact
                 var spine = new PrimarySpine(segment);
                 res.PrimarySpines.Add(spine);
                 res.MarketCellsRemaining = spine.Grow(res.MarketCellsRemaining, res.PrecastArchWidth, res.MemorialRegions, res.PlanarBounds);
+
+                if (spine.PrimarySplinterCurves.Any() || spine.SecondarySplinterCurves.Any())
+                {
+                    var splinterCurves = new List<Curve>(spine.PrimarySplinterCurves);
+                    var secondaryCurves = new List<Curve>(spine.SecondarySplinterCurves);
+
+                    while(res.MarketCellsRemaining > 0 && (splinterCurves.Any() || secondaryCurves.Any()))
+                    {
+                        
+                        var splinterCache = new List<Curve>();
+                        var secondaryCache = new List<Curve>();
+
+                        //Generate primary splinters
+                        foreach (var splinter in splinterCurves)
+                        {
+                            //Rhino.RhinoDoc.ActiveDoc.Objects.Add(splinter);
+
+                            if (res.NoiseFromPrimaryPathDeflectionVariance > 0.1)
+                            {
+                                splinter.Translate(new Vector3d(splinter.PointAtStart - splinter.PointAtEnd) * (res.NoiseFromPrimaryPathDeflectionVariance * 35));
+                            }
+
+                            var splinterSpine = new PrimarySpine(splinter);
+                            res.PrimarySpines.Add(splinterSpine);
+                            res.MarketCellsRemaining = splinterSpine.Grow(res.MarketCellsRemaining, res.PrecastArchWidth, res.MemorialRegions, res.PlanarBounds);
+
+                            if (splinterSpine.PrimarySplinterCurves.Any())
+                            {
+                                splinterCache.AddRange(splinterSpine.PrimarySplinterCurves);
+                            }
+
+                            if (splinterSpine.SecondarySplinterCurves.Any())
+                            {
+                                secondaryCache.AddRange(splinterSpine.PrimarySplinterCurves);
+                            }
+                        }
+
+                        //Commit any primary splinters.
+                        if (splinterCache.Any())
+                        {
+                            splinterCurves = splinterCache;
+                        }
+                        else
+                        {
+                            splinterCurves.Clear();
+                        }
+
+                        var r = new Random(9);
+
+                        //Generate secondary splinters
+                        foreach (var secondary in secondaryCurves)
+                        {
+                            secondary.Transform(Transform.Scale(secondary.PointAtNormalizedLength(0.5), (Math.Round(r.NextDouble() * res.MarketCellsRemaining) * res.PrecastArchWidth) / secondary.GetLength()));
+                            var delta = Convert.ToInt32(Math.Floor(secondary.GetLength() / res.PrecastArchWidth));
+
+                            if (delta == 0)
+                            {
+                                secondaryCache.Clear();
+                                break;
+                            }
+
+                            res.MarketCellsRemaining -= delta;
+                            res.SecondarySpines.Add(new SecondarySpine(secondary));
+                        }
+
+                        //Commit any secondary splinters
+                        if (secondaryCache.Any())
+                        {
+                            secondaryCurves = secondaryCache;
+                        }
+                        else
+                        {
+                            secondaryCache.Clear();
+                        }
+
+                        //Safe exit condition
+                        if (!splinterCache.Any() && !secondaryCache.Any())
+                        {
+                            break;
+                        }
+                    }
+                }
             }
         }
     }

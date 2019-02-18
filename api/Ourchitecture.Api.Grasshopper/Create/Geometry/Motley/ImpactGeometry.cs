@@ -22,6 +22,7 @@ namespace Ourchitecture.Api.Grasshopper.Create.Geometry
             var geo = new List<GeometryBase>();
 
             manifest.PrimarySpines.ForEach(x => geo.Add(x.PrimarySpineCurve));
+            manifest.SecondarySpines.ForEach(x => geo.Add(x.Centerline));
 
             return geo;
         }

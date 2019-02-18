@@ -311,6 +311,7 @@
     <Compile Include="Extensions\PlanarSlope.cs" />
     <Compile Include="Extensions\Remap.cs" />
     <Compile Include="Extensions\SafeBooleanDifference.cs" />
+    <Compile Include="Extensions\SafeOffsetMove.cs" />
     <Compile Include="Extensions\ShiftLeft.cs" />
     <Compile Include="Extensions\StandardDeviation.cs" />
     <Compile Include="Program.cs" />
