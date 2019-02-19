@@ -1,0 +1,37 @@
+<div class="wrapper-systems">
+  <div class="content">
+    <div class="language" *ngFor="let lang of languages">
+      <div class="language__title">
+        <div class="language__title__name">{{lang.name}}<span *ngIf="languageContainsSelectedDialect(lang)">/{{selectedDialect.name}}</span></div>
+        <div class="language__title__version">
+            <span *ngIf="!languageContainsSelectedDialect(lang)">{{lang.version}}</span>
+            <span *ngIf="languageContainsSelectedDialect(lang)">{{selectedDialect.version}}</span>
+        </div>
+      </div>
+      <div class="language__description">
+        {{lang.description}}
+        <span *ngIf="languageContainsSelectedDialect(lang)"> / {{selectedDialect.description}}</span>
+      </div>
+      <div *ngIf="lang.dialectNames.length > 0" class="language__dialects">
+        <div 
+        class="dialect" 
+        *ngFor="let dialect of lang.dialectNames" 
+        id="dialect_{{dialect}}"
+        [ngClass]="{
+          'dialect--spaced' : dialect != lang.dialectNames[0], 
+          'dialect--selected': selectedDialectName == dialect,
+          'dialect--loading': !isDialectLoaded(lang, dialect),
+          'dialect--loaded': isDialectLoaded(lang, dialect)}"
+        (click)="onSelectDialect(lang, dialect)">
+        {{dialect}}
+        </div>
+        <a *ngIf="languageContainsSelectedDialect(lang)" routerLink="/box/{{lang.name}}/{{selectedDialect.name}}" class="language__dialects__launch">
+          >
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+  
+</div>

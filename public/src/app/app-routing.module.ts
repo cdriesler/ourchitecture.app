@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { RootComponent } from './root/root.component';
-import { CiceroComponent } from './cicero/cicero.component';
+import { SystemsComponent } from './systems/systems.component';
+import { BoxComponent } from './box/box.component';
 
 const routes: Routes = [
-  { path: "", redirectTo: "/root", pathMatch: "full" },
-  { path: "root", component: RootComponent},
-  { path: "root/test", component: RootComponent},
-  { path: "cicero", component: CiceroComponent}
+  { path: "", redirectTo: "/systems", pathMatch: "full" },
+  { path: "systems", component: SystemsComponent},
+  { path: "box/:language/:dialect", component: BoxComponent},
 ];
 
 @NgModule({
