@@ -7,10 +7,10 @@ using Rhino.Geometry;
 
 namespace Ourchitecture.Api.Protocols.Motley
 {
-    public class VendorRequest : MotleyRequest
+    public class VendorRequest
     {
-        public override Curve Boundary { get; }
-        public override Curve Path { get; }
+        public Curve Boundary { get; }
+        public Curve Path { get; }
 
         public Curve Cell { get; }
         

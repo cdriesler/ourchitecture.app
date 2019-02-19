@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Ourchitecture.Api.Protocols.Motley.Vendor
+namespace Ourchitecture.Api.Protocols.Motley.Impact
 {
-    public static class Glue
+    public class TertiarySpine
     {
-
     }
 }

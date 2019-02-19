@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Rhino.Geometry;
+using Rhino.Geometry.Intersect;
 
-namespace Ourchitecture.Api.Protocols.Motley.Vendor
+namespace Ourchitecture.Api.Protocols.Motley
 {
     public static class Motifs
     {
@@ -65,6 +66,45 @@ namespace Ourchitecture.Api.Protocols.Motley.Vendor
             allSegments.Add(top);
 
             return Curve.JoinCurves(allSegments)[0];
+        }
+
+        public static Curve RoundedOffset(Curve crv, double dist)
+        {
+            if (crv.PointAtStart.DistanceTo(crv.PointAtEnd) < 0.1)
+            {
+                return crv;
+            }
+
+            var offsetA = crv.Offset(Plane.WorldXY, dist / 2, 0.1, CurveOffsetCornerStyle.None)[0];
+            var offsetB = crv.Offset(Plane.WorldXY, dist / -2, 0.1, CurveOffsetCornerStyle.None)[0];
+
+            if (offsetA.PointAtStart.DistanceTo(offsetB.PointAtStart) < 0.1 || offsetA.PointAtEnd.DistanceTo(offsetB.PointAtEnd) < 0.1)
+            {
+                return crv;
+            }
+
+            var circleA = new Circle((offsetA.PointAtStart + offsetB.PointAtStart) / 2, offsetA.PointAtStart.DistanceTo(offsetB.PointAtStart) / 2).ToNurbsCurve();
+            var circleB = new Circle((offsetA.PointAtEnd + offsetB.PointAtEnd) / 2, offsetA.PointAtEnd.DistanceTo(offsetB.PointAtEnd) / 2).ToNurbsCurve();
+
+            circleA.ClosestPoint(offsetA.PointAtStart, out var tAA);
+            circleA.ClosestPoint(offsetB.PointAtStart, out var tAB);
+
+            var arcA = circleA.Trim(tAB, tAA);
+
+            circleB.ClosestPoint(offsetA.PointAtEnd, out var tBA);
+            circleB.ClosestPoint(offsetB.PointAtEnd, out var tBB);
+
+            var arcB = circleB.Trim(tBA, tBB);
+
+            var segments = new List<Curve>
+            {
+                arcA,
+                offsetA,
+                arcB,
+                offsetB,
+            };
+
+            return Curve.JoinCurves(segments)[0];
         }
     }
 }

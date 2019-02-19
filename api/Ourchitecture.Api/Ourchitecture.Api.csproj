@@ -303,20 +303,35 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\Contain.cs" />
     <Compile Include="Extensions\ExtrudeAndCap.cs" />
+    <Compile Include="Extensions\GetIntersectingRegions.cs" />
     <Compile Include="Extensions\NoiseBasedValue.cs" />
+    <Compile Include="Extensions\PartitionByApproximateSize.cs" />
+    <Compile Include="Extensions\PlanarSlope.cs" />
     <Compile Include="Extensions\Remap.cs" />
     <Compile Include="Extensions\SafeBooleanDifference.cs" />
+    <Compile Include="Extensions\SafeOffsetMove.cs" />
+    <Compile Include="Extensions\ShiftLeft.cs" />
     <Compile Include="Extensions\StandardDeviation.cs" />
+    <Compile Include="Extensions\TrimLineWithinRegion.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protocols\Intent\IntentModule.cs" />
+    <Compile Include="Protocols\Motley\Common\Composition.cs" />
+    <Compile Include="Protocols\Motley\Common\Measure.cs" />
+    <Compile Include="Protocols\Motley\Common\Motifs.cs" />
+    <Compile Include="Protocols\Motley\Common\Variance.cs" />
     <Compile Include="Protocols\Motley\MotleyModule.cs" />
     <Compile Include="Protocols\Motley\MotleyRequest.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Impact\ImpactManifest.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Impact\ImpactRequest.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Impact\ImpactSchema.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Impact\Models\MemorialRegion.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Impact\Models\PrimarySpine.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Impact\Models\SecondarySpine.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Impact\Models\TertiarySpine.cs" />
     <Compile Include="Protocols\Motley\Praxis\Swerve\Swerve.cs" />
-    <Compile Include="Protocols\Motley\Praxis\Vendor\Logic\Glue.cs" />
-    <Compile Include="Protocols\Motley\Praxis\Vendor\Logic\Measure.cs" />
-    <Compile Include="Protocols\Motley\Praxis\Vendor\Logic\Motifs.cs" />
     <Compile Include="Protocols\Motley\Praxis\Vendor\Models\VendorCell.cs" />
     <Compile Include="Protocols\Motley\Praxis\Vendor\Models\VendorEntrance.cs" />
     <Compile Include="Protocols\Motley\Praxis\Vendor\Models\VendorPathFlank.cs" />
@@ -346,7 +361,7 @@
   <ItemGroup>
     <Folder Include="Drawing\" />
     <Folder Include="Protocols\Motley\Assets\" />
-    <Folder Include="Protocols\Motley\Common\" />
+    <Folder Include="Protocols\Motley\Praxis\Impact\Styles\" />
     <Folder Include="Protocols\Motley\Praxis\Vendor\Styles\" />
   </ItemGroup>
   <PropertyGroup>

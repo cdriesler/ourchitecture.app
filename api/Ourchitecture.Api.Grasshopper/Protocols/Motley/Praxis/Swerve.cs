@@ -1,23 +1,23 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
-using Ourchitecture.Api.Protocols.Motley;
+using Ourchitecture.Api.Protocols;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
 namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
 {
-    public class Vendor : GH_Component
+    public class Swerve : GH_Component
     {
         /// <summary>
-        /// Initializes a new instance of the Vendor class.
+        /// Initializes a new instance of the Swerve class.
         /// </summary>
-        public Vendor() : base(
-            "Vendor", 
-            "Vendor",
+        public Swerve(): base(
+            "Swerve", 
+            "Swerve",
             "Description",
-            "Protocol", 
-            "Motley")
+            Properties.Resources.Category_Name, 
+            "Motley"
+            )
         {
         }
 
@@ -26,7 +26,6 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddCurveParameter("Boundary", "B", "Square boundary of operation.", GH_ParamAccess.item);
             pManager.AddCurveParameter("Path", "P", "Path to aggregate along.", GH_ParamAccess.item);
             pManager.AddCurveParameter("Cell", "C", "Basic cell geometry.", GH_ParamAccess.item);
         }
@@ -46,23 +45,7 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            Curve bounds = null;
-            if (!DA.GetData(0, ref bounds)) return;
 
-            Curve path = null;
-            if (!DA.GetData(1, ref path)) return;
-
-            Curve cell = null;
-            if (!DA.GetData(2, ref cell)) return;
-
-            var res = VendorSchema.Solve(new VendorRequest(bounds, path, cell));
-
-            var geo = new List<Brep>() { res.SculptedRoofMass };
-
-            geo.AddRange(res.MarketCells.Select(x => x.SculptedCellMass));
-
-            //DA.SetData(0, res.GetAllGeometry());
-            DA.SetDataList(0, geo);
         }
 
         /// <summary>
@@ -83,7 +66,7 @@ namespace Ourchitecture.Api.Grasshopper.Protocols.Motley
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("54d74b40-bf08-4a54-a281-35769738d2e2"); }
+            get { return new Guid("83460d82-1092-4643-b025-5be4bf872ea6"); }
         }
     }
 }

@@ -7,9 +7,17 @@ using Rhino.Geometry;
 
 namespace Ourchitecture.Api.Protocols.Motley
 {
-    public abstract class MotleyRequest
+    public class MotleyRequest
     {
-        public abstract Curve Boundary { get; }
-        public abstract Curve Path { get; }
+        public Curve Boundary { get; }
+        public Curve PrimaryPath { get; }
+        public Curve Cell { get; }
+
+        public MotleyRequest(Curve boundary, Curve path, Curve cell)
+        {
+            Boundary = boundary;
+            PrimaryPath = path;
+            Cell = cell;
+        }
     }
 }

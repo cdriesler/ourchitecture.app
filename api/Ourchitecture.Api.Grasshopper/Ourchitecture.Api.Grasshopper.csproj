@@ -65,10 +65,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Create\Diagram\CreateDiagram.cs" />
+    <Compile Include="Create\Drawing\CreateDrawing.cs" />
+    <Compile Include="Create\Geometry\CreateGeometry.cs" />
+    <Compile Include="Create\Geometry\Motley\ImpactGeometry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Protocols\Intent\ModelToJson.cs" />
-    <Compile Include="Protocols\Motley\Swerve.cs" />
-    <Compile Include="Protocols\Motley\Vendor.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Impact.cs" />
+    <Compile Include="Protocols\Motley\Motley.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Swerve.cs" />
+    <Compile Include="Protocols\Motley\Praxis\Vendor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -79,6 +90,12 @@
       <Project>{1c84f54a-03f2-45df-a0b5-ef7470255197}</Project>
       <Name>Ourchitecture.Api</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

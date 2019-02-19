@@ -4,13 +4,13 @@ using System.Linq;
 using System.Web;
 using Rhino.Geometry;
 
-namespace Ourchitecture.Api.Protocols.Motley.Vendor
+namespace Ourchitecture.Api.Protocols.Motley
 {
     public static class Measure
     {
         public static double CurveSegmentVolatility(Curve crv)
         {
-            var crvSegments = new List<Curve>();           
+            var crvSegments = new List<Curve>();
 
             for (int i = 0; i < crv.SpanCount; i++)
             {
